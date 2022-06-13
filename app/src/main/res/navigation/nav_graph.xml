@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/connectionsFragment">
+
+    <fragment
+        android:id="@+id/discoverFragment"
+        android:name="com.ayushunleashed.mitram.fragments.DiscoverFragment"
+        android:label="fragment_discover"
+        tools:layout="@layout/fragment_discover" >
+        <action
+            android:id="@+id/action_discoverFragment_to_likesFragment"
+            app:destination="@id/likesFragment" />
+        <action
+            android:id="@+id/action_discoverFragment_to_connectionsFragment"
+            app:destination="@id/connectionsFragment" />
+        <action
+            android:id="@+id/action_discoverFragment_to_messagesFragment2"
+            app:destination="@id/messagesFragment" />
+        <action
+            android:id="@+id/action_discoverFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/likesFragment"
+        android:name="com.ayushunleashed.mitram.fragments.LikesFragment"
+        android:label="fragment_likes"
+        tools:layout="@layout/fragment_likes" />
+
+    <fragment
+        android:id="@+id/connectionsFragment"
+        android:name="com.ayushunleashed.mitram.fragments.ConnectionsFragment"
+        android:label="fragment_connections"
+        tools:layout="@layout/fragment_connections" />
+
+    <fragment
+        android:id="@+id/messagesFragment"
+        android:name="com.ayushunleashed.mitram.fragments.MessagesFragment"
+        android:label="fragment_messages"
+        tools:layout="@layout/fragment_messages" />
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.ayushunleashed.mitram.fragments.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" />
+</navigation>
