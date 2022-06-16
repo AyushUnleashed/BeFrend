@@ -9,6 +9,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
+import com.asynctaskcoffee.cardstack.CardContainer
+import com.asynctaskcoffee.cardstack.CardListener
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class FragmentHomeActivity : AppCompatActivity() {
@@ -23,7 +25,6 @@ class FragmentHomeActivity : AppCompatActivity() {
         setContentView(R.layout.activity_fragment_home)
 
         supportActionBar?.hide()
-
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         navController = navHostFragment.navController
 
@@ -33,6 +34,4 @@ class FragmentHomeActivity : AppCompatActivity() {
         //setupBagBadgeSystem()
 
     }
-
-
 }

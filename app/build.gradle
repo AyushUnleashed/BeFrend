@@ -96,6 +96,8 @@ dependencies {
     // Jetpack Compose Integration
     implementation("androidx.navigation:navigation-compose:$nav_version")
 
+    //swipeable cards
 
+    implementation 'com.github.AsynctaskCoffee:tinderlikecardstack:1.0'
 
 }

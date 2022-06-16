@@ -7,6 +7,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
 
 
 class UserDao {
@@ -15,10 +16,18 @@ class UserDao {
 
     fun addUsers(user: UserModel?)
     {
+
         GlobalScope.launch (Dispatchers.IO){
+
             //if user is not null
             user?.let{
-                usersCollection.document(user.uid).set(it)
+                if(usersCollection.document(user.uid).get().await().exists())
+                {
+                    //do nothing
+                }else
+                {
+                    usersCollection.document(user.uid).set(it)
+                }
             }
         }
     }

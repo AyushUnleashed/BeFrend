@@ -2,11 +2,11 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:state_checked="true">
         <layer-list>
-            <item android:gravity="bottom|center_horizontal">
+            <item android:gravity="top|center_horizontal">
                 <shape android:shape="rectangle">
-                    <size android:width="70dp" android:height="6dp" />
+                    <size android:width="70dp" android:height="1dp" />
                     <solid android:color="@color/themeApp" />
-                    <corners android:topRightRadius="12dp" android:topLeftRadius="12dp" />
+                    <corners android:topRightRadius="0dp" android:topLeftRadius="0dp" />
                 </shape>
             </item>
         </layer-list>
