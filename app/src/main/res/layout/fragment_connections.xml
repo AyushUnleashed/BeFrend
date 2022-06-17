@@ -21,6 +21,23 @@
         android:text="Connections"/>
 
     <TextView
+        android:visibility="gone"
+        android:id="@+id/tvNoUsers"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:textSize="16sp"
+        android:fontFamily="@font/poppins_regular"
+        android:textColor="@color/gray70"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvPageTitle"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="No Users To Show"
+        android:textAlignment="center"/>
+
+    <TextView
         android:id="@+id/tvPageDescription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

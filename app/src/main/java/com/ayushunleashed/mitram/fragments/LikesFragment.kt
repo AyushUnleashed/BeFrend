@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -27,6 +28,7 @@ class LikesFragment : Fragment() {
 
     private lateinit var usersList:MutableList<UserModel>
     private lateinit var currentUser:FirebaseUser
+    lateinit var tvNoUsersToShow: TextView
 
     lateinit var recyclerView:RecyclerView
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,7 +48,7 @@ class LikesFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         currentUser = FirebaseAuth.getInstance().currentUser!!
-
+        tvNoUsersToShow =view.findViewById(R.id.tvNoUsers)
         loadData(view)
     }
 
@@ -91,7 +93,12 @@ class LikesFragment : Fragment() {
             {
                 if (likedByArray != null) {
                     if(likedByArray.size == 0) {
-                        Toast.makeText(requireContext(),"No Likes",Toast.LENGTH_SHORT).show()
+                        //Toast.makeText(requireContext(),"No Likes",Toast.LENGTH_SHORT).show()
+                            tvNoUsersToShow.visibility = View.VISIBLE
+
+
+                    }else {
+                        tvNoUsersToShow.visibility = View.GONE
                     }
                 }
 

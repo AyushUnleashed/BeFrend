@@ -1,8 +1,8 @@
 package com.ayushunleashed.mitram.fragments
 
+import android.content.ContentValues.TAG
+import android.content.Context
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -13,26 +13,20 @@ import androidx.navigation.fragment.findNavController
 import com.asynctaskcoffee.cardstack.CardContainer
 import com.asynctaskcoffee.cardstack.CardListener
 import com.asynctaskcoffee.cardstack.pulse
-import com.asynctaskcoffee.cardstack.px
-import com.ayushunleashed.mitram.FragmentHomeActivity
 import com.ayushunleashed.mitram.R
 import com.ayushunleashed.mitram.adapters.UserCardAdapter
 import com.ayushunleashed.mitram.models.UserModel
 import com.bumptech.glide.Glide
-import com.firebase.ui.auth.data.model.User
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.firestore.FirebaseFirestore
-import com.lorentzos.flingswipe.SwipeFlingAdapterView
 import kotlinx.coroutines.*
 import kotlinx.coroutines.tasks.await
-import java.util.ArrayList
 
 
 class DiscoverFragment : Fragment() ,CardListener{
+    lateinit var thisContext: Context
 
     lateinit var cardContainer: CardContainer
     lateinit var userCardAdapter: UserCardAdapter
@@ -43,6 +37,7 @@ class DiscoverFragment : Fragment() ,CardListener{
     lateinit var btnReloadDiscoverUsers: FloatingActionButton
     lateinit var btnRightSwipe:FloatingActionButton
     lateinit var btnLeftSwipe:FloatingActionButton
+    lateinit var tvNoUsersToShow:TextView
 
 //    lateinit var myToolbarDiscover:androidx.appcompat.widget.Toolbar
 //    lateinit var custom_title:TextView
@@ -56,12 +51,16 @@ class DiscoverFragment : Fragment() ,CardListener{
         savedInstanceState: Bundle?
     ): View? {
 
+        if (container != null) {
+            thisContext = container.getContext()
+        };
+
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_discover, container, false)
         setupViews(view)
 
         /*Customization*/
-        cardContainer.maxStackSize = 1
+        cardContainer.maxStackSize = 2
 
         cardContainer.setOnCardActionListener(this)
         currentUser = FirebaseAuth.getInstance().currentUser!!
@@ -80,7 +79,6 @@ class DiscoverFragment : Fragment() ,CardListener{
             it.pulse() // for sweet animation
             userCardAdapter.swipeLeft()
         }
-
 
         return view
     }
@@ -117,27 +115,39 @@ class DiscoverFragment : Fragment() ,CardListener{
             //get all users from database
             val users = async{db.collection("users").whereNotEqualTo("uid",currentUser.uid).get().await().toObjects(UserModel::class.java)}
 
-//            // get current user model from database
-//            val currentUserModel = db.collection("users").document(currentUser.uid).get().await().toObject(UserModel::class.java)
+            // get current user model from database
+            val currentUserModel = db.collection("users").document(currentUser.uid).get().await().toObject(UserModel::class.java)
+            val usersYouLiked = currentUserModel!!.usersYouLiked
+            val connections = currentUserModel.connections
+            val combinedArray = usersYouLiked + connections
 
-            // delete current user from the list of all users.
-//            users.await().remove(currentUserModel)
-//                if(users.await().contains(currentUserModel))
-//                {
-//                    if (currentUserModel != null) {
-//                        Log.d("GENERAL","discover screen still contains"+currentUserModel.displayName)
-//                    };
-//                }
-
-                // adding users to the userslist
             usersList = users.await()
+
+
+                //remove all users you already liked or are in connections
+                // this is causing crash becasue it takes lot of time to execute and if you change fragment at that moment it crashes
+
+                for(userId in combinedArray)
+                {
+                    val oneOfTheUserYouLikedOrConnectedWith = db.collection("users").document(userId).get().await().toObject(UserModel::class.java)
+                    usersList.remove(oneOfTheUserYouLikedOrConnectedWith)
+                }
 
                 // updating ui with users
             withContext(Dispatchers.Main)
             {
                 if(usersList.size == 0)
                 {
-                    Toast.makeText(requireContext(),"No Users To Show",Toast.LENGTH_SHORT).show()
+                    tvNoUsersToShow.visibility = View.VISIBLE
+                    btnRightSwipe.visibility = View.GONE
+                    btnLeftSwipe.visibility = View.GONE
+                    //Toast.makeText(requireContext(),"No Users To Show",Toast.LENGTH_SHORT).show()
+                }
+                else{
+                    tvNoUsersToShow.visibility = View.GONE
+                    btnRightSwipe.visibility = View.VISIBLE
+                    btnLeftSwipe.visibility = View.VISIBLE
+
                 }
 
 
@@ -155,6 +165,7 @@ class DiscoverFragment : Fragment() ,CardListener{
 
     fun setupViews(view: View)
     {
+        tvNoUsersToShow = view.findViewById(R.id.tvNoUsers)
         btnLeftSwipe = view.findViewById(R.id.btnLeftSwipe)
         btnRightSwipe = view.findViewById(R.id.btnRightSwipe)
         cardContainer = view.findViewById(R.id.cardContainer)
@@ -192,7 +203,41 @@ class DiscoverFragment : Fragment() ,CardListener{
             "onRightSwipe pos: $position model: " + (model as UserModel).toString()
         )
 
+        var currentUserModel: UserModel?
+        runBlocking {
+            currentUserModel = db.collection("users").document(currentUser.uid).get().await().toObject(UserModel::class.java)
+        }
+
         val userWhoGotRightSwiped:UserModel = model as UserModel
+
+        val check1 = GlobalScope.launch(Dispatchers.IO) {
+//            val currentUserModel: UserModel? = db.collection("users").document(currentUser.uid).get().await().toObject(UserModel::class.java)
+
+            if(currentUserModel!!.likedBy.contains(userWhoGotRightSwiped.uid))
+            {
+                // if you already have the person you liked on in your likes list
+
+                // remove him from your like list
+                currentUserModel!!.likedBy.remove(userWhoGotRightSwiped.uid)
+
+                // add him to your connection list
+                currentUserModel!!.connections.add(userWhoGotRightSwiped.uid)
+
+                // add yourself to his connection list
+                userWhoGotRightSwiped.connections.add(currentUserModel!!.uid)
+
+                //updating this to database
+                // current user's like list and connections list both are updated
+                db.collection("users").document(currentUser.uid).set(currentUserModel!!).await()
+                // request user's connection list is updated
+                db.collection("users").document(userWhoGotRightSwiped.uid).set(userWhoGotRightSwiped).await()
+
+                withContext(Dispatchers.Main)
+                {
+                    Toast.makeText(requireContext(),"It's a match",Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
 
         if(!userWhoGotRightSwiped.likedBy.contains(currentUser.uid) && !userWhoGotRightSwiped.connections.contains(currentUser.uid))
         {
@@ -209,6 +254,11 @@ class DiscoverFragment : Fragment() ,CardListener{
                 }.addOnFailureListener {
                     Toast.makeText(requireContext(),"Failed To sent like request", Toast.LENGTH_SHORT).show()
                 }
+
+                //adding this person you swiped right on to users you liked
+                //val currentUserModel: UserModel? = db.collection("users").document(currentUser.uid).get().await().toObject(UserModel::class.java)
+                currentUserModel!!.usersYouLiked.add(userWhoGotRightSwiped.uid)
+                db.collection("users").document(currentUserModel!!.uid).set(currentUserModel!!).await()
             }
         }
         else
@@ -241,8 +291,8 @@ class DiscoverFragment : Fragment() ,CardListener{
 
     fun handleReloadUsersButton()
     {
-        //loadData()
-        usersList = defaultProfiles()
+        loadData()
+        //usersList = defaultProfiles()
         userCardAdapter = UserCardAdapter(usersList,requireContext())
         cardContainer.setAdapter(userCardAdapter)
         btnReloadDiscoverUsers.visibility = View.GONE

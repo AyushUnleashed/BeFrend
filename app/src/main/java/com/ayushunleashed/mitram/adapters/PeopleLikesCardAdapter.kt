@@ -107,6 +107,9 @@ class PeopleLikesCardAdapter(var users: MutableList<UserModel>):RecyclerView.Ada
 
                 if (currentUserModel != null) {
 
+                    // since this person declined we would remove him from list of users who that person liked
+                    likeCardUserModel.usersYouLiked.remove(currentUserModel.uid)
+
                     // removing from liked array
                     currentUserModel.likedBy.remove(likeCardUserModel.uid)
 

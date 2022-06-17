@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
@@ -27,6 +28,7 @@ class ConnectionsFragment : Fragment() {
 
     private lateinit var usersList:MutableList<UserModel>
     private lateinit var currentUser: FirebaseUser
+    lateinit var tvNoUsersToShow: TextView
 
     lateinit var recyclerView: RecyclerView
 
@@ -47,7 +49,7 @@ class ConnectionsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         currentUser = FirebaseAuth.getInstance().currentUser!!
-
+        tvNoUsersToShow = view.findViewById(R.id.tvNoUsers)
         loadData(view)
         
     }
@@ -91,6 +93,15 @@ class ConnectionsFragment : Fragment() {
 
                 if (users != null) {
                     Log.d("GENERAL", "connectionsArray by users list" + users.toString());
+
+                    if(users.isEmpty())
+                    {
+                        tvNoUsersToShow.visibility = View.VISIBLE
+                    }
+                    else
+                    {
+                        tvNoUsersToShow.visibility = View.GONE
+                    }
                     Toast.makeText(requireContext(),"Size:${users.size}", Toast.LENGTH_SHORT).show()
                 }
                 recyclerView = view.findViewById(R.id.myRecyclerView)
