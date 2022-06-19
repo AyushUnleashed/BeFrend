@@ -118,7 +118,7 @@ class DiscoverFragment : Fragment() ,CardListener{
 
     }
 
-    fun loadUsersForDiscoverPage()
+    fun loadUsersForDiscoverPageOrignal()
     {
         progressBar.visibility = View.VISIBLE
 
@@ -148,6 +148,56 @@ class DiscoverFragment : Fragment() ,CardListener{
             }
 
             usersList = (allUsers - arrayOfPeopleYouDontWant) as MutableList<UserModel>
+
+
+            // updating ui with users
+            withContext(Dispatchers.Main)
+            {
+                progressBar.visibility = View.GONE
+                if(usersList.size == 0)
+                {
+                    tvNoUsersToShow.visibility = View.VISIBLE
+                    btnRightSwipe.visibility = View.GONE
+                    btnLeftSwipe.visibility = View.GONE
+                    //Toast.makeText(requireContext(),"No Users To Show",Toast.LENGTH_SHORT).show()
+                }
+                else{
+                    tvNoUsersToShow.visibility = View.GONE
+                    btnRightSwipe.visibility = View.VISIBLE
+                    btnLeftSwipe.visibility = View.VISIBLE
+                }
+
+
+                Log.d("GENERAL","${usersList.size} users in Discover");
+                for(user in usersList)
+                {
+                    Log.d("GENERAL","**user:"+user.displayName.toString());
+                }
+
+                userCardAdapter = UserCardAdapter(usersList,thisContext)
+                cardContainer.setAdapter(userCardAdapter)
+            }
+        }
+    }
+
+    fun loadUsersForDiscoverPage()
+    {
+        progressBar.visibility = View.VISIBLE
+
+        GlobalScope.launch(Dispatchers.IO){
+
+            // get current user model from database
+            val currentUserModel = db.collection("users").document(currentUser.uid).get().await().toObject(UserModel::class.java)
+            val usersYouLiked = currentUserModel!!.usersYouLiked
+            val connections = currentUserModel.connections
+            val combinedArray = usersYouLiked + connections
+
+
+            for(uid in combinedArray)
+            {
+                val query = db.collection("users").whereNotIn("uid",combinedArray)
+                usersList = query.get().await().toObjects(UserModel::class.java)
+            }
 
 
             // updating ui with users
