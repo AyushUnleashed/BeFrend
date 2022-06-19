@@ -37,7 +37,11 @@
         android:id="@+id/connectionsFragment"
         android:name="com.ayushunleashed.mitram.fragments.ConnectionsFragment"
         android:label="fragment_connections"
-        tools:layout="@layout/fragment_connections" />
+        tools:layout="@layout/fragment_connections" >
+        <action
+            android:id="@+id/action_connectionsFragment_to_chatFragment"
+            app:destination="@id/chatFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/messagesFragment"
@@ -66,5 +70,17 @@
         <action
             android:id="@+id/action_fullUserProfileFragment_to_discoverFragment"
             app:destination="@id/discoverFragment" />
+
+        <argument name ="userId"
+            app:argType="string"
+            android:name="userId"/>
+    </fragment>
+    <fragment
+        android:id="@+id/chatFragment"
+        android:name="com.ayushunleashed.mitram.fragments.ChatFragment"
+        android:label="ChatFragment">
+        <argument name ="userId"
+        app:argType="string"
+        android:name="userId"/>
     </fragment>
 </navigation>

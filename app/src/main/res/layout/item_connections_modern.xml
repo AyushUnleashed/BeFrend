@@ -5,6 +5,7 @@
     android:layout_height="wrap_content"
     android:background="@color/white"
     android:backgroundTint="@color/white"
+    android:id="@+id/cardViewConnections"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardCornerRadius="16dp"
     android:elevation="0dp"

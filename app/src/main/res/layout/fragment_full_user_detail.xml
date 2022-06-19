@@ -89,7 +89,7 @@
 </androidx.cardview.widget.CardView>
 
     <TextView
-        android:id="@+id/tvUerName"
+        android:id="@+id/tvUserNameDetailPage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Ayush Yadav"
@@ -113,11 +113,11 @@
         app:layout_constraintLeft_toLeftOf="parent"
         android:fontFamily="@font/montserrat_medium"
         android:textSize="14sp"
-        app:layout_constraintTop_toBottomOf="@id/tvUerName"
+        app:layout_constraintTop_toBottomOf="@id/tvUserNameDetailPage"
         />
 
     <TextView
-        android:id="@+id/tvUserBio"
+        android:id="@+id/tvUserBioDetailPage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="I don’t know what to write right now so i’m just

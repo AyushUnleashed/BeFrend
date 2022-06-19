@@ -30,6 +30,7 @@ class ConnectionsFragment : Fragment() {
     private lateinit var usersList:MutableList<UserModel>
     private lateinit var currentUser: FirebaseUser
     private lateinit var db:FirebaseFirestore
+    var  currentUserModel:UserModel? = null
 
 
     lateinit var tvNoUsersToShow: TextView
@@ -57,6 +58,11 @@ class ConnectionsFragment : Fragment() {
 
         currentUser = FirebaseAuth.getInstance().currentUser!!
 
+        GlobalScope.launch {
+            currentUserModel = db.collection("users").document(currentUser.uid).get().await()
+                .toObject(UserModel::class.java)
+        }
+
         setupViews(view)
 
         loadData(view)
@@ -77,8 +83,6 @@ class ConnectionsFragment : Fragment() {
 
         GlobalScope.launch(Dispatchers.IO) {
 
-            val currentUserModel = db.collection("users").document(currentUser.uid).get().await()
-                .toObject(UserModel::class.java)
             var users:MutableList<UserModel> = arrayListOf()
 
             val connectionsArray = currentUserModel?.connections
@@ -118,7 +122,7 @@ class ConnectionsFragment : Fragment() {
                 }
                 Toast.makeText(requireContext(),"Size:${users.size}", Toast.LENGTH_SHORT).show()
                 recyclerView = view.findViewById(R.id.myRecyclerView)
-                val adapter = users.let { ConnectionsCardAdapter(it) }
+                val adapter = users.let { ConnectionsCardAdapter(it,requireContext()) }
                 recyclerView.adapter = adapter
                 recyclerView.layoutManager = StaggeredGridLayoutManager(
                     1,
@@ -126,5 +130,41 @@ class ConnectionsFragment : Fragment() {
                 )
             }
         }
+    }
+
+    fun removeConnection(connectionUidToBeRemoved: String)
+    {
+        GlobalScope.launch(Dispatchers.IO) {
+            db = FirebaseFirestore.getInstance()
+            val currentUserModel = db.collection("users").document(FirebaseAuth.getInstance().currentUser!!.uid).get().await()
+                .toObject(UserModel::class.java)
+
+            var currentConnection = db.collection("users").document(connectionUidToBeRemoved).get().await().toObject(UserModel::class.java)
+
+            if (currentConnection != null && currentUserModel!=null)
+            {
+                currentUserModel.connections.remove(connectionUidToBeRemoved)
+                Log.d("GENERAL","Removed ${currentConnection.displayName} from ${currentUserModel.displayName} offline")
+
+                currentConnection.connections.remove(currentUserModel.uid);
+                Log.d("GENERAL","Removed ${currentUserModel.displayName} from ${currentConnection.displayName} offline")
+
+
+                //precautions - this 4
+                currentUserModel.likedBy.remove(currentConnection.uid)
+                currentConnection.likedBy.remove(currentUserModel.uid)
+                currentUserModel.usersYouLiked.remove(currentConnection.uid)
+                currentConnection.usersYouLiked.remove(currentUserModel.uid)
+
+
+            //update to database
+
+                db.collection("users").document(connectionUidToBeRemoved).set(currentConnection).await()
+                Log.d("GENERAL","Updated ${currentConnection.displayName}")
+                db.collection("users").document(currentUserModel.uid!!).set(currentUserModel).await()
+                Log.d("GENERAL","Updated ${currentUserModel.displayName}")
+            }
+        }
+
     }
 }

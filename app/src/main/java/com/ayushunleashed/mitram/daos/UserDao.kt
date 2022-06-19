@@ -21,7 +21,7 @@ class UserDao {
 
             //if user is not null
             user?.let{
-                if(usersCollection.document(user.uid).get().await().exists())
+                if(usersCollection.document(user.uid!!).get().await().exists())
                 {
                     //do nothing
                 }else

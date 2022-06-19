@@ -2,13 +2,13 @@ package com.ayushunleashed.mitram.adapters
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.graphics.Bitmap
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
+import androidx.core.os.bundleOf
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.asynctaskcoffee.cardstack.CardContainerAdapter
@@ -28,7 +28,7 @@ class UserCardAdapter(var users: List<UserModel>,context: Context): CardContaine
         val view = layoutInflater.inflate(R.layout.item_user,null)
 
         var tvUserName = view.findViewById<TextView>(R.id.tvUserName)
-        var tvUserBio = view.findViewById<TextView>(R.id.tvUserBio)
+        var tvUserBio = view.findViewById<TextView>(R.id.tvUserBioDetailPage)
         var imgViewUserProfile = view.findViewById<ImageView>(R.id.imgViewUserProfile)
         var cardViewProfileDescription:CardView = view.findViewById(R.id.cardViewProfileDescription)
         var btnShowFullProfile = view.findViewById<ImageButton>(R.id.btnShowFullProfile)
@@ -40,7 +40,8 @@ class UserCardAdapter(var users: List<UserModel>,context: Context): CardContaine
         Glide.with(imgViewUserProfile.context).load(users[position].imageUrl).placeholder(R.drawable.img_user_place_holder)
             .error(R.drawable.img_user_profile_sample).into(imgViewUserProfile)
 
-
+        //
+        val bundle = bundleOf("userId" to users[position].uid)
 
         //defining nav controller for navigation
         var navController: NavController?=null
@@ -50,7 +51,7 @@ class UserCardAdapter(var users: List<UserModel>,context: Context): CardContaine
 
                 //for navigating to product description fragment
                 navController = Navigation.findNavController(view)
-                navController!!.navigate(R.id.action_discoverFragment_to_fullUserProfileFragment)
+                navController!!.navigate(R.id.action_discoverFragment_to_fullUserProfileFragment,bundle)
         }
 
 

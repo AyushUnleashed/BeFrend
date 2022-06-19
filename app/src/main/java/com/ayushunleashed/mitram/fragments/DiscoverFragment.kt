@@ -1,7 +1,5 @@
 package com.ayushunleashed.mitram.fragments
 
-import android.app.Activity
-import android.content.ContentValues.TAG
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
@@ -10,8 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.fragment.findNavController
+import androidx.core.os.bundleOf
 import com.asynctaskcoffee.cardstack.CardContainer
 import com.asynctaskcoffee.cardstack.CardListener
 import com.asynctaskcoffee.cardstack.pulse
@@ -19,6 +16,7 @@ import com.ayushunleashed.mitram.R
 import com.ayushunleashed.mitram.adapters.UserCardAdapter
 import com.ayushunleashed.mitram.models.UserModel
 import com.bumptech.glide.Glide
+import com.firebase.ui.auth.data.model.User
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -31,7 +29,11 @@ class DiscoverFragment : Fragment() ,CardListener{
     lateinit var thisContext: Context
 
     lateinit var userCardAdapter: UserCardAdapter
+
     lateinit var usersList:MutableList<UserModel>
+
+
+
     lateinit var currentUser: FirebaseUser
     lateinit var db:FirebaseFirestore
 
@@ -42,6 +44,10 @@ class DiscoverFragment : Fragment() ,CardListener{
     lateinit var btnLeftSwipe:FloatingActionButton
     lateinit var tvNoUsersToShow:TextView
     private lateinit var progressBar: ProgressBar
+
+    lateinit var myView:View
+
+    var LIST_STATE:String = "list_state"
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -61,9 +67,17 @@ class DiscoverFragment : Fragment() ,CardListener{
             thisContext = container.getContext()
         };
 
-        // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_discover, container, false)
-        setupViews(view)
+//        var getAns = savedInstanceState?.getBundle(LIST_STATE)
+//        if (getAns != null) {
+//            usersList = getAns.getParcelable("usersList")!!
+//        }
+//
+//        Toast.makeText(thisContext,"toLoad:$getAns",Toast.LENGTH_SHORT).show()
+
+        myView = inflater.inflate(R.layout.fragment_discover, container, false)
+
+
+        setupViews(myView)
         setupButtons()
 
         /*Customization*/
@@ -73,7 +87,10 @@ class DiscoverFragment : Fragment() ,CardListener{
         currentUser = FirebaseAuth.getInstance().currentUser!!
         db  = FirebaseFirestore.getInstance()
 
-        return view
+        loadCurrentUserData()
+        loadUsersForDiscoverPageOrignal()
+
+        return myView
     }
 
     fun setupButtons()
@@ -97,9 +114,9 @@ class DiscoverFragment : Fragment() ,CardListener{
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
         //customToolBar(view)
-        loadCurrentUserData()
-        loadUsersForDiscoverPage()
+
     }
 
     fun loadCurrentUserData()
@@ -116,6 +133,13 @@ class DiscoverFragment : Fragment() ,CardListener{
             }
         }
 
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+
+        val bundle = bundleOf("usersList" to usersList)
+        outState.putBundle(LIST_STATE,bundle)
     }
 
     fun loadUsersForDiscoverPageOrignal()
@@ -147,8 +171,7 @@ class DiscoverFragment : Fragment() ,CardListener{
                 }
             }
 
-            usersList = (allUsers - arrayOfPeopleYouDontWant) as MutableList<UserModel>
-
+            usersList = (allUsers - arrayOfPeopleYouDontWant - currentUserModel) as MutableList<UserModel>
 
             // updating ui with users
             withContext(Dispatchers.Main)
@@ -262,7 +285,9 @@ class DiscoverFragment : Fragment() ,CardListener{
             "SwipeLog",
             "onLeftSwipe pos: $position model: " + (model as UserModel).toString()
         )
-        Toast.makeText(requireContext(),"Left Swiped",Toast.LENGTH_SHORT).show()
+        val model:UserModel = model as UserModel
+        val displayName = model.displayName.toString()
+        Toast.makeText(requireContext(),"Left Swiped $displayName ",Toast.LENGTH_SHORT).show()
     }
 
     override fun onRightSwipe(position: Int, model: Any) {
@@ -288,11 +313,18 @@ class DiscoverFragment : Fragment() ,CardListener{
                 // remove him from your like list
                 currentUserModel!!.likedBy.remove(userWhoGotRightSwiped.uid)
 
+                userWhoGotRightSwiped.usersYouLiked.remove(currentUserModel!!.uid)
+
+                //precautions
+                currentUserModel!!.usersYouLiked.remove(userWhoGotRightSwiped.uid)
+                userWhoGotRightSwiped.likedBy.remove(currentUserModel!!.uid)
+
+
                 // add him to your connection list
-                currentUserModel!!.connections.add(userWhoGotRightSwiped.uid)
+                currentUserModel!!.connections.add(userWhoGotRightSwiped.uid!!)
 
                 // add yourself to his connection list
-                userWhoGotRightSwiped.connections.add(currentUserModel!!.uid)
+                userWhoGotRightSwiped.connections.add(currentUserModel!!.uid!!)
 
                 //updating this to database
                 // current user's like list and connections list both are updated
@@ -316,7 +348,7 @@ class DiscoverFragment : Fragment() ,CardListener{
             )
 
             GlobalScope.launch(Dispatchers.IO) {
-                db.collection("users").document(userWhoGotRightSwiped.uid).set(userWhoGotRightSwiped).
+                db.collection("users").document(userWhoGotRightSwiped.uid!!).set(userWhoGotRightSwiped).
                 addOnSuccessListener {
                     Toast.makeText(requireContext(),"Like request Sent", Toast.LENGTH_SHORT).show()
                 }.addOnFailureListener {
@@ -326,7 +358,7 @@ class DiscoverFragment : Fragment() ,CardListener{
                 //adding this person you swiped right on to users you liked
                 //val currentUserModel: UserModel? = db.collection("users").document(currentUser.uid).get().await().toObject(UserModel::class.java)
                 currentUserModel!!.usersYouLiked.add(userWhoGotRightSwiped.uid)
-                db.collection("users").document(currentUserModel!!.uid).set(currentUserModel!!).await()
+                db.collection("users").document(currentUserModel!!.uid!!).set(currentUserModel!!).await()
             }
         }
         else
@@ -367,4 +399,6 @@ class DiscoverFragment : Fragment() ,CardListener{
         btnLeftSwipe.visibility = View.VISIBLE
         btnRightSwipe.visibility = View.VISIBLE
     }
+
+
 }

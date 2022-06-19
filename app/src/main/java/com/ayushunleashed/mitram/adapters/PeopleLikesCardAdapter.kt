@@ -48,8 +48,8 @@ class PeopleLikesCardAdapter(var users: MutableList<UserModel>):RecyclerView.Ada
     override fun onBindViewHolder(holder: PeopleLikesCardViewHolder, position: Int) {
 
         val name = users[position].displayName
-        val words = name.split("\\s".toRegex()).toTypedArray()
-        holder.tvUserName.text = name.toUpperCase()
+        val words = name?.split("\\s".toRegex())?.toTypedArray()
+        holder.tvUserName.text = name?.toUpperCase()
         Glide.with(holder.imgViewUserProfile.context).load(users[position].imageUrl).circleCrop().into(holder.imgViewUserProfile)
 
 
@@ -72,13 +72,20 @@ class PeopleLikesCardAdapter(var users: MutableList<UserModel>):RecyclerView.Ada
                 if (currentUserModel != null  && !currentUserModel.connections.contains(likeCardUserModel.uid)) {
 
                     //add the connection request person's id to current users list of connection
-                    currentUserModel.connections.add(likeCardUserModel.uid)
+                    currentUserModel.connections.add(likeCardUserModel.uid!!)
 
                     // also add current user to the request person's connection list
-                    likeCardUserModel.connections.add(currentUserModel.uid)
+                    likeCardUserModel.connections.add(currentUserModel.uid!!)
 
                     // removing liked from current users likedby array
+
+                    //once they are connections no need for any of this
                     currentUserModel.likedBy.remove(likeCardUserModel.uid)
+
+                    // precautions - this 3
+                    currentUserModel.usersYouLiked.remove(likeCardUserModel.uid)
+                    likeCardUserModel.likedBy.remove(currentUserModel.uid)
+                    likeCardUserModel.usersYouLiked.remove(currentUserModel.uid)
 
 
                     withContext(Dispatchers.Main)

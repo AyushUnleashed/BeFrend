@@ -5,6 +5,10 @@
       <map>
         <entry key="..\:/Users/ayush/AndroidStudioProjects/Mitram/app/src/main/res/drawable/bottom_nav_background.xml" value="0.176" />
         <entry key="..\:/Users/ayush/AndroidStudioProjects/Mitram/app/src/main/res/drawable/btn_round.xml" value="0.221" />
+        <entry key="..\:/Users/ayush/AndroidStudioProjects/Mitram/app/src/main/res/drawable/custom_input.xml" value="0.221" />
+        <entry key="..\:/Users/ayush/AndroidStudioProjects/Mitram/app/src/main/res/drawable/ic_back.xml" value="0.221" />
+        <entry key="..\:/Users/ayush/AndroidStudioProjects/Mitram/app/src/main/res/drawable/ic_back_arrow.xml" value="0.221" />
+        <entry key="..\:/Users/ayush/AndroidStudioProjects/Mitram/app/src/main/res/drawable/ic_back_button.xml" value="0.221" />
         <entry key="..\:/Users/ayush/AndroidStudioProjects/Mitram/app/src/main/res/drawable/ic_bottom_card_bg.xml" value="0.221" />
         <entry key="..\:/Users/ayush/AndroidStudioProjects/Mitram/app/src/main/res/drawable/ic_cards_bottom_nav_2.xml" value="0.221" />
         <entry key="..\:/Users/ayush/AndroidStudioProjects/Mitram/app/src/main/res/drawable/ic_connections_bottom_nav.xml" value="0.221" />
@@ -15,15 +19,19 @@
         <entry key="..\:/Users/ayush/AndroidStudioProjects/Mitram/app/src/main/res/drawable/ic_messages_bottom_nav_2.xml" value="0.221" />
         <entry key="..\:/Users/ayush/AndroidStudioProjects/Mitram/app/src/main/res/drawable/ic_profile_bottom_nav.xml" value="0.221" />
         <entry key="..\:/Users/ayush/AndroidStudioProjects/Mitram/app/src/main/res/drawable/ic_reload.xml" value="0.221" />
+        <entry key="..\:/Users/ayush/AndroidStudioProjects/Mitram/app/src/main/res/drawable/ic_send_plane.xml" value="0.221" />
         <entry key="..\:/Users/ayush/AndroidStudioProjects/Mitram/app/src/main/res/drawable/ic_tick.xml" value="0.221" />
         <entry key="..\:/Users/ayush/AndroidStudioProjects/Mitram/app/src/main/res/drawable/ic_user_bottom_nav_2.xml" value="0.221" />
         <entry key="..\:/Users/ayush/AndroidStudioProjects/Mitram/app/src/main/res/drawable/ic_user_group_bottom_nav_2.xml" value="0.221" />
+        <entry key="..\:/Users/ayush/AndroidStudioProjects/Mitram/app/src/main/res/drawable/ic_wave_icon.xml" value="0.221" />
         <entry key="..\:/Users/ayush/AndroidStudioProjects/Mitram/app/src/main/res/drawable/item_bottom_bg.xml" value="0.221" />
         <entry key="..\:/Users/ayush/AndroidStudioProjects/Mitram/app/src/main/res/drawable/underline_item_bottom_nav.xml" value="0.176" />
+        <entry key="..\:/Users/ayush/AndroidStudioProjects/Mitram/app/src/main/res/layout-v26/fragment_chat.xml" value="0.19021739130434784" />
         <entry key="..\:/Users/ayush/AndroidStudioProjects/Mitram/app/src/main/res/layout/activity_fragment_home.xml" value="0.19021739130434784" />
         <entry key="..\:/Users/ayush/AndroidStudioProjects/Mitram/app/src/main/res/layout/activity_home.xml" value="0.22826086956521738" />
         <entry key="..\:/Users/ayush/AndroidStudioProjects/Mitram/app/src/main/res/layout/activity_main.xml" value="0.18342391304347827" />
         <entry key="..\:/Users/ayush/AndroidStudioProjects/Mitram/app/src/main/res/layout/activity_sign_in.xml" value="0.22826086956521738" />
+        <entry key="..\:/Users/ayush/AndroidStudioProjects/Mitram/app/src/main/res/layout/fragment_chat.xml" value="0.264" />
         <entry key="..\:/Users/ayush/AndroidStudioProjects/Mitram/app/src/main/res/layout/fragment_connections.xml" value="0.19021739130434784" />
         <entry key="..\:/Users/ayush/AndroidStudioProjects/Mitram/app/src/main/res/layout/fragment_discover.xml" value="0.176" />
         <entry key="..\:/Users/ayush/AndroidStudioProjects/Mitram/app/src/main/res/layout/fragment_full_user_detail.xml" value="0.19021739130434784" />
@@ -39,6 +47,7 @@
         <entry key="..\:/Users/ayush/AndroidStudioProjects/Mitram/app/src/main/res/layout/item_people_likes_modern.xml" value="0.5301204819277109" />
         <entry key="..\:/Users/ayush/AndroidStudioProjects/Mitram/app/src/main/res/layout/item_user.xml" value="0.264" />
         <entry key="..\:/Users/ayush/AndroidStudioProjects/Mitram/app/src/main/res/menu/bottom_nav_menu.xml" value="0.27447916666666666" />
+        <entry key="..\:/Users/ayush/AndroidStudioProjects/Mitram/app/src/main/res/menu/connections_menu.xml" value="0.27447916666666666" />
       </map>
     </option>
   </component>

@@ -102,4 +102,7 @@ dependencies {
 
     implementation 'com.github.AsynctaskCoffee:tinderlikecardstack:1.0'
 
+    //circular image view
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
+
 }
