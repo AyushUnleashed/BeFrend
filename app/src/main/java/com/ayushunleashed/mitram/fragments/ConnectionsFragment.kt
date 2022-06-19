@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
@@ -28,8 +29,11 @@ class ConnectionsFragment : Fragment() {
 
     private lateinit var usersList:MutableList<UserModel>
     private lateinit var currentUser: FirebaseUser
-    lateinit var tvNoUsersToShow: TextView
+    private lateinit var db:FirebaseFirestore
 
+
+    lateinit var tvNoUsersToShow: TextView
+    private lateinit var progressBar: ProgressBar
     lateinit var recyclerView: RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,6 +46,9 @@ class ConnectionsFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_connections, container, false)
+
+        db = FirebaseFirestore.getInstance()
+
         return view
     }
 
@@ -49,13 +56,23 @@ class ConnectionsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         currentUser = FirebaseAuth.getInstance().currentUser!!
-        tvNoUsersToShow = view.findViewById(R.id.tvNoUsers)
+
+        setupViews(view)
+
         loadData(view)
         
     }
 
+    fun setupViews(view: View)
+    {
+
+        tvNoUsersToShow = view.findViewById(R.id.tvNoUsers)
+        progressBar = view.findViewById(R.id.progressBar)
+    }
+
     fun loadData(view: View)
-    {    val db = FirebaseFirestore.getInstance()
+    {
+        progressBar.visibility = View.VISIBLE
 
 
         GlobalScope.launch(Dispatchers.IO) {
@@ -77,9 +94,7 @@ class ConnectionsFragment : Fragment() {
 
                         job.join()
 
-                        if (users != null) {
-                            user?.let { users.add(it) }
-                        }
+                        user?.let { users.add(it) }
 
                         Log.d("GENERAL", "${user?.displayName} is added to array" );
                     }
@@ -90,30 +105,26 @@ class ConnectionsFragment : Fragment() {
 
             withContext(Dispatchers.Main)
             {
+                progressBar.visibility = View.GONE
+                Log.d("GENERAL", "connectionsArray by users list" + users.toString());
 
-                if (users != null) {
-                    Log.d("GENERAL", "connectionsArray by users list" + users.toString());
-
-                    if(users.isEmpty())
-                    {
-                        tvNoUsersToShow.visibility = View.VISIBLE
-                    }
-                    else
-                    {
-                        tvNoUsersToShow.visibility = View.GONE
-                    }
-                    Toast.makeText(requireContext(),"Size:${users.size}", Toast.LENGTH_SHORT).show()
+                if(users.isEmpty())
+                {
+                    tvNoUsersToShow.visibility = View.VISIBLE
                 }
+                else
+                {
+                    tvNoUsersToShow.visibility = View.GONE
+                }
+                Toast.makeText(requireContext(),"Size:${users.size}", Toast.LENGTH_SHORT).show()
                 recyclerView = view.findViewById(R.id.myRecyclerView)
-                val adapter = users?.let { ConnectionsCardAdapter(it) }
+                val adapter = users.let { ConnectionsCardAdapter(it) }
                 recyclerView.adapter = adapter
                 recyclerView.layoutManager = StaggeredGridLayoutManager(
-                    2,
+                    1,
                     StaggeredGridLayoutManager.VERTICAL
                 )
             }
         }
-
-
     }
 }

@@ -1,5 +1,6 @@
 package com.ayushunleashed.mitram.fragments
 
+import android.app.Activity
 import android.content.ContentValues.TAG
 import android.content.Context
 import android.os.Bundle
@@ -9,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.findNavController
 import com.asynctaskcoffee.cardstack.CardContainer
 import com.asynctaskcoffee.cardstack.CardListener
@@ -28,22 +30,26 @@ import kotlinx.coroutines.tasks.await
 class DiscoverFragment : Fragment() ,CardListener{
     lateinit var thisContext: Context
 
-    lateinit var cardContainer: CardContainer
     lateinit var userCardAdapter: UserCardAdapter
     lateinit var usersList:MutableList<UserModel>
     lateinit var currentUser: FirebaseUser
     lateinit var db:FirebaseFirestore
+
+    lateinit var cardContainer: CardContainer
     lateinit var userImage:ImageView
     lateinit var btnReloadDiscoverUsers: FloatingActionButton
     lateinit var btnRightSwipe:FloatingActionButton
     lateinit var btnLeftSwipe:FloatingActionButton
     lateinit var tvNoUsersToShow:TextView
+    private lateinit var progressBar: ProgressBar
 
-//    lateinit var myToolbarDiscover:androidx.appcompat.widget.Toolbar
-//    lateinit var custom_title:TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+    }
+
+    override fun onStart() {
+        super.onStart()
     }
 
     override fun onCreateView(
@@ -58,14 +64,20 @@ class DiscoverFragment : Fragment() ,CardListener{
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_discover, container, false)
         setupViews(view)
+        setupButtons()
 
         /*Customization*/
         cardContainer.maxStackSize = 2
-
         cardContainer.setOnCardActionListener(this)
+
         currentUser = FirebaseAuth.getInstance().currentUser!!
         db  = FirebaseFirestore.getInstance()
 
+        return view
+    }
+
+    fun setupButtons()
+    {
         btnReloadDiscoverUsers.setOnClickListener{
             handleReloadUsersButton()
         }
@@ -80,27 +92,25 @@ class DiscoverFragment : Fragment() ,CardListener{
             userCardAdapter.swipeLeft()
         }
 
-        return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         //customToolBar(view)
-        loadUserImage()
-        loadData()
-
+        loadCurrentUserData()
+        loadUsersForDiscoverPage()
     }
 
-    fun loadUserImage()
+    fun loadCurrentUserData()
     {
         GlobalScope.launch(Dispatchers.IO) {
-            val user = db.collection("users").document(currentUser.uid).get().await().toObject(UserModel::class.java)
+            val currentUserModel = db.collection("users").document(currentUser.uid).get().await().toObject(UserModel::class.java)
 
             withContext(Dispatchers.Main)
             {
-                if (user != null) {
-                    Glide.with(userImage.context).load(user.imageUrl).circleCrop().placeholder(R.drawable.img_user_place_holder)
+                if (currentUserModel != null) {
+                    Glide.with(userImage.context).load(currentUserModel.imageUrl).circleCrop().placeholder(R.drawable.img_user_place_holder)
                         .error(R.drawable.img_user_profile_sample).into(userImage)
                 }
             }
@@ -108,12 +118,11 @@ class DiscoverFragment : Fragment() ,CardListener{
 
     }
 
-    fun loadData()
-    {        val db = FirebaseFirestore.getInstance()
-            GlobalScope.launch(Dispatchers.IO){
+    fun loadUsersForDiscoverPage()
+    {
+        progressBar.visibility = View.VISIBLE
 
-            //get all users from database
-            val users = async{db.collection("users").whereNotEqualTo("uid",currentUser.uid).get().await().toObjects(UserModel::class.java)}
+        GlobalScope.launch(Dispatchers.IO){
 
             // get current user model from database
             val currentUserModel = db.collection("users").document(currentUser.uid).get().await().toObject(UserModel::class.java)
@@ -121,21 +130,30 @@ class DiscoverFragment : Fragment() ,CardListener{
             val connections = currentUserModel.connections
             val combinedArray = usersYouLiked + connections
 
-            usersList = users.await()
 
+            //remove all users you already liked or are in connections
+            // this is causing crash because it takes lot of time to execute and if you change fragment at that moment it crashes
 
-                //remove all users you already liked or are in connections
-                // this is causing crash becasue it takes lot of time to execute and if you change fragment at that moment it crashes
+            // get all users
 
-                for(userId in combinedArray)
-                {
-                    val oneOfTheUserYouLikedOrConnectedWith = db.collection("users").document(userId).get().await().toObject(UserModel::class.java)
-                    usersList.remove(oneOfTheUserYouLikedOrConnectedWith)
+            val allUsers = db.collection("users").get().await().toObjects(UserModel::class.java)
+
+            val arrayOfPeopleYouDontWant = mutableListOf<UserModel>()
+            for( uid in combinedArray)
+            {
+                val eachUserNotToInclude = db.collection("users").document(uid).get().await().toObject(UserModel::class.java)
+                if (eachUserNotToInclude != null) {
+                    arrayOfPeopleYouDontWant.add(eachUserNotToInclude)
                 }
+            }
 
-                // updating ui with users
+            usersList = (allUsers - arrayOfPeopleYouDontWant) as MutableList<UserModel>
+
+
+            // updating ui with users
             withContext(Dispatchers.Main)
             {
+                progressBar.visibility = View.GONE
                 if(usersList.size == 0)
                 {
                     tvNoUsersToShow.visibility = View.VISIBLE
@@ -147,7 +165,6 @@ class DiscoverFragment : Fragment() ,CardListener{
                     tvNoUsersToShow.visibility = View.GONE
                     btnRightSwipe.visibility = View.VISIBLE
                     btnLeftSwipe.visibility = View.VISIBLE
-
                 }
 
 
@@ -157,7 +174,7 @@ class DiscoverFragment : Fragment() ,CardListener{
                     Log.d("GENERAL","**user:"+user.displayName.toString());
                 }
 
-                userCardAdapter = UserCardAdapter(usersList,requireContext())
+                userCardAdapter = UserCardAdapter(usersList,thisContext)
                 cardContainer.setAdapter(userCardAdapter)
             }
         }
@@ -165,6 +182,7 @@ class DiscoverFragment : Fragment() ,CardListener{
 
     fun setupViews(view: View)
     {
+        progressBar = view.findViewById(R.id.progressBar)
         tvNoUsersToShow = view.findViewById(R.id.tvNoUsers)
         btnLeftSwipe = view.findViewById(R.id.btnLeftSwipe)
         btnRightSwipe = view.findViewById(R.id.btnRightSwipe)
@@ -210,8 +228,8 @@ class DiscoverFragment : Fragment() ,CardListener{
 
         val userWhoGotRightSwiped:UserModel = model as UserModel
 
+        // for matching
         val check1 = GlobalScope.launch(Dispatchers.IO) {
-//            val currentUserModel: UserModel? = db.collection("users").document(currentUser.uid).get().await().toObject(UserModel::class.java)
 
             if(currentUserModel!!.likedBy.contains(userWhoGotRightSwiped.uid))
             {
@@ -291,7 +309,7 @@ class DiscoverFragment : Fragment() ,CardListener{
 
     fun handleReloadUsersButton()
     {
-        loadData()
+        loadUsersForDiscoverPage()
         //usersList = defaultProfiles()
         userCardAdapter = UserCardAdapter(usersList,requireContext())
         cardContainer.setAdapter(userCardAdapter)

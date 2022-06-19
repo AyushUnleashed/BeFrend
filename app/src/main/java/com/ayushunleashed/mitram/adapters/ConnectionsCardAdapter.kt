@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.compose.ui.text.toUpperCase
 import androidx.recyclerview.widget.RecyclerView
 import com.asynctaskcoffee.cardstack.CardContainerAdapter
 import com.ayushunleashed.mitram.R
@@ -35,7 +36,7 @@ class ConnectionsCardAdapter(var users: MutableList<UserModel>):RecyclerView.Ada
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ConnectionsCardViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_connections,parent,false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_connections_modern,parent,false)
         return ConnectionsCardViewHolder(view)
     }
 
@@ -43,8 +44,8 @@ class ConnectionsCardAdapter(var users: MutableList<UserModel>):RecyclerView.Ada
 
         val name = users[position].displayName
         val words = name.split("\\s".toRegex()).toTypedArray()
-        holder.tvUserName.text = words[0]
-        Glide.with(holder.imgViewUserProfile.context).load(users[position].imageUrl).placeholder(R.drawable.img_user_place_holder)
+        holder.tvUserName.text = name.toUpperCase()
+        Glide.with(holder.imgViewUserProfile.context).load(users[position].imageUrl).circleCrop().placeholder(R.drawable.img_user_place_holder)
             .error(R.drawable.img_user_not_found).into(holder.imgViewUserProfile)
 
     }

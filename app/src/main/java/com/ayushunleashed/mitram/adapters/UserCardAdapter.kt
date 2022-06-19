@@ -2,22 +2,25 @@ package com.ayushunleashed.mitram.adapters
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.graphics.Bitmap
 import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.recyclerview.widget.RecyclerView
+import androidx.cardview.widget.CardView
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import com.asynctaskcoffee.cardstack.CardContainerAdapter
 import com.ayushunleashed.mitram.R
 import com.ayushunleashed.mitram.models.UserModel
 import com.bumptech.glide.Glide
-import kotlinx.coroutines.NonDisposableHandle.parent
 
 
 class UserCardAdapter(var users: List<UserModel>,context: Context): CardContainerAdapter() {
 
     var layoutInflater: LayoutInflater = LayoutInflater.from(context)
+    var thisContext:Context = context
 
 
     @SuppressLint("InflateParams")
@@ -27,13 +30,30 @@ class UserCardAdapter(var users: List<UserModel>,context: Context): CardContaine
         var tvUserName = view.findViewById<TextView>(R.id.tvUserName)
         var tvUserBio = view.findViewById<TextView>(R.id.tvUserBio)
         var imgViewUserProfile = view.findViewById<ImageView>(R.id.imgViewUserProfile)
-
+        var cardViewProfileDescription:CardView = view.findViewById(R.id.cardViewProfileDescription)
+        var btnShowFullProfile = view.findViewById<ImageButton>(R.id.btnShowFullProfile)
+        var myCardView =view.findViewById<CardView>(R.id.myCardView)
         val user = getItem(position)
 
         tvUserName.text = users[position].displayName
         tvUserBio.text = users[position].bio
         Glide.with(imgViewUserProfile.context).load(users[position].imageUrl).placeholder(R.drawable.img_user_place_holder)
             .error(R.drawable.img_user_profile_sample).into(imgViewUserProfile)
+
+
+
+        //defining nav controller for navigation
+        var navController: NavController?=null
+
+
+       btnShowFullProfile.setOnClickListener{
+
+                //for navigating to product description fragment
+                navController = Navigation.findNavController(view)
+                navController!!.navigate(R.id.action_discoverFragment_to_fullUserProfileFragment)
+        }
+
+
 
         return view
     }

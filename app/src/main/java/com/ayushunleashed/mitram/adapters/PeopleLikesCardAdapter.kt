@@ -9,6 +9,7 @@ import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.compose.ui.text.toUpperCase
 import androidx.recyclerview.widget.RecyclerView
 import com.asynctaskcoffee.cardstack.CardContainerAdapter
 import com.ayushunleashed.mitram.R
@@ -28,8 +29,8 @@ class PeopleLikesCardAdapter(var users: MutableList<UserModel>):RecyclerView.Ada
     {
         var tvUserName:TextView
         var imgViewUserProfile:ImageView
-        var btnAcceptConnection: ImageButton
-        var btnDeclineConnection:ImageButton
+        var btnAcceptConnection: Button
+        var btnDeclineConnection:Button
 
         init {
             tvUserName = itemview.findViewById(R.id.tvUserName)
@@ -40,7 +41,7 @@ class PeopleLikesCardAdapter(var users: MutableList<UserModel>):RecyclerView.Ada
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PeopleLikesCardViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_people_likes,parent,false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_people_likes_modern,parent,false)
         return PeopleLikesCardViewHolder(view)
     }
 
@@ -48,8 +49,8 @@ class PeopleLikesCardAdapter(var users: MutableList<UserModel>):RecyclerView.Ada
 
         val name = users[position].displayName
         val words = name.split("\\s".toRegex()).toTypedArray()
-        holder.tvUserName.text = words[0]
-        Glide.with(holder.imgViewUserProfile.context).load(users[position].imageUrl).into(holder.imgViewUserProfile)
+        holder.tvUserName.text = name.toUpperCase()
+        Glide.with(holder.imgViewUserProfile.context).load(users[position].imageUrl).circleCrop().into(holder.imgViewUserProfile)
 
 
 

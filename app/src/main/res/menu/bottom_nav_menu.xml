@@ -5,30 +5,30 @@
     <item
         android:id="@+id/discoverFragment"
         android:title="Discover"
-        android:icon="@drawable/ic_cards_bottom_nav"
+        android:icon="@drawable/ic_cards_bottom_nav_2"
         />
 
     <item
         android:id="@+id/likesFragment"
         android:title="Likes"
-        android:icon="@drawable/ic_likes_bottom_nav"
+        android:icon="@drawable/ic_heat_bottom_nav_2"
         />
     <item
         android:id="@+id/connectionsFragment"
         android:title="Connections"
-        android:icon="@drawable/ic_connections_bottom_nav"
+        android:icon="@drawable/ic_user_group_bottom_nav_2"
         />
 
     <item
         android:id="@+id/messagesFragment"
         android:title="Messages"
-        android:icon="@drawable/ic_messages_bottom_nav"
+        android:icon="@drawable/ic_messages_bottom_nav_2"
         />
 
     <item
         android:id="@+id/profileFragment"
         android:title="Profile"
-        android:icon="@drawable/ic_profile_bottom_nav"
+        android:icon="@drawable/ic_user_bottom_nav_2"
         />
 
 </menu>

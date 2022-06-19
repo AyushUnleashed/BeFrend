@@ -4,16 +4,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".fragments.LikesFragment">
+    tools:context=".fragments.LikesFragment"
+    android:background="@color/themeSecondaryApp">
 
     <TextView
         android:id="@+id/tvPageTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:layout_marginLeft="40dp"
-        android:textSize="34sp"
-        android:fontFamily="@font/poppins_bold"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
+        android:textSize="28sp"
+        android:fontFamily="@font/montserrat_medium"
         android:textColor="@color/black"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -42,14 +43,14 @@
         android:layout_height="wrap_content"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginTop="10dp"
-        android:layout_marginLeft="40dp"
-        android:layout_marginRight="40dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         android:textSize="16sp"
-        android:fontFamily="@font/poppins_regular"
+        android:fontFamily="@font/montserrat_regular"
         android:textColor="@color/gray70"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvPageTitle"
-        android:text="This is a list of people who have liked you  - Like them or Cancel"/>
+        android:text="This is a list of people who liked your profile"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_marginTop="40dp"
@@ -60,9 +61,9 @@
         app:layout_constraintRight_toRightOf="parent"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginEnd="40dp"
-        tools:listitem="@layout/item_people_likes">
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        tools:listitem="@layout/item_people_likes_modern">
 
     </androidx.recyclerview.widget.RecyclerView>
 

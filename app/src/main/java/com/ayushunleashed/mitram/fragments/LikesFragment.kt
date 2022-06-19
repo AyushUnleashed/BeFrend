@@ -110,7 +110,7 @@ class LikesFragment : Fragment() {
                 val adapter = users?.let { PeopleLikesCardAdapter(it) }
                 recyclerView.adapter = adapter
                 recyclerView.layoutManager = StaggeredGridLayoutManager(
-                    2,
+                    1,
                     StaggeredGridLayoutManager.VERTICAL
                 )
             }

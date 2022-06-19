@@ -6,11 +6,15 @@
         <item name="colorPrimaryVariant">@color/themeSecondaryApp</item>
         <item name="colorOnPrimary">@color/black</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/teal_200</item>
+        <item name="colorSecondary">@color/themeApp</item>
         <item name="colorSecondaryVariant">@color/teal_200</item>
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">#DCDCDC</item>
         <!-- Customize your theme here. -->
+    </style>
+    
+    <style name="GeneralFABStyle1" parent="ShapeAppearance.Material3.SmallComponent">
+
     </style>
 </resources>

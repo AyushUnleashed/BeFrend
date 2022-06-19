@@ -7,10 +7,14 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="white50">#80FFFFFF</color>
     <color name="blue">#3269FF</color>
-    <color name="themeApp">#E94057</color>
-    <color name="themeSecondaryApp">#FFFFFF</color>
+    <color name="themeApp">#FF5F00</color>
+    <color name="themeSecondaryApp">#E7E9ED</color>
+    <color name="btnColor">#D1D3D7</color>
+    <color name="newBlack">#E6101010</color>
     <color name="gray70">#B3000000</color>
     <color name="myGray">#ADAFBB</color>
+
 
 </resources>

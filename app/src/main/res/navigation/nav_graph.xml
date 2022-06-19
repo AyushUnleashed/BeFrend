@@ -23,8 +23,8 @@
             android:id="@+id/action_discoverFragment_to_profileFragment"
             app:destination="@id/profileFragment" />
         <action
-            android:id="@+id/action_discoverFragment_to_fullUserPage"
-            app:destination="@id/fullUserPage" />
+            android:id="@+id/action_discoverFragment_to_fullUserProfileFragment"
+            app:destination="@id/fullUserProfileFragment" />
     </fragment>
 
     <fragment
@@ -53,14 +53,18 @@
             android:id="@+id/action_profileFragment_to_signInActivity"
             app:destination="@id/signInActivity" />
     </fragment>
-    <fragment
-        android:id="@+id/fullUserPage"
-        android:name="com.ayushunleashed.mitram.fragments.FullUserPage"
-        android:label="fragment_full_user_page"
-        tools:layout="@layout/fragment_full_user_page" />
     <activity
         android:id="@+id/signInActivity"
         android:name="com.ayushunleashed.mitram.SignInActivity"
         android:label="activity_sign_in"
         tools:layout="@layout/activity_sign_in" />
+    <fragment
+        android:id="@+id/fullUserProfileFragment"
+        android:name="com.ayushunleashed.mitram.fragments.FullUserDetailFragment"
+        android:label="fragment_full_user_profile"
+        tools:layout="@layout/fragment_full_user_detail" >
+        <action
+            android:id="@+id/action_fullUserProfileFragment_to_discoverFragment"
+            app:destination="@id/discoverFragment" />
+    </fragment>
 </navigation>

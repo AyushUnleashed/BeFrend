@@ -12,13 +12,24 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:textSize="24sp"
-        android:fontFamily="@font/poppins_bold"
+        android:textSize="28sp"
+        android:fontFamily="@font/montserrat_medium"
         android:textColor="@color/black"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginStart="20dp"
         android:text="Discover"/>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:visibility="gone">
+    </ProgressBar>
 
 
     <TextView
@@ -67,22 +78,21 @@
 
     <com.asynctaskcoffee.cardstack.CardContainer
         android:layout_marginTop="20dp"
-        android:layout_marginBottom="100dp"
         android:id="@+id/cardContainer"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/btnLeftSwipe"
         app:layout_constraintTop_toBottomOf="@id/tvPageTitle"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/btnRightSwipe"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_tick"
+        android:src="@drawable/ic_highfi"
         app:tint = "@color/white"
-        app:fabCustomSize="78dp"
+        app:fabCustomSize="72dp"
         android:outlineAmbientShadowColor="@color/themeApp"
         app:maxImageSize="36dp"
         app:borderWidth="0dp"
@@ -104,14 +114,16 @@
 
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
         android:id="@+id/btnLeftSwipe"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_cross"
+        android:src="@drawable/ic_cross_icon"
         app:tint = "@color/white"
-        android:backgroundTint="#474747"
-        app:fabCustomSize="78dp"
-        app:maxImageSize="32dp"
+        android:backgroundTint="@color/newBlack"
+        app:fabCustomSize="72dp"
+        app:maxImageSize="24dp"
         app:borderWidth="0dp"
         app:elevation="5dp"
         app:layout_constraintRight_toLeftOf="@id/guideline"
