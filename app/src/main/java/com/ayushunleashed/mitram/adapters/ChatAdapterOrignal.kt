@@ -12,7 +12,7 @@ import com.ayushunleashed.mitram.databinding.ItemContainerReceivedMessageBinding
 import com.ayushunleashed.mitram.databinding.ItemContainerSentMessageBinding
 import com.ayushunleashed.mitram.models.ChatMessageModel
 
-public class ChatAdapter(chatMessages:MutableList<ChatMessageModel>, senderId:String): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+public class ChatAdapterOrignal(chatMessages:MutableList<ChatMessageModel>, senderId:String): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private var VIEW_TYPE_SENT: Int = 1
     private var VIEW_TYPE_RECEIVED: Int =2
@@ -31,6 +31,10 @@ public class ChatAdapter(chatMessages:MutableList<ChatMessageModel>, senderId:St
 
         fun setData(chatMessage:ChatMessageModel)
         {
+            binding.tvTextMessage.text = chatMessage.messageText
+            Log.d("GENERAL","sender setting ${chatMessage.messageText} as TextMessage")
+            binding.tvTextTime.text = chatMessage.dateTime
+            Log.d("GENERAL","sender setting ${chatMessage.dateTime} as TextTime")
 
             tvTextMessage.text = chatMessage.messageText
             Log.d("GENERAL","sender setting ${tvTextMessage.text} as TextMessage")
@@ -44,17 +48,15 @@ public class ChatAdapter(chatMessages:MutableList<ChatMessageModel>, senderId:St
     ):
         RecyclerView.ViewHolder(itemView) {
 
-        var tvTextMessage = itemView.findViewById<TextView>(R.id.tvTextMessage)
-        var tvTextTime = itemView.findViewById<TextView>(R.id.tvTextTime)
-
         private var binding: ItemContainerReceivedMessageBinding = ItemContainerReceivedMessageBinding.bind(itemContainerReceivedMessageBinding.root)
 
         fun setData(chatMessage:ChatMessageModel)
         {
-            tvTextMessage.text = chatMessage.messageText
-            Log.d("GENERAL","sender setting ${tvTextMessage.text} as TextMessage")
-            tvTextTime.text = chatMessage.dateTime
-            Log.d("GENERAL","sender setting ${tvTextTime.text} as TextTime")
+            binding.tvTextMessage.text = chatMessage.messageText
+            Log.d("GENERAL","Receiver setting ${chatMessage.messageText} as TextMessage")
+
+            binding.tvTextTime.text = chatMessage.dateTime
+            Log.d("GENERAL","Receiver setting ${chatMessage.dateTime} as TextTime")
 
         }
     }
@@ -76,9 +78,6 @@ public class ChatAdapter(chatMessages:MutableList<ChatMessageModel>, senderId:St
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-
-        //holder.tvTextMessage
-
         if(getItemViewType(position) == VIEW_TYPE_SENT)
         {
             (holder as SentMessageViewHolder).setData(chatMessages[position])
