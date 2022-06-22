@@ -71,7 +71,7 @@ class ConnectionsCardAdapter(var users: MutableList<UserModel>,context: Context)
 
 
         //
-        val bundle = bundleOf("userId" to users[position].uid)
+        val bundle = bundleOf("userToSend" to users[position])
 
         //defining nav controller for navigation
         var navController: NavController?=null

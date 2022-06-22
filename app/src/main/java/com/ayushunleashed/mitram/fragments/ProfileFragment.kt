@@ -20,7 +20,9 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.SetOptions
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.messaging.FirebaseMessaging
 import kotlinx.coroutines.*
 import kotlinx.coroutines.tasks.await
 import org.w3c.dom.Text
@@ -45,6 +47,9 @@ class ProfileFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_profile, container, false)
+
+        db  = FirebaseFirestore.getInstance()
+
         return view
     }
 
@@ -61,16 +66,32 @@ class ProfileFragment : Fragment() {
         userImage = view.findViewById(R.id.userImage)
         tvUserName = view.findViewById(R.id.tvUserName)
         currentUser = FirebaseAuth.getInstance().currentUser!!
-        db  = FirebaseFirestore.getInstance()
 
     }
 
     fun logOut() {
         val user = Firebase.auth.currentUser!!
+        deleteToken()
         mAuth.signOut();
         Toast.makeText(requireContext(),"LoggedOut",Toast.LENGTH_SHORT).show()
 
         findNavController().navigate(R.id.action_profileFragment_to_signInActivity)
+    }
+
+
+    fun deleteToken()
+    {
+        currentUser = FirebaseAuth.getInstance().currentUser!!
+        db  = FirebaseFirestore.getInstance()
+
+        GlobalScope.launch {
+
+            var currentUserModel = db.collection("users").document(currentUser.uid).get().await().toObject(
+                UserModel::class.java)
+            currentUserModel?.fcmToken = null
+
+            db.collection("users").document(currentUser.uid).set(currentUserModel!!)
+        }
     }
 
     fun loadUserImage()

@@ -1,6 +1,7 @@
 package com.ayushunleashed.mitram.fragments
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +11,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.navigation.fragment.findNavController
 import com.ayushunleashed.mitram.R
+import com.ayushunleashed.mitram.databinding.FragmentFullUserDetailBinding
 import com.ayushunleashed.mitram.models.UserModel
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
@@ -22,12 +24,9 @@ import kotlinx.coroutines.withContext
 
 class FullUserDetailFragment : Fragment() {
 
-    lateinit var btnGoBackToDiscoverPage: ImageButton
-    lateinit var tvUserName:TextView
-    lateinit var tvUserBio:TextView
-    lateinit var imgViewUserProfile:ImageView
+    private lateinit var binding:FragmentFullUserDetailBinding
 
-    lateinit var userIdToLoad:String
+    var userToLoad:UserModel? = null
 
 
     override fun onCreateView(
@@ -35,61 +34,43 @@ class FullUserDetailFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-
-        userIdToLoad = requireArguments().getString("userId").toString()
-
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_full_user_detail, container, false)
+        val view =  inflater.inflate(R.layout.fragment_full_user_detail, container, false)
+        return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setupViews(view)
-        handleBackButton()
+        binding = FragmentFullUserDetailBinding.bind(view)
+        userToLoad = requireArguments().getParcelable<UserModel>("currentUser")
+        Log.d("GENERAL","userToLoad:${userToLoad.toString()}")
         loadUserDetails()
+        handleBackButton()
+
     }
 
     fun handleBackButton()
     {
-        btnGoBackToDiscoverPage.setOnClickListener{
+        binding.btnGoBackToDiscoverPage.setOnClickListener{
             findNavController().navigate(R.id.action_fullUserProfileFragment_to_discoverFragment)
         }
     }
 
-    fun setupViews(view: View)
-    {
-        btnGoBackToDiscoverPage = view.findViewById(R.id.btnGoBackToDiscoverPage)
-        tvUserName = view.findViewById<TextView>(R.id.tvUserNameDetailPage)
-        tvUserBio = view.findViewById<TextView>(R.id.tvUserBioDetailPage)
-        imgViewUserProfile = view.findViewById<ImageView>(R.id.imgViewUserProfile)
-    }
-
-
     fun loadUserDetails()
     {
-        val db = FirebaseFirestore.getInstance()
-        val currentUser = FirebaseAuth.getInstance().currentUser
-        //progressBar.visibility = View.VISIBLE
 
-        GlobalScope.launch(Dispatchers.IO){
+        // load image
+        Glide.with(binding.imgViewUserProfile.context).load(userToLoad!!.imageUrl).placeholder(R.drawable.img_user_place_holder)
+            .error(R.drawable.img_user_not_found).into(binding.imgViewUserProfile)
 
-            val userModelToLoad = db.collection("users").document(userIdToLoad).get().await().toObject(
-                UserModel::class.java)
+        //load name
+        binding.tvUserNameDetailPage.text = userToLoad!!.displayName
 
-            if(userModelToLoad!=null)
-            {
-                // updating ui with users
-                withContext(Dispatchers.Main)
-                {
-                    tvUserName.text = userModelToLoad.displayName
-                    tvUserBio.text = userModelToLoad.bio
-                    Glide.with(imgViewUserProfile.context).load(userModelToLoad.imageUrl).placeholder(R.drawable.img_user_place_holder)
-                        .error(R.drawable.img_user_not_found).into(imgViewUserProfile)
-                }
-            }
+        //load bio
+        binding.tvUserBioDetailPage.text = userToLoad!!.bio
 
-        }
+
     }
 
 }

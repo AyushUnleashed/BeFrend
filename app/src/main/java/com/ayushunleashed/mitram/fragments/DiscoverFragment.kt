@@ -2,6 +2,7 @@ package com.ayushunleashed.mitram.fragments
 
 import android.content.Context
 import android.os.Bundle
+import android.os.Parcelable
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -31,6 +32,7 @@ class DiscoverFragment : Fragment() ,CardListener{
     lateinit var userCardAdapter: UserCardAdapter
 
     lateinit var usersList:MutableList<UserModel>
+    //lateinit var usersInstance:Parcelable
 
 
 
@@ -47,7 +49,7 @@ class DiscoverFragment : Fragment() ,CardListener{
 
     lateinit var myView:View
 
-    var LIST_STATE:String = "list_state"
+    //var LIST_STATE:String = "list_state"
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -58,6 +60,14 @@ class DiscoverFragment : Fragment() ,CardListener{
         super.onStart()
     }
 
+//    override fun onSaveInstanceState(outState: Bundle) {
+//        super.onSaveInstanceState(outState)
+//
+//        //val bundle = bundleOf("usersList" to usersList)
+//        //outState.putBundle(LIST_STATE,bundle)
+//        outState.putParcelable(LIST_STATE,usersInstance)
+//    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -67,9 +77,9 @@ class DiscoverFragment : Fragment() ,CardListener{
             thisContext = container.getContext()
         };
 
-//        var getAns = savedInstanceState?.getBundle(LIST_STATE)
+//        var getAns = savedInstanceState?.getParcelable< >(LIST_STATE)
 //        if (getAns != null) {
-//            usersList = getAns.getParcelable("usersList")!!
+//            usersList = getAns
 //        }
 //
 //        Toast.makeText(thisContext,"toLoad:$getAns",Toast.LENGTH_SHORT).show()
@@ -135,12 +145,7 @@ class DiscoverFragment : Fragment() ,CardListener{
 
     }
 
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
 
-        val bundle = bundleOf("usersList" to usersList)
-        outState.putBundle(LIST_STATE,bundle)
-    }
 
     fun loadUsersForDiscoverPageOrignal()
     {
@@ -172,6 +177,7 @@ class DiscoverFragment : Fragment() ,CardListener{
             }
 
             usersList = (allUsers - arrayOfPeopleYouDontWant - currentUserModel) as MutableList<UserModel>
+           // usersInstance = usersList as Parcelable
 
             // updating ui with users
             withContext(Dispatchers.Main)

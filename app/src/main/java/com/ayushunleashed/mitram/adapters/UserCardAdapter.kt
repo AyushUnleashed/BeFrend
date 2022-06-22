@@ -41,7 +41,7 @@ class UserCardAdapter(var users: List<UserModel>,context: Context): CardContaine
             .error(R.drawable.img_user_profile_sample).into(imgViewUserProfile)
 
         //
-        val bundle = bundleOf("userId" to users[position].uid)
+        val bundle = bundleOf("currentUser" to users[position])
 
         //defining nav controller for navigation
         var navController: NavController?=null

@@ -70,17 +70,20 @@
         <action
             android:id="@+id/action_fullUserProfileFragment_to_discoverFragment"
             app:destination="@id/discoverFragment" />
+        <argument
+            android:name="currentUser"
+            app:argType="com.ayushunleashed.mitram.models.UserModel" />
 
-        <argument name ="userId"
-            app:argType="string"
-            android:name="userId"/>
     </fragment>
     <fragment
         android:id="@+id/chatFragment"
         android:name="com.ayushunleashed.mitram.fragments.ChatFragment"
         android:label="ChatFragment">
-        <argument name ="userId"
-        app:argType="string"
-        android:name="userId"/>
+        <argument
+            android:name="userToSend"
+            app:argType="com.ayushunleashed.mitram.models.UserModel" />
+        <action
+            android:id="@+id/action_chatFragment_to_connectionsFragment"
+            app:destination="@id/connectionsFragment" />
     </fragment>
 </navigation>
