@@ -53,7 +53,7 @@ class ConnectionsCardAdapter(var users: MutableList<UserModel>,context: Context)
         Glide.with(holder.imgViewUserProfile.context).load(users[position].imageUrl).circleCrop().placeholder(R.drawable.img_user_place_holder)
             .error(R.drawable.img_user_not_found).into(holder.imgViewUserProfile)
 
-        holder.itemView.setOnClickListener {
+        holder.itemView.setOnLongClickListener {
             Toast.makeText(holder.itemView.context,"You are holding card",Toast.LENGTH_SHORT).show()
 
             var popupMenu = PopupMenu(holder.itemView.context,holder.itemView)
@@ -67,6 +67,7 @@ class ConnectionsCardAdapter(var users: MutableList<UserModel>,context: Context)
                 false
             }
             popupMenu.show()
+            true
         }
 
 
