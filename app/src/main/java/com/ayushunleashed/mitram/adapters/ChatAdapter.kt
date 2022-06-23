@@ -34,7 +34,8 @@ public class ChatAdapter(chatMessages:MutableList<ChatMessageModel>, senderId:St
 
             tvTextMessage.text = chatMessage.messageText
             Log.d("GENERAL","sender setting ${tvTextMessage.text} as TextMessage")
-            tvTextTime.text = chatMessage.dateTime
+            val timeAndDate = chatMessage.dateTime.split("\r?\n|\r".toRegex()).toTypedArray()
+            tvTextTime.text = timeAndDate[0]
             Log.d("GENERAL","sender setting ${tvTextTime.text} as TextTime")
         }
     }
@@ -53,7 +54,8 @@ public class ChatAdapter(chatMessages:MutableList<ChatMessageModel>, senderId:St
         {
             tvTextMessage.text = chatMessage.messageText
             Log.d("GENERAL","sender setting ${tvTextMessage.text} as TextMessage")
-            tvTextTime.text = chatMessage.dateTime
+            val timeAndDate = chatMessage.dateTime.split("\r?\n|\r".toRegex()).toTypedArray()
+            tvTextTime.text = timeAndDate[0]
             Log.d("GENERAL","sender setting ${tvTextTime.text} as TextTime")
 
         }

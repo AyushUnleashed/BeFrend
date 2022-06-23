@@ -11,7 +11,7 @@ class DateClass() {
     lateinit var currentDate: String
     lateinit var currentTime: String
 
-    public fun getDate(): String {
+    public fun getTimeAndDate(): String {
         date= Calendar.getInstance().time
         currentDate=DateFormat.getDateInstance().format(date)
         currentTime =DateFormat.getTimeInstance().format(date.time)

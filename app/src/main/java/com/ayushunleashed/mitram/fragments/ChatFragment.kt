@@ -113,7 +113,7 @@ class ChatFragment : Fragment() {
     fun sendMessage()
     {
         val receiverId = chatUser!!.uid
-        val dateTime =  dateClass.getTime()
+        val dateTime =  dateClass.getTimeAndDate()
         val messageText = binding.etvEnterMessage.text.toString()
 
         if(messageText!="" && messageText.trim().isNotEmpty())
@@ -157,7 +157,7 @@ class ChatFragment : Fragment() {
             //var messagesArray:MutableList<ChatMessageModel> = mutableListOf()
             // messagesArray.clear()
             Log.d("MESSAGE_LIST","List Start Here")
-            for(documentChange in value.documentChanges) {
+            for(documentChange in value.documentChanges){
 
                 val message = documentChange.document.toObject(ChatMessageModel::class.java)
                 Log.d("MESSAGE_LIST","Message: ${message!!.messageText}")
@@ -165,10 +165,19 @@ class ChatFragment : Fragment() {
                     messagesArray.add(message)
                 }
             }
+
+
+            var sortedMessages = messagesArray.sortedWith(compareBy { it.dateTime })
+            var sortedMessagesList:MutableList<ChatMessageModel> = mutableListOf()
+            if(sortedMessages.size!=0)
+            {
+                sortedMessagesList = sortedMessages as MutableList<ChatMessageModel>
+            }
+
             Log.d("MESSAGE_LIST","List End Here")
 
             // update UI
-            chatAdapter = ChatAdapter(messagesArray,senderId!!)
+            chatAdapter = ChatAdapter(sortedMessagesList,senderId!!)
             binding.myRecyclerView.adapter = chatAdapter
             binding.myRecyclerView.layoutManager = LinearLayoutManager(requireContext())
             chatAdapter.notifyDataSetChanged()

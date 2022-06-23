@@ -10,10 +10,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.core.os.bundleOf
+import androidx.fragment.app.activityViewModels
 import com.asynctaskcoffee.cardstack.CardContainer
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.ViewModel
 import com.asynctaskcoffee.cardstack.CardListener
 import com.asynctaskcoffee.cardstack.pulse
+import com.ayushunleashed.mitram.FragmentHomeActivity
 import com.ayushunleashed.mitram.R
+import com.ayushunleashed.mitram.SharedViewModel
 import com.ayushunleashed.mitram.adapters.UserCardAdapter
 import com.ayushunleashed.mitram.models.UserModel
 import com.bumptech.glide.Glide
@@ -32,9 +37,9 @@ class DiscoverFragment : Fragment() ,CardListener{
     lateinit var userCardAdapter: UserCardAdapter
 
     lateinit var usersList:MutableList<UserModel>
-    //lateinit var usersInstance:Parcelable
 
-
+    private var mRootView: ViewGroup? = null
+    private var mIsFirstLoad = false
 
     lateinit var currentUser: FirebaseUser
     lateinit var db:FirebaseFirestore
@@ -54,39 +59,35 @@ class DiscoverFragment : Fragment() ,CardListener{
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
     }
 
     override fun onStart() {
         super.onStart()
     }
 
-//    override fun onSaveInstanceState(outState: Bundle) {
-//        super.onSaveInstanceState(outState)
-//
-//        //val bundle = bundleOf("usersList" to usersList)
-//        //outState.putBundle(LIST_STATE,bundle)
-//        outState.putParcelable(LIST_STATE,usersInstance)
-//    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
 
+        Log.d("DISCOVER_PAGE_STATE","mIsFirstLoaded: $mIsFirstLoad & mRootView:$mRootView")
         if (container != null) {
             thisContext = container.getContext()
         };
 
-//        var getAns = savedInstanceState?.getParcelable< >(LIST_STATE)
-//        if (getAns != null) {
-//            usersList = getAns
-//        }
-//
-//        Toast.makeText(thisContext,"toLoad:$getAns",Toast.LENGTH_SHORT).show()
+        if (mRootView == null)
+        {
+            //load
+            myView = inflater.inflate(R.layout.fragment_discover, container, false)
+            mIsFirstLoad =true
+        }
+        else
+        {
+            mIsFirstLoad = false
+        }
 
-        myView = inflater.inflate(R.layout.fragment_discover, container, false)
-
-
+        Log.d("DISCOVER_PAGE_STATE","mIsFirstLoaded: $mIsFirstLoad & mRootView:$mRootView")
         setupViews(myView)
         setupButtons()
 
@@ -98,10 +99,11 @@ class DiscoverFragment : Fragment() ,CardListener{
         db  = FirebaseFirestore.getInstance()
 
         loadCurrentUserData()
-        loadUsersForDiscoverPageOrignal()
+
 
         return myView
     }
+
 
     fun setupButtons()
     {
@@ -124,9 +126,12 @@ class DiscoverFragment : Fragment() ,CardListener{
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
-        //customToolBar(view)
-
+        Log.d("DISCOVER_PAGE_STATE","mIsFirstLoaded: $mIsFirstLoad & mRootView:$mRootView")
+        if(mIsFirstLoad) {
+            loadUsersForDiscoverPageOrignal()
+        } else {
+            //Do nothing
+        }
     }
 
     fun loadCurrentUserData()
@@ -158,7 +163,6 @@ class DiscoverFragment : Fragment() ,CardListener{
             val usersYouLiked = currentUserModel!!.usersYouLiked
             val connections = currentUserModel.connections
             val combinedArray = usersYouLiked + connections
-
 
             //remove all users you already liked or are in connections
             // this is causing crash because it takes lot of time to execute and if you change fragment at that moment it crashes
