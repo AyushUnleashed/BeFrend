@@ -18,11 +18,8 @@ import com.ayushunleashed.mitram.models.UserModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import kotlinx.coroutines.tasks.await
-import kotlinx.coroutines.withContext
 
 
 class ConnectionsFragment : Fragment() {
@@ -31,6 +28,10 @@ class ConnectionsFragment : Fragment() {
     private lateinit var currentUser: FirebaseUser
     private lateinit var db:FirebaseFirestore
     var  currentUserModel:UserModel? = null
+
+    var myConnectionsList:MutableList<UserModel> = mutableListOf()
+
+
 
 
     lateinit var tvNoUsersToShow: TextView
@@ -58,15 +59,10 @@ class ConnectionsFragment : Fragment() {
 
         currentUser = FirebaseAuth.getInstance().currentUser!!
 
-        GlobalScope.launch {
-            currentUserModel = db.collection("users").document(currentUser.uid).get().await()
-                .toObject(UserModel::class.java)
-        }
-
         setupViews(view)
 
         loadData(view)
-        
+
     }
 
     fun setupViews(view: View)
@@ -82,23 +78,17 @@ class ConnectionsFragment : Fragment() {
 
 
         GlobalScope.launch(Dispatchers.IO) {
-
-            var users:MutableList<UserModel> = arrayListOf()
+            currentUserModel = db.collection("users").document(currentUser.uid).get().await()
+                .toObject(UserModel::class.java)
 
             val connectionsArray = currentUserModel?.connections
 
-            val addingUsers = launch {
+            val addingUsers = launch(Dispatchers.IO) {
                 if (connectionsArray != null) {
                     for (uid in connectionsArray) {
 
-                        var user:UserModel? = null
-                        val job = launch {
-                            user = db.collection("users").document(uid).get().await().toObject(UserModel::class.java)!!
-                        }
-
-                        job.join()
-
-                        user?.let { users.add(it) }
+                        var user = db.collection("users").document(uid).get().await().toObject(UserModel::class.java)!!
+                        user?.let { myConnectionsList.add(it) }
 
                         Log.d("GENERAL", "${user?.displayName} is added to array" );
                     }
@@ -110,9 +100,9 @@ class ConnectionsFragment : Fragment() {
             withContext(Dispatchers.Main)
             {
                 progressBar.visibility = View.GONE
-                Log.d("GENERAL", "connectionsArray by users list" + users.toString());
+                Log.d("GENERAL", "connectionsArray by users list" + myConnectionsList.toString());
 
-                if(users.isEmpty())
+                if(myConnectionsList.isEmpty())
                 {
                     tvNoUsersToShow.visibility = View.VISIBLE
                 }
@@ -120,9 +110,9 @@ class ConnectionsFragment : Fragment() {
                 {
                     tvNoUsersToShow.visibility = View.GONE
                 }
-                Toast.makeText(requireContext(),"Size:${users.size}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(),"Size:${myConnectionsList.size}", Toast.LENGTH_SHORT).show()
                 recyclerView = view.findViewById(R.id.myRecyclerView)
-                val adapter = users.let { ConnectionsCardAdapter(it,requireContext()) }
+                val adapter = myConnectionsList.let { ConnectionsCardAdapter(it,requireContext()) }
                 recyclerView.adapter = adapter
                 recyclerView.layoutManager = StaggeredGridLayoutManager(
                     1,

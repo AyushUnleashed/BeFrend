@@ -23,7 +23,6 @@
             android:background="@drawable/background_sent_message">
 
             <TextView
-                app:layout_constraintStart_toStartOf=""
                 app:layout_constraintEnd_toStartOf="@id/tvTextTime"
                 android:id="@+id/tvTextMessage"
                 app:layout_constraintTop_toTopOf="parent"
