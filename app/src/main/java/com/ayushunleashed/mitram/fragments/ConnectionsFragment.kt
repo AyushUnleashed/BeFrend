@@ -1,5 +1,6 @@
 package com.ayushunleashed.mitram.fragments
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -23,16 +24,12 @@ import kotlinx.coroutines.tasks.await
 
 
 class ConnectionsFragment : Fragment() {
+    lateinit var thisContext: Context
 
     private lateinit var usersList:MutableList<UserModel>
     private lateinit var currentUser: FirebaseUser
     private lateinit var db:FirebaseFirestore
     var  currentUserModel:UserModel? = null
-
-
-
-
-
 
     lateinit var tvNoUsersToShow: TextView
     private lateinit var progressBar: ProgressBar
@@ -40,12 +37,18 @@ class ConnectionsFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+        if (container != null) {
+            thisContext = container.getContext()
+        };
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_connections, container, false)
 
@@ -110,9 +113,9 @@ class ConnectionsFragment : Fragment() {
                 {
                     tvNoUsersToShow.visibility = View.GONE
                 }
-                Toast.makeText(requireContext(),"Size:${myConnectionsList.size}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(thisContext,"Size:${myConnectionsList.size}", Toast.LENGTH_SHORT).show()
                 recyclerView = view.findViewById(R.id.myRecyclerView)
-                val adapter = myConnectionsList.let { ConnectionsCardAdapter(it,requireContext()) }
+                val adapter = myConnectionsList.let { ConnectionsCardAdapter(it,thisContext) }
                 recyclerView.adapter = adapter
                 recyclerView.layoutManager = StaggeredGridLayoutManager(
                     1,
