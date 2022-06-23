@@ -29,7 +29,7 @@ class ConnectionsFragment : Fragment() {
     private lateinit var db:FirebaseFirestore
     var  currentUserModel:UserModel? = null
 
-    var myConnectionsList:MutableList<UserModel> = mutableListOf()
+
 
 
 
@@ -80,7 +80,7 @@ class ConnectionsFragment : Fragment() {
         GlobalScope.launch(Dispatchers.IO) {
             currentUserModel = db.collection("users").document(currentUser.uid).get().await()
                 .toObject(UserModel::class.java)
-
+            var myConnectionsList:MutableList<UserModel> = mutableListOf()
             val connectionsArray = currentUserModel?.connections
 
             val addingUsers = launch(Dispatchers.IO) {
