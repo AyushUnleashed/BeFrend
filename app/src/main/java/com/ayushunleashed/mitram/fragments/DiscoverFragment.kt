@@ -209,7 +209,7 @@ class DiscoverFragment : Fragment() ,CardListener{
         }
     }
 
-    fun loadUsersForDiscoverPage()
+    /*fun loadUsersForDiscoverPage()
     {
         progressBar.visibility = View.VISIBLE
 
@@ -257,7 +257,7 @@ class DiscoverFragment : Fragment() ,CardListener{
                 cardContainer.setAdapter(userCardAdapter)
             }
         }
-    }
+    }*/
 
     fun setupViews(view: View)
     {
@@ -397,7 +397,7 @@ class DiscoverFragment : Fragment() ,CardListener{
 
     fun handleReloadUsersButton()
     {
-        loadUsersForDiscoverPage()
+        loadUsersForDiscoverPageOrignal()
         //usersList = defaultProfiles()
         userCardAdapter = UserCardAdapter(usersList,requireContext())
         cardContainer.setAdapter(userCardAdapter)
