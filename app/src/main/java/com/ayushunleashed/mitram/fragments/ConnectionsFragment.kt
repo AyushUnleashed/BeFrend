@@ -112,7 +112,7 @@ class ConnectionsFragment : Fragment() {
                 {
                     tvNoUsersToShow.visibility = View.GONE
                 }
-                Toast.makeText(thisContext,"Size:${myConnectionsList.size}", Toast.LENGTH_SHORT).show()
+                //Toast.makeText(thisContext,"Size:${myConnectionsList.size}", Toast.LENGTH_SHORT).show()
                 recyclerView = view.findViewById(R.id.myRecyclerView)
                 val adapter = myConnectionsList.let { ConnectionsCardAdapter(it,thisContext) }
                 recyclerView.adapter = adapter

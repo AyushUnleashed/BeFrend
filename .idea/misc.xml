@@ -11,6 +11,7 @@
         <entry key="..\:/Users/ayush/AndroidStudioProjects/Mitram/app/src/main/res/drawable/ic_back.xml" value="0.221" />
         <entry key="..\:/Users/ayush/AndroidStudioProjects/Mitram/app/src/main/res/drawable/ic_back_arrow.xml" value="0.221" />
         <entry key="..\:/Users/ayush/AndroidStudioProjects/Mitram/app/src/main/res/drawable/ic_back_button.xml" value="0.221" />
+        <entry key="..\:/Users/ayush/AndroidStudioProjects/Mitram/app/src/main/res/drawable/ic_baseline_more_vert_24.xml" value="0.2345" />
         <entry key="..\:/Users/ayush/AndroidStudioProjects/Mitram/app/src/main/res/drawable/ic_bottom_card_bg.xml" value="0.221" />
         <entry key="..\:/Users/ayush/AndroidStudioProjects/Mitram/app/src/main/res/drawable/ic_cards_bottom_nav_2.xml" value="0.221" />
         <entry key="..\:/Users/ayush/AndroidStudioProjects/Mitram/app/src/main/res/drawable/ic_connections_bottom_nav.xml" value="0.221" />
@@ -19,6 +20,7 @@
         <entry key="..\:/Users/ayush/AndroidStudioProjects/Mitram/app/src/main/res/drawable/ic_highfi.xml" value="0.221" />
         <entry key="..\:/Users/ayush/AndroidStudioProjects/Mitram/app/src/main/res/drawable/ic_img_blur_background.xml" value="0.221" />
         <entry key="..\:/Users/ayush/AndroidStudioProjects/Mitram/app/src/main/res/drawable/ic_messages_bottom_nav_2.xml" value="0.221" />
+        <entry key="..\:/Users/ayush/AndroidStudioProjects/Mitram/app/src/main/res/drawable/ic_more_options.xml" value="0.2345" />
         <entry key="..\:/Users/ayush/AndroidStudioProjects/Mitram/app/src/main/res/drawable/ic_profile_bottom_nav.xml" value="0.221" />
         <entry key="..\:/Users/ayush/AndroidStudioProjects/Mitram/app/src/main/res/drawable/ic_reload.xml" value="0.221" />
         <entry key="..\:/Users/ayush/AndroidStudioProjects/Mitram/app/src/main/res/drawable/ic_send_plane.xml" value="0.221" />
@@ -33,7 +35,7 @@
         <entry key="..\:/Users/ayush/AndroidStudioProjects/Mitram/app/src/main/res/layout/activity_home.xml" value="0.22826086956521738" />
         <entry key="..\:/Users/ayush/AndroidStudioProjects/Mitram/app/src/main/res/layout/activity_main.xml" value="0.18342391304347827" />
         <entry key="..\:/Users/ayush/AndroidStudioProjects/Mitram/app/src/main/res/layout/activity_sign_in.xml" value="0.22826086956521738" />
-        <entry key="..\:/Users/ayush/AndroidStudioProjects/Mitram/app/src/main/res/layout/fragment_chat.xml" value="0.2352" />
+        <entry key="..\:/Users/ayush/AndroidStudioProjects/Mitram/app/src/main/res/layout/fragment_chat.xml" value="0.4" />
         <entry key="..\:/Users/ayush/AndroidStudioProjects/Mitram/app/src/main/res/layout/fragment_connections.xml" value="0.19021739130434784" />
         <entry key="..\:/Users/ayush/AndroidStudioProjects/Mitram/app/src/main/res/layout/fragment_discover.xml" value="0.176" />
         <entry key="..\:/Users/ayush/AndroidStudioProjects/Mitram/app/src/main/res/layout/fragment_full_user_detail.xml" value="0.19021739130434784" />

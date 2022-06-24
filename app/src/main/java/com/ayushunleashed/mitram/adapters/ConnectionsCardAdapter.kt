@@ -97,7 +97,12 @@ class ConnectionsCardAdapter(var users: MutableList<UserModel>,context: Context)
             navController = Navigation.findNavController(holder.itemView)
             navController!!.navigate(R.id.action_connectionsFragment_to_chatFragment,bundle)
         }
-
+//
+//        holder.imgViewUserProfile.setOnClickListener{
+//            val myBundle = bundleOf("currentUser" to users[position])
+//            navController = Navigation.findNavController(holder.itemView)
+//            navController!!.navigate(R.id.action_connectionsFragment_to_fullUserProfileFragment,myBundle)
+//        }
     }
 
     fun getLastMessage(position: Int):String

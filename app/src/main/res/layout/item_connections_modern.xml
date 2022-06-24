@@ -30,37 +30,73 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/tvUserName"
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
+            app:layout_constraintTop_toTopOf="parent"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:flow_horizontalBias="0.0"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="12dp"
+            app:layout_constraintStart_toEndOf="@id/imgViewUserProfile"
+            app:layout_constraintEnd_toStartOf="@id/btnMessageConnection"
+            >
+
+        <TextView
+            android:id="@+id/tvUserName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:fontFamily="@font/montserrat_semi_bold"
             android:text="Ayush Yadav"
             android:textColor="#101010"
-            android:textSize="13sp"
-            app:layout_constraintBottom_toTopOf="@id/tvLastMessage"
-            app:layout_constraintEnd_toStartOf="@id/btnMessageConnection"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@id/imgViewUserProfile"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:textSize="14sp"
+            app:layout_constraintBottom_toTopOf="@id/tvLastMessage" />
 
         <TextView
             android:id="@+id/tvLastMessage"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
             android:fontFamily="@font/montserrat_regular"
-            android:text="Ayush Yadav"
+            android:text="Start Conversation"
+            android:ellipsize="marquee"
             android:textColor="#101010"
-            android:textSize="10sp"
-            android:maxLines="1"
-            android:ellipsize="end"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@id/imgViewUserProfile"
-            app:layout_constraintTop_toBottomOf="@id/tvUserName"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintEnd_toStartOf="@id/btnMessageConnection"/>
+            android:textSize="12sp"
+            android:singleLine="true" />
+
+        </LinearLayout>
+
+<!--        <TextView-->
+<!--            android:id="@+id/tvUserName"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginStart="8dp"-->
+<!--            android:fontFamily="@font/montserrat_semi_bold"-->
+<!--            android:text="Ayush Yadav"-->
+<!--            android:textColor="#101010"-->
+<!--            android:textSize="13sp"-->
+<!--            app:layout_constraintBottom_toTopOf="@id/tvLastMessage"-->
+<!--            app:layout_constraintEnd_toStartOf="@id/btnMessageConnection"-->
+<!--            app:layout_constraintHorizontal_bias="0.0"-->
+<!--            app:layout_constraintStart_toEndOf="@id/imgViewUserProfile"-->
+<!--            app:layout_constraintTop_toTopOf="parent" />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/tvLastMessage"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginStart="8dp"-->
+<!--            android:fontFamily="@font/montserrat_regular"-->
+<!--            android:text="Ayush Yadav"-->
+<!--            android:textColor="#101010"-->
+<!--            android:textSize="10sp"-->
+<!--            android:maxLines="1"-->
+<!--            android:ellipsize="end"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintStart_toEndOf="@id/imgViewUserProfile"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/tvUserName"-->
+<!--            app:layout_constraintHorizontal_bias="0.0"-->
+<!--            app:layout_constraintEnd_toStartOf="@id/btnMessageConnection"/>-->
 
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
             android:id="@+id/btnMessageConnection"
@@ -68,7 +104,7 @@
             android:layout_height="wrap_content"
 
             android:layout_marginRight="28dp"
-            android:backgroundTint="@color/newBlack"
+            android:backgroundTint="@color/themeApp"
             app:icon="@drawable/ic_wave_icon"
             app:iconSize="24dp"
             app:iconTint="@color/white"
