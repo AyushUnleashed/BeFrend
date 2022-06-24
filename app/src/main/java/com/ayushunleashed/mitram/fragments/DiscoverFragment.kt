@@ -297,7 +297,7 @@ class DiscoverFragment : Fragment() ,CardListener{
         )
         val model:UserModel = model as UserModel
         val displayName = model.displayName.toString()
-        Toast.makeText(requireContext(),"Left Swiped $displayName ",Toast.LENGTH_SHORT).show()
+        Toast.makeText(thisContext,"Left Swiped $displayName ",Toast.LENGTH_SHORT).show()
     }
 
     override fun onRightSwipe(position: Int, model: Any) {
@@ -344,7 +344,7 @@ class DiscoverFragment : Fragment() ,CardListener{
 
                 withContext(Dispatchers.Main)
                 {
-                    Toast.makeText(requireContext(),"It's a match",Toast.LENGTH_SHORT).show()
+                    Toast.makeText(thisContext,"It's a match",Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -362,9 +362,9 @@ class DiscoverFragment : Fragment() ,CardListener{
             GlobalScope.launch(Dispatchers.IO) {
                 db.collection("users").document(userWhoGotRightSwiped.uid!!).set(userWhoGotRightSwiped).
                 addOnSuccessListener {
-                    Toast.makeText(requireContext(),"Like request Sent", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(thisContext,"Like request Sent", Toast.LENGTH_SHORT).show()
                 }.addOnFailureListener {
-                    Toast.makeText(requireContext(),"Failed To sent like request", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(thisContext,"Failed To sent like request", Toast.LENGTH_SHORT).show()
                 }
 
                 //adding this person you swiped right on to users you liked
@@ -375,7 +375,7 @@ class DiscoverFragment : Fragment() ,CardListener{
         }
         else
         {
-            Toast.makeText(requireContext(),"Already Exist not adding",Toast.LENGTH_SHORT).show()
+            Toast.makeText(thisContext,"Already Exist not adding",Toast.LENGTH_SHORT).show()
         }
 
     }
@@ -405,7 +405,7 @@ class DiscoverFragment : Fragment() ,CardListener{
     {
         loadUsersForDiscoverPageOrignal()
         //usersList = defaultProfiles()
-        userCardAdapter = UserCardAdapter(usersList,requireContext())
+        userCardAdapter = UserCardAdapter(usersList,thisContext)
         cardContainer.setAdapter(userCardAdapter)
         btnReloadDiscoverUsers.visibility = View.GONE
         btnLeftSwipe.visibility = View.VISIBLE

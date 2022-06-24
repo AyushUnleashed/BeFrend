@@ -5,10 +5,10 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:padding="4dp">
+    android:padding="4dp"
+    android:layout_marginEnd="40dp">
 
     <androidx.cardview.widget.CardView
-        android:layout_marginEnd="40dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
@@ -21,21 +21,23 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout"
             android:layout_gravity="start"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/background_received_message">
 
             <TextView
                 app:layout_constraintEnd_toStartOf="@id/tvTextTime"
                 android:id="@+id/tvTextMessage"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="12dp"
-                tools:text="Do you like it?"
+                tools:text="Long Long long long long long longlonogonglsfkdsggsdfgfgfgvsgfvsdfvdvs"
                 android:fontFamily="@font/montserrat_regular"
                 android:textSize="14sp"
+                android:layout_marginBottom="10dp"
                 android:textColor="@color/black" />
 
             <TextView

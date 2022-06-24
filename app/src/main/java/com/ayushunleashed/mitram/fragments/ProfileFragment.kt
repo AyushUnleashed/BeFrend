@@ -1,6 +1,7 @@
 package com.ayushunleashed.mitram.fragments
 
 import android.content.ContentValues.TAG
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -29,7 +30,7 @@ import org.w3c.dom.Text
 
 
 class ProfileFragment : Fragment() {
-
+    lateinit var thisContext: Context
     lateinit var btnLogout:Button
     lateinit var db: FirebaseFirestore
     lateinit var userImage: ImageView
@@ -45,6 +46,10 @@ class ProfileFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+        if (container != null) {
+            thisContext = container.getContext()
+        };
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_profile, container, false)
 
@@ -73,7 +78,7 @@ class ProfileFragment : Fragment() {
         val user = Firebase.auth.currentUser!!
         deleteToken()
         mAuth.signOut();
-        Toast.makeText(requireContext(),"LoggedOut",Toast.LENGTH_SHORT).show()
+        Toast.makeText(thisContext,"LoggedOut",Toast.LENGTH_SHORT).show()
 
         findNavController().navigate(R.id.action_profileFragment_to_signInActivity)
     }

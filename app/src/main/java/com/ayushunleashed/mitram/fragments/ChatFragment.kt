@@ -1,5 +1,6 @@
 package com.ayushunleashed.mitram.fragments
 
+import android.content.Context
 import android.graphics.Color
 import kotlin.Comparable
 import android.os.Bundle
@@ -34,7 +35,7 @@ import java.util.*
 
 
 class ChatFragment : Fragment() {
-
+    lateinit var thisContext: Context
     private var chatUser:UserModel? = null
     private lateinit var binding: FragmentChatBinding
     private var db= FirebaseFirestore.getInstance()
@@ -42,7 +43,6 @@ class ChatFragment : Fragment() {
     private var senderId = currentUser!!.uid
     lateinit var currentUserModel: UserModel
     private var dateClass= DateClass()
-
 
     private var messagesArray:MutableList<ChatMessageModel> = mutableListOf()
 
@@ -52,6 +52,10 @@ class ChatFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+        if (container != null) {
+            thisContext = container.getContext()
+        };
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_chat, container, false)
 
@@ -81,7 +85,7 @@ class ChatFragment : Fragment() {
     {
         chatAdapter = ChatAdapter(messagesArray,senderId!!)
         binding.myRecyclerView.adapter = chatAdapter
-        binding.myRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+        binding.myRecyclerView.layoutManager = LinearLayoutManager(thisContext)
     }
 
 
@@ -179,7 +183,7 @@ class ChatFragment : Fragment() {
             // update UI
             chatAdapter = ChatAdapter(sortedMessagesList,senderId!!)
             binding.myRecyclerView.adapter = chatAdapter
-            binding.myRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+            binding.myRecyclerView.layoutManager = LinearLayoutManager(thisContext)
             chatAdapter.notifyDataSetChanged()
         }
     }
@@ -212,7 +216,7 @@ class ChatFragment : Fragment() {
                     // update UI
                     chatAdapter = ChatAdapter(messagesArray,senderId!!)
                     binding.myRecyclerView.adapter = chatAdapter
-                    binding.myRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+                    binding.myRecyclerView.layoutManager = LinearLayoutManager(thisContext)
                     chatAdapter.notifyDataSetChanged()
                 }
             }
