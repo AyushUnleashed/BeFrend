@@ -119,7 +119,11 @@ class ConnectionsCardAdapter(var users: MutableList<UserModel>,context: Context)
             // get chats of both of them
             chatsSender = db.collection("chat").whereEqualTo("senderId",senderId)
                 .whereEqualTo("receiverId",receiverId).orderBy("dateTime",Query.Direction.DESCENDING).limit(1).get().await().toObjects(ChatMessageModel::class.java)
-            chatsSender[0].messageText = "You: "+chatsSender[0].messageText
+
+            if(chatsSender.isNotEmpty()) //otherwise crash
+            {
+                chatsSender[0].messageText = "You: "+chatsSender[0].messageText
+            }
 
             chatsReceiver= db.collection("chat").whereEqualTo("senderId",receiverId)
                 .whereEqualTo("receiverId",senderId).orderBy("dateTime",Query.Direction.DESCENDING).limit(1).get().await().toObjects(ChatMessageModel::class.java)

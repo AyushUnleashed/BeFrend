@@ -92,6 +92,7 @@ class ConnectionsFragment : Fragment() {
 
     fun loadData(view: View)
     {
+        myConnectionsList.clear()
         progressBar.visibility = View.VISIBLE
 
 
