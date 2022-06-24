@@ -1,18 +1,15 @@
 package com.ayushunleashed.mitram.fragments
 
 import android.content.Context
-import android.graphics.Color
-import kotlin.Comparable
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.ayushunleashed.mitram.R
 import com.ayushunleashed.mitram.adapters.ChatAdapter
 import com.ayushunleashed.mitram.databinding.FragmentChatBinding
@@ -21,17 +18,9 @@ import com.ayushunleashed.mitram.models.UserModel
 import com.ayushunleashed.mitram.utils.DateClass
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.*
-import com.google.firebase.ktx.Firebase
-import com.google.firebase.messaging.FirebaseMessaging
-import com.google.firebase.messaging.FirebaseMessagingService
 import kotlinx.coroutines.*
 import kotlinx.coroutines.tasks.await
-import java.text.DateFormat
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
-import java.util.*
 
 
 class ChatFragment : Fragment() {
@@ -72,7 +61,7 @@ class ChatFragment : Fragment() {
         {
             loadCurrentChatUserDetails()
         }
-
+        listenIfReceiverIsOnline()
         handleClicks()
         setupRecyclerView()
         getMessages()
@@ -88,6 +77,29 @@ class ChatFragment : Fragment() {
         binding.myRecyclerView.layoutManager = LinearLayoutManager(thisContext)
     }
 
+    fun listenIfReceiverIsOnline()
+    {
+        db.collection("users").document(chatUser!!.uid!!).addSnapshotListener { value, error ->
+            error?.let {
+                it.message?.let { it1 -> Log.d("GENERAL", it1) }
+                return@addSnapshotListener
+            }
+            value?.let {
+                var onlineStatus = it.getBoolean("isOnline")
+                Log.d("IS_ONLINE","Online: {$onlineStatus}")
+
+            if(it.getBoolean("isOnline") == true)
+            {
+                binding.tvOnlineStatus.setTextColor(ContextCompat.getColor(thisContext,R.color.myGreen))
+                binding.tvOnlineStatus.text = "Online"
+            }else  if(it.getBoolean("isOnline") == false)
+            {
+                binding.tvOnlineStatus.setTextColor(ContextCompat.getColor(thisContext,R.color.myGray))
+                binding.tvOnlineStatus.text = "Offline"
+            }
+            }
+        }
+    }
 
     fun dummyChatData():MutableList<ChatMessageModel>
     {

@@ -27,10 +27,19 @@ class FragmentHomeActivity : AppCompatActivity() {
     private lateinit var navController: NavController
     private lateinit var bottomNavigationView: BottomNavigationView
 
-    lateinit var db: FirebaseFirestore
-    lateinit var currentUser: FirebaseUser
+    var db =  FirebaseFirestore.getInstance()
+    var currentUser: FirebaseUser? = FirebaseAuth.getInstance().currentUser
 
 
+    override fun onResume() {
+        super.onResume()
+        db.collection("users").document(currentUser!!.uid).update("isOnline",true)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        db.collection("users").document(currentUser!!.uid).update("isOnline",false)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,11 +65,11 @@ class FragmentHomeActivity : AppCompatActivity() {
 
         GlobalScope.launch {
 
-            var currentUserModel = db.collection("users").document(currentUser.uid).get().await().toObject(
+            var currentUserModel = db.collection("users").document(currentUser!!.uid).get().await().toObject(
                 UserModel::class.java)
             currentUserModel?.fcmToken = token
 
-            db.collection("users").document(currentUser.uid).set(currentUserModel!!, SetOptions.merge())
+            db.collection("users").document(currentUser!!.uid).set(currentUserModel!!, SetOptions.merge())
         }
     }
 

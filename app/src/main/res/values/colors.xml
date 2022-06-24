@@ -16,5 +16,6 @@
     <color name="gray70">#B3000000</color>
     <color name="myGray">#ADAFBB</color>
     <color name="myBlue">#0584FE</color>
+    <color name="myGreen">#4CAF50</color>
 
 </resources>

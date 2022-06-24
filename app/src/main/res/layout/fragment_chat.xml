@@ -73,7 +73,7 @@
                     android:layout_height="wrap_content"
 
                     android:fontFamily="@font/montserrat_regular"
-                    android:text="Online"
+                    android:text="No Status"
                     android:textColor="#101010"
                     android:textSize="10sp" />
 
