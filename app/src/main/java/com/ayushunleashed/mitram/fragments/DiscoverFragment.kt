@@ -14,6 +14,7 @@ import androidx.fragment.app.activityViewModels
 import com.asynctaskcoffee.cardstack.CardContainer
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import com.asynctaskcoffee.cardstack.CardListener
 import com.asynctaskcoffee.cardstack.pulse
 import com.ayushunleashed.mitram.FragmentHomeActivity
@@ -34,11 +35,12 @@ import kotlinx.coroutines.tasks.await
 class DiscoverFragment : Fragment() ,CardListener{
     lateinit var thisContext: Context
 
+   lateinit var sharedViewModel:SharedViewModel
+
     lateinit var userCardAdapter: UserCardAdapter
 
     lateinit var usersList:MutableList<UserModel>
 
-    private var mRootView: ViewGroup? = null
     private var mIsFirstLoad = false
 
     lateinit var currentUser: FirebaseUser
@@ -66,35 +68,30 @@ class DiscoverFragment : Fragment() ,CardListener{
         super.onStart()
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putBoolean("mIsFirstLoad",false)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
 
-        Log.d("DISCOVER_PAGE_STATE","mIsFirstLoaded: $mIsFirstLoad & mRootView:$mRootView")
+        Log.d("DISCOVER_PAGE_STATE","mIsFirstLoaded: $mIsFirstLoad")
         if (container != null) {
             thisContext = container.getContext()
         };
 
-        if (mRootView == null)
-        {
-            //load
-            myView = inflater.inflate(R.layout.fragment_discover, container, false)
-            mIsFirstLoad =true
-        }
-        else
-        {
-            mIsFirstLoad = false
-        }
+        myView = inflater.inflate(R.layout.fragment_discover, container, false)
 
-        Log.d("DISCOVER_PAGE_STATE","mIsFirstLoaded: $mIsFirstLoad & mRootView:$mRootView")
+        sharedViewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
         setupViews(myView)
         setupButtons()
 
         /*Customization*/
         cardContainer.maxStackSize = 2
         cardContainer.setOnCardActionListener(this)
-
         currentUser = FirebaseAuth.getInstance().currentUser!!
         db  = FirebaseFirestore.getInstance()
 
@@ -126,11 +123,22 @@ class DiscoverFragment : Fragment() ,CardListener{
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        Log.d("DISCOVER_PAGE_STATE","mIsFirstLoaded: $mIsFirstLoad & mRootView:$mRootView")
-        if(mIsFirstLoad) {
+        Log.d("DISCOVER_PAGE_STATE","mIsFirstLoaded: $mIsFirstLoad")
+//        if(mIsFirstLoad) {
+//            loadUsersForDiscoverPageOrignal()
+//        } else {
+//            //Do nothing
+//        }
+
+        if(sharedViewModel.loadedDiscoverFragmentBefore)
+        {
+            //Log.d("SWIPE","discoverCardPosition: ${sharedViewModel.discoverCardPosition}")
+            //var count = sharedViewModel.discoverCardPosition
+            userCardAdapter = UserCardAdapter(sharedViewModel.myUsersList,thisContext)
+            cardContainer.setAdapter(userCardAdapter)
+        }
+        else{
             loadUsersForDiscoverPageOrignal()
-        } else {
-            //Do nothing
         }
     }
 
@@ -154,6 +162,7 @@ class DiscoverFragment : Fragment() ,CardListener{
 
     fun loadUsersForDiscoverPageOrignal()
     {
+        sharedViewModel.loadedDiscoverFragmentBefore = true
         progressBar.visibility = View.VISIBLE
 
         GlobalScope.launch(Dispatchers.IO){
@@ -181,6 +190,7 @@ class DiscoverFragment : Fragment() ,CardListener{
             }
 
             usersList = (allUsers - arrayOfPeopleYouDontWant - currentUserModel) as MutableList<UserModel>
+            sharedViewModel.myUsersList = usersList
            // usersInstance = usersList as Parcelable
 
             // updating ui with users
@@ -295,6 +305,7 @@ class DiscoverFragment : Fragment() ,CardListener{
             "SwipeLog",
             "onLeftSwipe pos: $position model: " + (model as UserModel).toString()
         )
+        sharedViewModel.myUsersList.removeAt(position)
         val model:UserModel = model as UserModel
         val displayName = model.displayName.toString()
         Toast.makeText(thisContext,"Left Swiped $displayName ",Toast.LENGTH_SHORT).show()
@@ -305,7 +316,7 @@ class DiscoverFragment : Fragment() ,CardListener{
             "SwipeLog",
             "onRightSwipe pos: $position model: " + (model as UserModel).toString()
         )
-
+        sharedViewModel.myUsersList.removeAt(position)
         var currentUserModel: UserModel?
         runBlocking {
             currentUserModel = db.collection("users").document(currentUser.uid).get().await().toObject(UserModel::class.java)
@@ -381,6 +392,7 @@ class DiscoverFragment : Fragment() ,CardListener{
     }
 
     override fun onItemShow(position: Int, model: Any) {
+        sharedViewModel.discoverCardPosition = position
         Log.e("SwipeLog", "onItemShow pos: $position model: " + (model as UserModel).toString())
     }
 
@@ -404,6 +416,8 @@ class DiscoverFragment : Fragment() ,CardListener{
     fun handleReloadUsersButton()
     {
         loadUsersForDiscoverPageOrignal()
+        sharedViewModel.myUsersList.clear()
+        sharedViewModel.myUsersList = usersList
         //usersList = defaultProfiles()
         userCardAdapter = UserCardAdapter(usersList,thisContext)
         cardContainer.setAdapter(userCardAdapter)

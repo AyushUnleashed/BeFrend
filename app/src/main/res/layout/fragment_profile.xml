@@ -39,7 +39,7 @@
         android:textColor="@color/black"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/userImage"
-        android:text="Ayush Yadav"/>
+        android:text="No Name"/>
 
 
     <Button

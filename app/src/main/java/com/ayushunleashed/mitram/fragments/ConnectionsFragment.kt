@@ -10,9 +10,11 @@ import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.ayushunleashed.mitram.R
+import com.ayushunleashed.mitram.SharedViewModel
 import com.ayushunleashed.mitram.adapters.ConnectionsCardAdapter
 import com.ayushunleashed.mitram.adapters.PeopleLikesCardAdapter
 import com.ayushunleashed.mitram.models.UserModel
@@ -25,11 +27,12 @@ import kotlinx.coroutines.tasks.await
 
 class ConnectionsFragment : Fragment() {
     lateinit var thisContext: Context
-
+    lateinit var sharedViewModel: SharedViewModel
     private lateinit var usersList:MutableList<UserModel>
     private lateinit var currentUser: FirebaseUser
     private lateinit var db:FirebaseFirestore
     var  currentUserModel:UserModel? = null
+    var myConnectionsList:MutableList<UserModel> = mutableListOf()
 
     lateinit var tvNoUsersToShow: TextView
     private lateinit var progressBar: ProgressBar
@@ -52,7 +55,7 @@ class ConnectionsFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_connections, container, false)
 
         db = FirebaseFirestore.getInstance()
-
+        sharedViewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
         return view
     }
 
@@ -63,6 +66,18 @@ class ConnectionsFragment : Fragment() {
 
         setupViews(view)
 
+//        if(sharedViewModel.loadedConnectionsFragmentBefore == true)
+//        {
+//            val adapter = sharedViewModel.myConnectionsList.let { ConnectionsCardAdapter(it,thisContext) }
+//            recyclerView.adapter = adapter
+//            recyclerView.layoutManager = StaggeredGridLayoutManager(
+//                1,
+//                StaggeredGridLayoutManager.VERTICAL
+//            )
+//        }else
+//        {
+//            loadData(view)
+//        }
         loadData(view)
 
     }
@@ -72,6 +87,7 @@ class ConnectionsFragment : Fragment() {
 
         tvNoUsersToShow = view.findViewById(R.id.tvNoUsers)
         progressBar = view.findViewById(R.id.progressBar)
+        recyclerView = view.findViewById(R.id.myRecyclerView)
     }
 
     fun loadData(view: View)
@@ -82,7 +98,7 @@ class ConnectionsFragment : Fragment() {
         GlobalScope.launch(Dispatchers.IO) {
             currentUserModel = db.collection("users").document(currentUser.uid).get().await()
                 .toObject(UserModel::class.java)
-            var myConnectionsList:MutableList<UserModel> = mutableListOf()
+
             val connectionsArray = currentUserModel?.connections
 
             val addingUsers = launch(Dispatchers.IO) {
@@ -98,7 +114,8 @@ class ConnectionsFragment : Fragment() {
             }
 
             addingUsers.join()
-
+//            sharedViewModel.loadedConnectionsFragmentBefore = true
+//            sharedViewModel.myConnectionsList = myConnectionsList
             withContext(Dispatchers.Main)
             {
                 progressBar.visibility = View.GONE
@@ -113,7 +130,7 @@ class ConnectionsFragment : Fragment() {
                     tvNoUsersToShow.visibility = View.GONE
                 }
                 //Toast.makeText(thisContext,"Size:${myConnectionsList.size}", Toast.LENGTH_SHORT).show()
-                recyclerView = view.findViewById(R.id.myRecyclerView)
+
                 val adapter = myConnectionsList.let { ConnectionsCardAdapter(it,thisContext) }
                 recyclerView.adapter = adapter
                 recyclerView.layoutManager = StaggeredGridLayoutManager(
