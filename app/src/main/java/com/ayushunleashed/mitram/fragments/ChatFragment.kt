@@ -165,16 +165,16 @@ class ChatFragment : Fragment() {
                     messagesArray.add(message)
                 }
             }
-
+            Log.d("MESSAGE_LIST","List End Here")
 
             var sortedMessages = messagesArray.sortedWith(compareBy { it.dateTime })
             var sortedMessagesList:MutableList<ChatMessageModel> = mutableListOf()
-            if(sortedMessages.size!=0)
+            if(sortedMessages.isNotEmpty())
             {
                 sortedMessagesList = sortedMessages as MutableList<ChatMessageModel>
             }
 
-            Log.d("MESSAGE_LIST","List End Here")
+            Log.d("MESSAGE_LIST","${sortedMessagesList.toString()}")
 
             // update UI
             chatAdapter = ChatAdapter(sortedMessagesList,senderId!!)

@@ -39,26 +39,9 @@
             android:text="Ayush Yadav"
             android:textColor="#101010"
             android:textSize="13sp"
-            app:layout_constraintBottom_toTopOf="@id/tvLastMessage"
-            app:layout_constraintEnd_toStartOf="@id/btnMessageConnection"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@id/imgViewUserProfile"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/tvLastMessage"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:fontFamily="@font/montserrat_regular"
-            android:text="Ayush Yadav"
-            android:textColor="#101010"
-            android:textSize="10sp"
-            android:maxLines="1"
-            android:ellipsize="end"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@id/imgViewUserProfile"
-            app:layout_constraintTop_toBottomOf="@id/tvUserName"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintEnd_toStartOf="@id/btnMessageConnection"/>
 

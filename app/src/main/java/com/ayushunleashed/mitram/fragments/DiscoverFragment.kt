@@ -316,7 +316,7 @@ class DiscoverFragment : Fragment() ,CardListener{
         // for matching
         val check1 = GlobalScope.launch(Dispatchers.IO) {
 
-            if(currentUserModel!!.likedBy.contains(userWhoGotRightSwiped.uid))
+            if(currentUserModel!!.likedBy.contains(userWhoGotRightSwiped.uid) || userWhoGotRightSwiped.usersYouLiked.contains(currentUserModel!!.uid))
             {
                 // if you already have the person you liked on in your likes list
 
@@ -351,7 +351,9 @@ class DiscoverFragment : Fragment() ,CardListener{
 
         if(!userWhoGotRightSwiped.likedBy.contains(currentUser.uid) && !userWhoGotRightSwiped.connections.contains(currentUser.uid))
         {
+
             userWhoGotRightSwiped.likedBy.add(currentUser.uid)
+
             Log.e(
                 "SwipeLog",
                 "onRightSwipe pos: $position model: " + (model as UserModel).toString()

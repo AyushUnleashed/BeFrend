@@ -64,9 +64,6 @@ class LikesFragment : Fragment() {
 
             val likedByArray = currentUserModel?.likedBy
 
-
-
-
             val addingUsers = launch {
                 if (likedByArray != null) {
                     for (uid in likedByArray) {

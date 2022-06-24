@@ -101,7 +101,24 @@ class PeopleLikesCardAdapter(var users: MutableList<UserModel>):RecyclerView.Ada
                     // request user's connection list is updated
                     db.collection("users").document(likeCardUserModel.uid).set(likeCardUserModel).await()
                 }
+                else if (currentUserModel != null  && currentUserModel.connections.contains(likeCardUserModel.uid))
+                {
+                    // if duplicacy occured, we have person already in connections
 
+                    //if they are connections no need for any of this
+                    currentUserModel.likedBy.remove(likeCardUserModel.uid)
+
+                    // precautions - this 3
+                    currentUserModel.usersYouLiked.remove(likeCardUserModel.uid)
+                    likeCardUserModel.likedBy.remove(currentUserModel.uid)
+                    likeCardUserModel.usersYouLiked.remove(currentUserModel.uid)
+
+                    //updating this to database
+                    // current user's like list and connections list both are updated
+                    db.collection("users").document(currentUser.uid).set(currentUserModel).await()
+                    // request user's connection list is updated
+                    db.collection("users").document(likeCardUserModel.uid!!).set(likeCardUserModel).await()
+                }
 
             }
 
@@ -121,6 +138,11 @@ class PeopleLikesCardAdapter(var users: MutableList<UserModel>):RecyclerView.Ada
                     // removing from liked array
                     currentUserModel.likedBy.remove(likeCardUserModel.uid)
 
+                    //precautions - this 2
+                    currentUserModel.usersYouLiked.remove(likeCardUserModel.uid)
+                    likeCardUserModel.likedBy.remove(currentUserModel.uid)
+
+
                     withContext(Dispatchers.Main)
                     {
                         //delete from ui
@@ -128,9 +150,11 @@ class PeopleLikesCardAdapter(var users: MutableList<UserModel>):RecyclerView.Ada
                         notifyDataSetChanged()
                     }
 
-
                     //updating this to database
+                    // current user's like list and connections list both are updated
                     db.collection("users").document(currentUser.uid).set(currentUserModel).await()
+                    // request user's connection list is updated
+                    db.collection("users").document(likeCardUserModel.uid!!).set(likeCardUserModel).await()
                 }
 
 

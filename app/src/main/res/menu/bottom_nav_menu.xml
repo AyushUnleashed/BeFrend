@@ -19,11 +19,11 @@
         android:icon="@drawable/ic_user_group_bottom_nav_2"
         />
 
-    <item
-        android:id="@+id/messagesFragment"
-        android:title="Messages"
-        android:icon="@drawable/ic_messages_bottom_nav_2"
-        />
+<!--    <item-->
+<!--        android:id="@+id/messagesFragment"-->
+<!--        android:title="Messages"-->
+<!--        android:icon="@drawable/ic_messages_bottom_nav_2"-->
+<!--        />-->
 
     <item
         android:id="@+id/profileFragment"
