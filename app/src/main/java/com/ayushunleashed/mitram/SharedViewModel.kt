@@ -9,5 +9,5 @@ class SharedViewModel: ViewModel() {
      public var myConnectionsList:MutableList<UserModel> = mutableListOf()
      public var loadedDiscoverFragmentBefore:Boolean = false
      public var loadedConnectionsFragmentBefore:Boolean = false
-     public var discoverCardPosition:Int =0
+     public var numOfSwipes:Int =0
 }

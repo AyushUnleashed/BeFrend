@@ -41,8 +41,6 @@ class DiscoverFragment : Fragment() ,CardListener{
 
     lateinit var usersList:MutableList<UserModel>
 
-    private var mIsFirstLoad = false
-
     lateinit var currentUser: FirebaseUser
     lateinit var db:FirebaseFirestore
 
@@ -78,7 +76,6 @@ class DiscoverFragment : Fragment() ,CardListener{
         savedInstanceState: Bundle?
     ): View? {
 
-        Log.d("DISCOVER_PAGE_STATE","mIsFirstLoaded: $mIsFirstLoad")
         if (container != null) {
             thisContext = container.getContext()
         };
@@ -123,16 +120,21 @@ class DiscoverFragment : Fragment() ,CardListener{
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        Log.d("DISCOVER_PAGE_STATE","mIsFirstLoaded: $mIsFirstLoad")
-//        if(mIsFirstLoad) {
-//            loadUsersForDiscoverPageOrignal()
-//        } else {
-//            //Do nothing
-//        }
 
         if(sharedViewModel.loadedDiscoverFragmentBefore)
         {
-            //Log.d("SWIPE","discoverCardPosition: ${sharedViewModel.discoverCardPosition}")
+
+            for(i in 0 until sharedViewModel.numOfSwipes)
+            {
+                sharedViewModel.myUsersList.removeAt(0)
+            }
+            sharedViewModel.numOfSwipes=0
+            Log.d("SwipeLog","sharedViewModel.myUsersList:${sharedViewModel.myUsersList.size}")
+
+            for(i in 0 until (sharedViewModel.myUsersList.size) )
+            {
+                Log.d("SwipeLog","user[$i]: ${sharedViewModel.myUsersList[i].displayName}")
+            }
             //var count = sharedViewModel.discoverCardPosition
             userCardAdapter = UserCardAdapter(sharedViewModel.myUsersList,thisContext)
             cardContainer.setAdapter(userCardAdapter)
@@ -140,6 +142,7 @@ class DiscoverFragment : Fragment() ,CardListener{
         else{
             loadUsersForDiscoverPageOrignal()
         }
+
     }
 
     fun loadCurrentUserData()
@@ -191,7 +194,6 @@ class DiscoverFragment : Fragment() ,CardListener{
 
             usersList = (allUsers - arrayOfPeopleYouDontWant - currentUserModel) as MutableList<UserModel>
             sharedViewModel.myUsersList = usersList
-           // usersInstance = usersList as Parcelable
 
             // updating ui with users
             withContext(Dispatchers.Main)
@@ -211,13 +213,13 @@ class DiscoverFragment : Fragment() ,CardListener{
                 }
 
 
-                Log.d("GENERAL","${usersList.size} users in Discover");
-                for(user in usersList)
+                Log.d("GENERAL","${sharedViewModel.myUsersList.size} users in Discover");
+                for(user in sharedViewModel.myUsersList)
                 {
                     Log.d("GENERAL","**user:"+user.displayName.toString());
                 }
 
-                userCardAdapter = UserCardAdapter(usersList,thisContext)
+                userCardAdapter = UserCardAdapter(sharedViewModel.myUsersList,thisContext)
                 cardContainer.setAdapter(userCardAdapter)
             }
         }
@@ -301,22 +303,38 @@ class DiscoverFragment : Fragment() ,CardListener{
     }
 
     override fun onLeftSwipe(position: Int, model: Any) {
-        Log.e(
-            "SwipeLog",
-            "onLeftSwipe pos: $position model: " + (model as UserModel).toString()
-        )
-        sharedViewModel.myUsersList.removeAt(position)
+
+        //sharedViewModel.myUsersList.removeAt(position)
         val model:UserModel = model as UserModel
         val displayName = model.displayName.toString()
         Toast.makeText(thisContext,"Left Swiped $displayName ",Toast.LENGTH_SHORT).show()
+        sharedViewModel.numOfSwipes++;
+        //reduce sharedViewModel
+//        if(sharedViewModel.myUsersList.contains(model))
+//        {
+//            sharedViewModel.myUsersList.remove(model)
+//            Log.d("SwipeLog"," $displayName removed from SharedViewModel UsersList,Size: ${sharedViewModel.myUsersList.size}")
+//            Log.d("SwipeLog","sharedViewModel.myUsersList:${sharedViewModel.myUsersList.size}")
+//            for(i in 0 until (sharedViewModel.myUsersList.size) )
+//            {
+//                Log.d("SwipeLog","user[$i]: ${sharedViewModel.myUsersList[i].displayName}")
+//            }
+//        }
+
+        Log.e(
+            "SwipeLog",
+            "onLeftSwipe pos: $position model: " + (model as UserModel).displayName.toString()
+        )
+
     }
 
     override fun onRightSwipe(position: Int, model: Any) {
+        sharedViewModel.numOfSwipes++;
         Log.e(
             "SwipeLog",
             "onRightSwipe pos: $position model: " + (model as UserModel).toString()
         )
-        sharedViewModel.myUsersList.removeAt(position)
+        //sharedViewModel.myUsersList.removeAt(position)
         var currentUserModel: UserModel?
         runBlocking {
             currentUserModel = db.collection("users").document(currentUser.uid).get().await().toObject(UserModel::class.java)
@@ -392,14 +410,14 @@ class DiscoverFragment : Fragment() ,CardListener{
     }
 
     override fun onItemShow(position: Int, model: Any) {
-        sharedViewModel.discoverCardPosition = position
-        Log.e("SwipeLog", "onItemShow pos: $position model: " + (model as UserModel).toString())
+        //sharedViewModel.discoverCardPosition = position
+        Log.e("SwipeLog", "onItemShow pos: $position model: " + (model as UserModel).displayName.toString())
     }
 
     override fun onSwipeCancel(position: Int, model: Any) {
         Log.e(
             "SwipeLog",
-            "onSwipeCancel pos: $position model: " + (model as UserModel).toString()
+            "onSwipeCancel pos: $position model: " + (model as UserModel).displayName.toString()
         )
     }
 
@@ -415,8 +433,9 @@ class DiscoverFragment : Fragment() ,CardListener{
 
     fun handleReloadUsersButton()
     {
-        loadUsersForDiscoverPageOrignal()
         sharedViewModel.myUsersList.clear()
+        sharedViewModel.numOfSwipes = 0
+        loadUsersForDiscoverPageOrignal()
         sharedViewModel.myUsersList = usersList
         //usersList = defaultProfiles()
         userCardAdapter = UserCardAdapter(usersList,thisContext)
