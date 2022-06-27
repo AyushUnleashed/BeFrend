@@ -13,22 +13,21 @@
         android:theme="@style/Theme.Mitram" >
 
         <activity
-            android:name=".HomeActivity"
-            android:exported="false" />
-        <activity
             android:name=".SignInActivity"
-            android:exported="true" >
+            android:exported="false" >
+
+        </activity>
+        <activity
+            android:name=".MainActivity">
+
+        </activity>
+        <activity android:name=".FragmentHomeActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity
-            android:name=".MainActivity">
-        </activity>
-        <activity android:name=".FragmentHomeActivity">
-
         </activity>
 
         <!-- [START firebase_service] -->

@@ -13,5 +13,6 @@ data class UserModel(
     val likedBy: ArrayList<String> = ArrayList(),
     val connections: ArrayList<String> = ArrayList(),
     val usersYouLiked:ArrayList<String> = ArrayList(),
-    var fcmToken:String? = ""
+    var fcmToken:String? = "",
+    var isOnline:Boolean = false
 ): Parcelable
