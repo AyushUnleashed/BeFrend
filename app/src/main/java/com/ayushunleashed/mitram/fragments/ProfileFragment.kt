@@ -17,6 +17,9 @@ import androidx.navigation.fragment.findNavController
 import com.ayushunleashed.mitram.R
 import com.ayushunleashed.mitram.models.UserModel
 import com.bumptech.glide.Glide
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
@@ -36,7 +39,7 @@ class ProfileFragment : Fragment() {
     lateinit var userImage: ImageView
     lateinit var tvUserName:TextView
     lateinit var currentUser: FirebaseUser
-
+    private lateinit var googleSignInClient: GoogleSignInClient
     private lateinit var mAuth: FirebaseAuth
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -78,10 +81,24 @@ class ProfileFragment : Fragment() {
         val user = Firebase.auth.currentUser!!
         deleteToken()
         mAuth.signOut();
+        clearOldLogin()
         Toast.makeText(thisContext,"LoggedOut",Toast.LENGTH_SHORT).show()
 
         findNavController().navigate(R.id.action_profileFragment_to_signInActivity)
     }
+
+    fun clearOldLogin()
+    {
+        // Configure Google Sign In
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken("584245718070-rmeqcca7nb9irbe156hu07u2ij6sv2g4.apps.googleusercontent.com")
+            .requestEmail()
+            .build()
+        googleSignInClient = GoogleSignIn.getClient(thisContext, gso)
+        googleSignInClient.signOut()
+        googleSignInClient.revokeAccess()
+    }
+
 
 
     fun deleteToken()
