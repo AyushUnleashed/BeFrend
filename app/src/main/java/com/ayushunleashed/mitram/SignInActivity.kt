@@ -45,7 +45,7 @@ class SignInActivity : AppCompatActivity() {
         setContentView(R.layout.activity_sign_in)
 
         setupViews()
-
+        supportActionBar?.hide()
         mAuth = Firebase.auth
 
 // Configure Google Sign In

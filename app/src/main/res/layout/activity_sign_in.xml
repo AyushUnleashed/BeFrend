@@ -5,18 +5,61 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".SignInActivity"
-    android:background="@color/themeSecondaryApp">
+    android:background="@color/white">
 
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/lottieSignIn"
+        android:layout_width="wrap_content"
+        android:layout_height="200dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        android:elevation="5dp"
+        android:layout_marginTop="100dp"
+        app:lottie_rawRes="@raw/friend_anim_lottie"/>
+
+    <TextView
+        android:id="@+id/tvWelcome"
+        android:layout_marginTop="50dp"
+        app:layout_constraintTop_toBottomOf="@id/lottieSignIn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Welcome!"
+        android:fontFamily="@font/montserrat_bold"
+        android:textSize="32sp"
+        android:textColor="@color/newBlack"
+        android:layout_marginStart="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        />
+
+    <TextView
+        android:id="@+id/tvMoreInfo"
+        android:layout_marginTop="20dp"
+        app:layout_constraintTop_toBottomOf="@id/tvWelcome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Find and interact with people
+having similar skils and interest"
+        android:paddingEnd="20dp"
+        android:fontFamily="@font/montserrat_regular"
+        android:textSize="16sp"
+        android:elevation="20dp"
+        android:textColor="@color/newBlack"
+        android:layout_marginStart="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        />
 
     <com.google.android.gms.common.SignInButton
         android:id="@+id/gSignInButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="15dp"
+        android:layout_margin="20dp"
+        app:layout_constraintTop_toBottomOf="@id/tvMoreInfo"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <ProgressBar
         android:outlineSpotShadowColor="@color/blue"
