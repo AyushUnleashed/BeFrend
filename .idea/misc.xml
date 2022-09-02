@@ -38,6 +38,7 @@
         <entry key="..\:/Users/ayush/AndroidStudioProjects/Mitram/app/src/main/res/layout/fragment_chat.xml" value="0.4" />
         <entry key="..\:/Users/ayush/AndroidStudioProjects/Mitram/app/src/main/res/layout/fragment_connections.xml" value="0.19021739130434784" />
         <entry key="..\:/Users/ayush/AndroidStudioProjects/Mitram/app/src/main/res/layout/fragment_discover.xml" value="0.176" />
+        <entry key="..\:/Users/ayush/AndroidStudioProjects/Mitram/app/src/main/res/layout/fragment_edit_profile.xml" value="0.21622846781504987" />
         <entry key="..\:/Users/ayush/AndroidStudioProjects/Mitram/app/src/main/res/layout/fragment_full_user_detail.xml" value="0.19021739130434784" />
         <entry key="..\:/Users/ayush/AndroidStudioProjects/Mitram/app/src/main/res/layout/fragment_full_user_page.xml" value="0.19021739130434784" />
         <entry key="..\:/Users/ayush/AndroidStudioProjects/Mitram/app/src/main/res/layout/fragment_full_user_profile.xml" value="0.19021739130434784" />
@@ -49,7 +50,7 @@
         <entry key="..\:/Users/ayush/AndroidStudioProjects/Mitram/app/src/main/res/layout/item_connections_modern.xml" value="0.4771084337349398" />
         <entry key="..\:/Users/ayush/AndroidStudioProjects/Mitram/app/src/main/res/layout/item_connections_modern_orignal.xml" value="0.21603260869565216" />
         <entry key="..\:/Users/ayush/AndroidStudioProjects/Mitram/app/src/main/res/layout/item_container_received_message.xml" value="0.4" />
-        <entry key="..\:/Users/ayush/AndroidStudioProjects/Mitram/app/src/main/res/layout/item_container_received_message_fixed.xml" value="1.0" />
+        <entry key="..\:/Users/ayush/AndroidStudioProjects/Mitram/app/src/main/res/layout/item_container_received_message_fixed.xml" value="0.3998109640831758" />
         <entry key="..\:/Users/ayush/AndroidStudioProjects/Mitram/app/src/main/res/layout/item_container_sent_message.xml" value="0.4" />
         <entry key="..\:/Users/ayush/AndroidStudioProjects/Mitram/app/src/main/res/layout/item_container_sent_message_fixed.xml" value="0.4" />
         <entry key="..\:/Users/ayush/AndroidStudioProjects/Mitram/app/src/main/res/layout/item_people_likes.xml" value="0.4" />

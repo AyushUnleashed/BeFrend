@@ -83,7 +83,6 @@ class DiscoverFragment : Fragment() ,CardListener{
 
             if(sharedViewModel.isUsersPresentForDiscoverFragment && sharedViewModel.myUsersList.size!=0)
             {
-
                 loadUsersForDiscoverPageOrignal()
             }
 
@@ -92,6 +91,7 @@ class DiscoverFragment : Fragment() ,CardListener{
                 sharedViewModel.myUsersList.removeAt(0)
             }
             sharedViewModel.numOfSwipes=0
+
 
 
             Log.d("SwipeLog","sharedViewModel.myUsersList:${sharedViewModel.myUsersList.size}")
@@ -117,7 +117,7 @@ class DiscoverFragment : Fragment() ,CardListener{
             }
 
         }
-        else{
+        else{ //first time app launches
             loadUsersForDiscoverPageOrignal()
         }
 
@@ -190,6 +190,9 @@ class DiscoverFragment : Fragment() ,CardListener{
                 false
             }else {true}
 
+
+
+
             // updating ui with users
             withContext(Dispatchers.Main)
             {
@@ -205,9 +208,7 @@ class DiscoverFragment : Fragment() ,CardListener{
                     btnRightSwipe.visibility = View.VISIBLE
                     btnLeftSwipe.visibility = View.VISIBLE
                 }
-
                 setDiscoverPageAdapter()
-
                 Log.d("GENERAL","${sharedViewModel.myUsersList.size} users in Discover");
                 for(user in sharedViewModel.myUsersList)
                 {

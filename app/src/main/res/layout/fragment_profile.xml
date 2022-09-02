@@ -41,6 +41,19 @@
         app:layout_constraintTop_toBottomOf="@id/userImage"
         android:text="No Name"/>
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Edit Profile"
+        android:id="@+id/btnEditProfile"
+        android:textColor="@color/themeApp"
+        android:backgroundTint="@color/themeSecondaryApp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvUserName"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginBottom="100dp" />
+
 
     <Button
         android:layout_width="wrap_content"
