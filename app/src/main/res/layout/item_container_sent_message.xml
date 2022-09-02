@@ -12,48 +12,47 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:cardBackgroundColor="#00E7E9ED"
         app:cardElevation="0dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/background_sent_message">
 
             <TextView
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/tvTextTime"
+                app:layout_constraintEnd_toEndOf="parent"
                 android:id="@+id/tvTextMessage"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="12dp"
-                android:text="Long Long long long long long longlonogonglsfkdsggsdfgfgfgvsgfvsdfvdvs"
+                android:padding="8dp"
+                android:text="Long Lssong lasdaadsdadaong long long long ssss longlonogonglsfkdsggsdfgfgfgvsgfvsdfvdvs"
                 android:fontFamily="@font/montserrat_regular"
                 android:textSize="14sp"
-                android:textColor="@color/white"
-                android:layout_marginBottom="10dp"/>
-
-            <TextView
-                app:layout_constraintRight_toRightOf="parent"
-                android:id="@+id/tvTextTime"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:padding="6dp"
-                android:text="12:32 AM"
-                android:fontFamily="@font/montserrat_regular"
-                android:textSize="11sp"
-                android:textColor="#FFE4E4"
-                app:layout_constraintBottom_toBottomOf="parent"
-                />
-
+                android:textColor="@color/white" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 
 
+    <TextView
+        app:layout_constraintTop_toBottomOf="@id/cardLayout"
+        app:layout_constraintRight_toRightOf="parent"
+        android:id="@+id/tvTextTime"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:paddingBottom="4dp"
+        android:paddingStart="4dp"
+        android:paddingEnd="4dp"
+        android:text="12:32 AM"
+        android:fontFamily="@font/montserrat_regular"
+        android:textSize="11sp"
+        android:textColor="#555555"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

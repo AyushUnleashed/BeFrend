@@ -34,8 +34,17 @@ public class ChatAdapter(chatMessages:MutableList<ChatMessageModel>, senderId:St
 
             tvTextMessage.text = chatMessage.messageText
             Log.d("GENERAL","sender setting ${tvTextMessage.text} as TextMessage")
-            val timeAndDate = chatMessage.dateTime.split("\r?\n|\r".toRegex()).toTypedArray()
-            tvTextTime.text = timeAndDate[0]
+            //val timeAndDate = chatMessage.dateTime.split("\r?\n|\r".toRegex()).toTypedArray()
+            val timeAndDate = chatMessage.dateTime.split("\\s".toRegex()).toTypedArray()
+            val time = timeAndDate[1];
+            val timeArray = time.split(':');
+            var timeHourAndMinutes:String;
+            if(timeArray.size==1){
+                timeHourAndMinutes = time;
+            }else{
+                timeHourAndMinutes = timeArray[0]+":"+timeArray[1];
+            }
+            tvTextTime.text =timeHourAndMinutes;
             Log.d("GENERAL","sender setting ${tvTextTime.text} as TextTime")
         }
     }
@@ -54,8 +63,17 @@ public class ChatAdapter(chatMessages:MutableList<ChatMessageModel>, senderId:St
         {
             tvTextMessage.text = chatMessage.messageText
             Log.d("GENERAL","sender setting ${tvTextMessage.text} as TextMessage")
-            val timeAndDate = chatMessage.dateTime.split("\r?\n|\r".toRegex()).toTypedArray()
-            tvTextTime.text = timeAndDate[0]
+            //val timeAndDate = chatMessage.dateTime.split("\r?\n|\r".toRegex()).toTypedArray()
+            val timeAndDate = chatMessage.dateTime.split("\\s".toRegex()).toTypedArray()
+            val time = timeAndDate[1];
+            val timeArray = time.split(':');
+            var timeHourAndMinutes:String;
+            if(timeArray.size==1){
+                timeHourAndMinutes = time;
+            }else{
+                timeHourAndMinutes = timeArray[0]+":"+timeArray[1];
+            }
+            tvTextTime.text =timeHourAndMinutes;
             Log.d("GENERAL","sender setting ${tvTextTime.text} as TextTime")
 
         }

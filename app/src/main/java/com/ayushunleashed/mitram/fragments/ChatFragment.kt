@@ -1,6 +1,7 @@
 package com.ayushunleashed.mitram.fragments
 
 import android.content.Context
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -8,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -55,6 +57,7 @@ class ChatFragment : Fragment() {
     }
 
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -116,6 +119,7 @@ class ChatFragment : Fragment() {
         return messagesList
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     fun handleClicks()
     {
         binding.btnBackToConnections.setOnClickListener {
@@ -131,10 +135,11 @@ class ChatFragment : Fragment() {
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     fun sendMessage()
     {
         val receiverId = chatUser!!.uid
-        val dateTime =  dateClass.getTimeAndDate()
+        val dateTime =  dateClass.getTimeStamp()
         val messageText = binding.etvEnterMessage.text.toString()
 
         if(messageText!="" && messageText.trim().isNotEmpty())
