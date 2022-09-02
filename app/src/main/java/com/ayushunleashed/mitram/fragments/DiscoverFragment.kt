@@ -75,32 +75,38 @@ class DiscoverFragment : Fragment() ,CardListener{
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        //Load User Image
         loadCurrentUserImage()
+
+        //if you have loaded discover fragment before, not the first time of app launch
+        // we don't call to server again, we used old data from previous call
         if(sharedViewModel.loadedDiscoverFragmentBefore)
         {
+
             Log.d("SwipeLog","sharedViewModel.isUsersPresentForDiscoverFragment:${sharedViewModel.isUsersPresentForDiscoverFragment}")
+            Log.d("SwipeLog","sharedViewModel.loadedDiscoverFragmentBefore:${sharedViewModel.loadedDiscoverFragmentBefore}")
             Log.d("SwipeLog","sharedViewModel.myUsersList.size:${sharedViewModel.myUsersList.size}")
 
-            if(sharedViewModel.isUsersPresentForDiscoverFragment && sharedViewModel.myUsersList.size!=0)
+            // if you have users to load(data is nonZero), and have swiped all cards
+            //so you reload all data;
+            if(sharedViewModel.isUsersPresentForDiscoverFragment && sharedViewModel.myUsersList.size==0)
             {
                 loadUsersForDiscoverPageOrignal()
+                sharedViewModel.numOfSwipes=0
             }
 
+            //whatever you swiped till last time was recorded.
+
+            // we remove that many users from userlist.
             for(i in 0 until sharedViewModel.numOfSwipes)
             {
                 sharedViewModel.myUsersList.removeAt(0)
             }
-            sharedViewModel.numOfSwipes=0
+            sharedViewModel.numOfSwipes=0    // ????????????????????
 
+            printSharedUserList()
 
-
-            Log.d("SwipeLog","sharedViewModel.myUsersList:${sharedViewModel.myUsersList.size}")
-
-            for(i in 0 until (sharedViewModel.myUsersList.size) )
-            {
-                Log.d("SwipeLog","user[$i]: ${sharedViewModel.myUsersList[i].displayName}")
-            }
-            //var count = sharedViewModel.discoverCardPosition
+            // we set the adapter with myUsersList.
             setDiscoverPageAdapter()
 
             // No users to show
@@ -118,9 +124,21 @@ class DiscoverFragment : Fragment() ,CardListener{
 
         }
         else{ //first time app launches
+            // call to server.
+            Log.d("SwipeLog","sharedViewModel.loadedDiscoverFragmentBefore:${sharedViewModel.loadedDiscoverFragmentBefore}")
             loadUsersForDiscoverPageOrignal()
         }
 
+    }
+
+    fun printSharedUserList(){
+        Log.d("SwipeLog","sharedViewModel.myUsersList:${sharedViewModel.myUsersList.size}")
+
+        // print all users after removal with swipes.
+        for(i in 0 until (sharedViewModel.myUsersList.size) )
+        {
+            Log.d("SwipeLog","user[$i]: ${sharedViewModel.myUsersList[i].displayName}")
+        }
     }
 
 
@@ -159,9 +177,14 @@ class DiscoverFragment : Fragment() ,CardListener{
 
     fun loadUsersForDiscoverPageOrignal()
     {
-        sharedViewModel.loadedDiscoverFragmentBefore = true
-        progressBar.visibility = View.VISIBLE
+        // first time, loadedDiscoverFragmentBefore was set to false,
+        //from now on it will be true;
 
+        sharedViewModel.loadedDiscoverFragmentBefore = true
+        progressBar.visibility = View.VISIBLE // starts loading
+
+
+        // we make a network call to fetch user list
         GlobalScope.launch(Dispatchers.IO){
 
             // get current user model from database
@@ -185,11 +208,16 @@ class DiscoverFragment : Fragment() ,CardListener{
             }
 
             usersList = (allUsers - arrayOfPeopleYouDontWant - currentUserModel) as MutableList<UserModel>
+            // usersList has list of final users that we need to show.
+
             sharedViewModel.myUsersList = usersList
             sharedViewModel.isUsersPresentForDiscoverFragment = if(usersList.size==0){
                 false
             }else {true}
 
+            // isUsersPresentForDiscoverFragment handles the edge case
+            // when no users are there to even show (no users from server side)
+            // no one from college signedup for the app.
 
 
 
@@ -208,6 +236,8 @@ class DiscoverFragment : Fragment() ,CardListener{
                     btnRightSwipe.visibility = View.VISIBLE
                     btnLeftSwipe.visibility = View.VISIBLE
                 }
+
+                //setting adapter to see data
                 setDiscoverPageAdapter()
                 Log.d("GENERAL","${sharedViewModel.myUsersList.size} users in Discover");
                 for(user in sharedViewModel.myUsersList)
@@ -398,6 +428,7 @@ class DiscoverFragment : Fragment() ,CardListener{
     override fun onItemShow(position: Int, model: Any) {
         //sharedViewModel.discoverCardPosition = position
         Log.e("SwipeLog", "onItemShow pos: $position model: " + (model as UserModel).displayName.toString())
+        printSharedUserList()
     }
 
     override fun onSwipeCancel(position: Int, model: Any) {
