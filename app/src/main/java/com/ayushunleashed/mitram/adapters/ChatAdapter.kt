@@ -84,13 +84,13 @@ public class ChatAdapter(chatMessages:MutableList<ChatMessageModel>, senderId:St
         if(viewType == VIEW_TYPE_SENT)
         {
             val view = LayoutInflater.from(parent.context).inflate(R.layout.item_container_sent_message,parent,false)
-            var itemViewHolder = SentMessageViewHolder( ItemContainerSentMessageBinding.inflate(LayoutInflater.from(parent.context),parent,false)  , view)
+            val itemViewHolder = SentMessageViewHolder( ItemContainerSentMessageBinding.inflate(LayoutInflater.from(parent.context),parent,false)  , view)
             return  itemViewHolder
         }
         else
         {
             val view = LayoutInflater.from(parent.context).inflate(R.layout.item_container_received_message,parent,false)
-            var itemViewHolder = ReceivedMessageViewHolder( ItemContainerReceivedMessageBinding.inflate(LayoutInflater.from(parent.context),parent,false), view)
+            val itemViewHolder = ReceivedMessageViewHolder( ItemContainerReceivedMessageBinding.inflate(LayoutInflater.from(parent.context),parent,false), view)
             return  itemViewHolder
         }
     }
