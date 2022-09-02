@@ -2,6 +2,7 @@ package com.ayushunleashed.mitram
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
@@ -29,11 +30,14 @@ class FragmentHomeActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         db.collection("users").document(currentUser!!.uid).update("isOnline",true)
+        Log.d("Status","User Online");
     }
 
     override fun onPause() {
         super.onPause()
         db.collection("users").document(currentUser!!.uid).update("isOnline",false)
+        Log.d("Status","User Offline");
+
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

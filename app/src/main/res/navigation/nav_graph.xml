@@ -59,6 +59,9 @@
         <action
             android:id="@+id/action_profileFragment_to_signInActivity"
             app:destination="@id/signInActivity" />
+        <action
+            android:id="@+id/action_profileFragment_to_editProfileFragment"
+            app:destination="@id/editProfileFragment" />
     </fragment>
     <activity
         android:id="@+id/signInActivity"
@@ -89,4 +92,9 @@
             android:id="@+id/action_chatFragment_to_connectionsFragment"
             app:destination="@id/connectionsFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/editProfileFragment"
+        android:name="com.ayushunleashed.mitram.fragments.EditProfileFragment"
+        android:label="fragment_edit_profile"
+        tools:layout="@layout/fragment_edit_profile" />
 </navigation>

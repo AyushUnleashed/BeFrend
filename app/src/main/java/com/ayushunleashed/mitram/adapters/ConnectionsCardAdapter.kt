@@ -143,7 +143,11 @@ class ConnectionsCardAdapter(var users: MutableList<UserModel>,context: Context)
             chats = chats.sortedWith(compareBy { it.dateTime }) as MutableList<ChatMessageModel>
 
             // chats only has 2 messages , 0 ,1 , set the last message, chats[1] to last message
-            lastMessage = chats[1].messageText
+            if(chats.size==1){
+                lastMessage = chats[0].messageText
+            }else if(chats.size==2){
+                lastMessage = chats[1].messageText
+            }
         }
         return lastMessage
     }

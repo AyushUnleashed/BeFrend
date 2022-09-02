@@ -15,6 +15,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import com.ayushunleashed.mitram.R
+import com.ayushunleashed.mitram.databinding.FragmentProfileBinding
 import com.ayushunleashed.mitram.models.UserModel
 import com.bumptech.glide.Glide
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -33,11 +34,15 @@ import org.w3c.dom.Text
 
 
 class ProfileFragment : Fragment() {
+
+    lateinit var binding:FragmentProfileBinding
+
     lateinit var thisContext: Context
-    lateinit var btnLogout:Button
+
     lateinit var db: FirebaseFirestore
-    lateinit var userImage: ImageView
-    lateinit var tvUserName:TextView
+//    lateinit var btnLogout:Button
+//    lateinit var userImage: ImageView
+    //lateinit var tvUserName:TextView
     lateinit var currentUser: FirebaseUser
     private lateinit var googleSignInClient: GoogleSignInClient
     private lateinit var mAuth: FirebaseAuth
@@ -49,6 +54,7 @@ class ProfileFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
 
         if (container != null) {
             thisContext = container.getContext()
@@ -63,18 +69,31 @@ class ProfileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        mAuth= Firebase.auth
-        btnLogout = view.findViewById(R.id.btnLogout)
 
-        btnLogout.setOnClickListener {
+        binding = FragmentProfileBinding.bind(view)
+
+
+        handleButtons()
+        mAuth= Firebase.auth
+//        btnLogout = view.findViewById(R.id.btnLogout)
+//        userImage = view.findViewById(R.id.userImage)
+//        tvUserName = view.findViewById(R.id.tvUserName)
+
+
+        loadUserImage()
+
+        currentUser = FirebaseAuth.getInstance().currentUser!!
+
+    }
+
+    fun handleButtons(){
+        binding.btnLogout.setOnClickListener {
             logOut()
         }
 
-        loadUserImage()
-        userImage = view.findViewById(R.id.userImage)
-        tvUserName = view.findViewById(R.id.tvUserName)
-        currentUser = FirebaseAuth.getInstance().currentUser!!
-
+        binding.btnEditProfile.setOnClickListener {
+            findNavController().navigate(R.id.action_profileFragment_to_editProfileFragment)
+        }
     }
 
     fun logOut() {
@@ -126,10 +145,10 @@ class ProfileFragment : Fragment() {
             withContext(Dispatchers.Main)
             {
                 if (user != null) {
-                    tvUserName.text = displayName
+                    binding.tvUserName.text = displayName
 
-                    Glide.with(userImage.context).load(user.imageUrl).circleCrop().placeholder(R.drawable.img_user_place_holder)
-                        .error(R.drawable.img_user_profile_sample).into(userImage)
+                    Glide.with(binding.userImage.context).load(user.imageUrl).circleCrop().placeholder(R.drawable.img_user_place_holder)
+                        .error(R.drawable.img_user_profile_sample).into(binding.userImage)
                 }
             }
         }

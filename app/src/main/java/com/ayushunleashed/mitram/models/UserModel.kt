@@ -10,9 +10,10 @@ data class UserModel(
     val displayName: String? = "",
     val imageUrl: String? ="",
     val bio: String? ="",
+    var isOnline:Boolean = false,
     val likedBy: ArrayList<String> = ArrayList(),
     val connections: ArrayList<String> = ArrayList(),
     val usersYouLiked:ArrayList<String> = ArrayList(),
-    var fcmToken:String? = "",
-    var isOnline:Boolean = false
+    var fcmToken:String? = ""
+
 ): Parcelable
