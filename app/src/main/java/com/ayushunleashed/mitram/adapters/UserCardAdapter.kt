@@ -2,8 +2,12 @@ package com.ayushunleashed.mitram.adapters
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.BlurMaskFilter
+import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
@@ -15,12 +19,17 @@ import com.asynctaskcoffee.cardstack.CardContainerAdapter
 import com.ayushunleashed.mitram.R
 import com.ayushunleashed.mitram.models.UserModel
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.target.CustomTarget
+import com.bumptech.glide.request.transition.Transition
+import eightbitlab.com.blurview.BlurView
+import eightbitlab.com.blurview.RenderScriptBlur
 
 
 class UserCardAdapter(var users: List<UserModel>,context: Context): CardContainerAdapter() {
 
     var layoutInflater: LayoutInflater = LayoutInflater.from(context)
     var thisContext:Context = context
+    lateinit var myBlurView :View
 
 
     @SuppressLint("InflateParams")
@@ -34,13 +43,25 @@ class UserCardAdapter(var users: List<UserModel>,context: Context): CardContaine
         var btnShowFullProfile = view.findViewById<ImageButton>(R.id.btnShowFullProfile)
         var myCardView =view.findViewById<CardView>(R.id.myCardView)
         val user = getItem(position)
-
+        myBlurView = view.findViewById<BlurView>(R.id.blurView)
         tvUserName.text = users[position].displayName
         tvUserBio.text = users[position].bio
         Glide.with(imgViewUserProfile.context).load(users[position].imageUrl).placeholder(R.drawable.img_user_place_holder)
             .error(R.drawable.img_user_profile_sample).into(imgViewUserProfile)
 
-        //
+
+
+
+
+        var radius =10f
+        // Optional:
+        // Set drawable to draw in the beginning of each blurred frame.
+        // Can be used in case your layout has a lot of transparent space and your content
+        // gets a too low alpha value after blur is applied.
+
+        (myBlurView as BlurView?)?.setupWith(myCardView, RenderScriptBlur(thisContext))
+            ?.setBlurRadius(radius) // or RenderEffectBlur
+
         val bundle = bundleOf("currentUser" to users[position])
 
         //defining nav controller for navigation
