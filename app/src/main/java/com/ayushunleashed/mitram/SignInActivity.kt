@@ -63,6 +63,7 @@ class SignInActivity : AppCompatActivity() {
 
         // when sign in button is clicked , start signIn() function.
         gSignInButton.setOnClickListener {
+            Log.d("GENERAL","Clicked on Signin Button")
             signIn()
         }
     }

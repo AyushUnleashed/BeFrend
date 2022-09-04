@@ -48,6 +48,9 @@ class FragmentHomeActivity : AppCompatActivity() {
 
         setupNav()
         getTokenFun()
+
+        db.collection("users").document(currentUser!!.uid).update("isOnline",true)
+        Log.d("Status","User Online");
     }
 
 
