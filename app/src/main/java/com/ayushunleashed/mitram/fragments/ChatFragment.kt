@@ -140,7 +140,9 @@ class ChatFragment : Fragment() {
     {
         val receiverId = chatUser!!.uid
         val dateTime =  dateClass.getTimeStamp()
-        val messageText = binding.etvEnterMessage.text.toString()
+        var messageText = binding.etvEnterMessage.text.toString()
+        messageText = messageText.replace("(^[\\r\\n]+|[\\r\\n]+$)".toRegex(), "");
+
 
         if(messageText!="" && messageText.trim().isNotEmpty())
         {

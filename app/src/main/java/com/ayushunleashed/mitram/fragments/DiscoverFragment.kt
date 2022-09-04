@@ -346,7 +346,7 @@ class DiscoverFragment : Fragment() ,CardListener{
         //sharedViewModel.myUsersList.removeAt(position)
         val model:UserModel = model as UserModel
         val displayName = model.displayName.toString()
-        Toast.makeText(thisContext,"Left Swiped $displayName ",Toast.LENGTH_SHORT).show()
+            //Toast.makeText(thisContext,"Left Swiped $displayName ",Toast.LENGTH_SHORT).show()
 
         // increasing number of swipes, later on we will remove users according to this, on fragment reload
         sharedViewModel.numOfSwipes++;
@@ -399,7 +399,7 @@ class DiscoverFragment : Fragment() ,CardListener{
 
                 withContext(Dispatchers.Main)
                 {
-                    Toast.makeText(thisContext,"It's a match",Toast.LENGTH_SHORT).show()
+                    //Toast.makeText(thisContext,"It's a match",Toast.LENGTH_SHORT).show()
                 }
             }
         }
