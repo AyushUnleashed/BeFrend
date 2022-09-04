@@ -5,6 +5,7 @@ import android.app.Activity.RESULT_OK
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.opengl.Visibility
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -111,6 +112,9 @@ class EditProfileFragment : Fragment() {
             Toast.makeText(thisContext,"Succesfully Uploaded Profile Picture",Toast.LENGTH_SHORT).show()
             Log.d("GENERAL","Image Uploaded Successfully")
 
+            binding.progressBar.visibility = View.GONE
+            binding.btnSaveProfileDetails.visibility = View.VISIBLE
+
             storageReference.downloadUrl.addOnSuccessListener {
                 Log.d("GENERAL","Image URL Fetched")
                 currentUserModel.imageUrl = it.toString()
@@ -120,6 +124,10 @@ class EditProfileFragment : Fragment() {
         }.addOnFailureListener{
             Toast.makeText(thisContext,"Upload Failed: $it",Toast.LENGTH_SHORT).show()
             Log.d("GENERAL","Image Failed: $it")
+
+            binding.progressBar.visibility = View.GONE
+            binding.btnSaveProfileDetails.visibility = View.VISIBLE
+
         }
     }
 
@@ -130,12 +138,13 @@ class EditProfileFragment : Fragment() {
         val intent = Intent()
         intent.type = "image/*"
         intent.action = Intent.ACTION_GET_CONTENT
-
         checkPermission.launch(intent)
     }
 
 
     private fun onActivityResult(requestCode: Int, result: ActivityResult) {
+        binding.progressBar.visibility = View.VISIBLE
+        binding.btnSaveProfileDetails.visibility = View.GONE
         if (result.resultCode == Activity.RESULT_OK) {
             val data = result.data
             when (requestCode) {
@@ -167,21 +176,6 @@ class EditProfileFragment : Fragment() {
 
     fun loadUserImage()
     {
-//        GlobalScope.launch(Dispatchers.IO) {
-//            val user = db.collection("users").document(currentUser.uid).get().await().toObject(
-//                UserModel::class.java)
-//            val displayName = user?.displayName
-//
-//            withContext(Dispatchers.Main)
-//            {
-//                if (user != null) {
-//
-//                    Glide.with(binding.userImage.context).load(user.imageUrl).circleCrop().placeholder(R.drawable.img_user_place_holder)
-//                        .error(R.drawable.img_user_profile_sample).into(binding.userImage)
-//                }
-//            }
-//        }
-
         Glide.with(binding.userImage.context).load(currentUserModel.imageUrl).circleCrop().placeholder(R.drawable.img_user_place_holder)
                         .error(R.drawable.img_user_profile_sample).into(binding.userImage)
     }
