@@ -146,7 +146,10 @@ class DiscoverFragment : Fragment() ,CardListener{
     {
         val userDao = UserDao()
         runBlocking {
-            currentUserModel =userDao.getUserById(currentUser.uid).await().toObject(UserModel::class.java)!!
+            //currentUserModel =userDao.getUserById(currentUser.uid).await().toObject(UserModel::class.java)!!
+
+            currentUserModel = db.collection("users").document(currentUser.uid).get().await()
+                .toObject(UserModel::class.java)!!
             sharedViewModel.currentUserModel = currentUserModel
         }
 
@@ -196,7 +199,7 @@ class DiscoverFragment : Fragment() ,CardListener{
         GlobalScope.launch(Dispatchers.IO){
 
             // get current user model from database
-            val currentUserModel = db.collection("users").document(currentUser.uid).get().await().toObject(UserModel::class.java)
+            //val currentUserModel = db.collection("users").document(currentUser.uid).get().await().toObject(UserModel::class.java)
             val usersYouLiked = currentUserModel!!.usersYouLiked
             val connections = currentUserModel.connections
             val combinedArray = usersYouLiked + connections
@@ -216,7 +219,10 @@ class DiscoverFragment : Fragment() ,CardListener{
             }
 
             usersList = (allUsers - arrayOfPeopleYouDontWant - currentUserModel) as MutableList<UserModel>
+            Log.d("SwipeLog","Deleted ${currentUserModel.displayName}")
             // usersList has list of final users that we need to show.
+
+
 
             sharedViewModel.myUsersList = usersList
             sharedViewModel.isUsersPresentForDiscoverFragment = if(usersList.size==0){
@@ -247,11 +253,7 @@ class DiscoverFragment : Fragment() ,CardListener{
 
                 //setting adapter to see data
                 setDiscoverPageAdapter()
-                Log.d("GENERAL","${sharedViewModel.myUsersList.size} users in Discover");
-                for(user in sharedViewModel.myUsersList)
-                {
-                    Log.d("GENERAL","**user:"+user.displayName.toString());
-                }
+                printSharedUserList()
             }
         }
     }
@@ -436,7 +438,7 @@ class DiscoverFragment : Fragment() ,CardListener{
     override fun onItemShow(position: Int, model: Any) {
         //sharedViewModel.discoverCardPosition = position
         Log.e("SwipeLog", "onItemShow pos: $position model: " + (model as UserModel).displayName.toString())
-        printSharedUserList()
+
     }
 
     override fun onSwipeCancel(position: Int, model: Any) {
