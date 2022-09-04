@@ -144,4 +144,7 @@ dependencies {
     //blur views
     implementation 'com.github.Dimezis:BlurView:version-2.0.2'
 
+    //Image Compression
+    implementation 'com.github.Shouheng88:compressor:1.6.0'
+
 }
