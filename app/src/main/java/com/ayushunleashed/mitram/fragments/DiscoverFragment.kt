@@ -465,8 +465,7 @@ class DiscoverFragment : Fragment() ,CardListener{
         sharedViewModel.numOfSwipes = 0
         loadUsersForDiscoverPageOrignal()
         //usersList = defaultProfiles()
-        userCardAdapter = UserCardAdapter(usersList,thisContext)
-        cardContainer.setAdapter(userCardAdapter)
+        setDiscoverPageAdapter()
         btnReloadDiscoverUsers.visibility = View.GONE
         btnLeftSwipe.visibility = View.VISIBLE
         btnRightSwipe.visibility = View.VISIBLE
