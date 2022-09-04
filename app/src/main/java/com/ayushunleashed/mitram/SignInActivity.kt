@@ -138,7 +138,7 @@ class SignInActivity : AppCompatActivity() {
             val user = firebaseuser.displayName?.let {
                 UserModel(
                     firebaseuser.uid,
-                    it, firebaseuser.photoUrl.toString(),"Default Bio of ${firebaseuser.displayName}"
+                    it, firebaseuser.photoUrl.toString(),"Hey there! My name is ${firebaseuser.displayName} . \nI am glad to be here"
                 )
             }
             val userDao = UserDao()
