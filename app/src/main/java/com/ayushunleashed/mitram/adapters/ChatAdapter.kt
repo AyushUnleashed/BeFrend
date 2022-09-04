@@ -2,7 +2,6 @@ package com.ayushunleashed.mitram.adapters
 
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.LayoutInflater.from
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
@@ -11,6 +10,8 @@ import com.ayushunleashed.mitram.R
 import com.ayushunleashed.mitram.databinding.ItemContainerReceivedMessageBinding
 import com.ayushunleashed.mitram.databinding.ItemContainerSentMessageBinding
 import com.ayushunleashed.mitram.models.ChatMessageModel
+import com.ayushunleashed.mitram.utils.DateClass
+import java.text.SimpleDateFormat
 
 public class ChatAdapter(chatMessages:MutableList<ChatMessageModel>, senderId:String): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -36,7 +37,9 @@ public class ChatAdapter(chatMessages:MutableList<ChatMessageModel>, senderId:St
             Log.d("GENERAL","sender setting ${tvTextMessage.text} as TextMessage")
             //val timeAndDate = chatMessage.dateTime.split("\r?\n|\r".toRegex()).toTypedArray()
             val timeAndDate = chatMessage.dateTime.split("\\s".toRegex()).toTypedArray()
-            val time = timeAndDate[1];
+            var time = timeAndDate[1];
+            time = DateClass().convertTime(time);
+            val date = DateClass().convertDate(timeAndDate[0]);
             val timeArray = time.split(':');
             var timeHourAndMinutes:String;
             if(timeArray.size==1){
@@ -48,6 +51,9 @@ public class ChatAdapter(chatMessages:MutableList<ChatMessageModel>, senderId:St
             Log.d("GENERAL","sender setting ${tvTextTime.text} as TextTime")
         }
     }
+
+
+
 
     class ReceivedMessageViewHolder(itemContainerReceivedMessageBinding: ItemContainerReceivedMessageBinding,
                                     itemView: View
@@ -65,8 +71,10 @@ public class ChatAdapter(chatMessages:MutableList<ChatMessageModel>, senderId:St
             Log.d("GENERAL","sender setting ${tvTextMessage.text} as TextMessage")
             //val timeAndDate = chatMessage.dateTime.split("\r?\n|\r".toRegex()).toTypedArray()
             val timeAndDate = chatMessage.dateTime.split("\\s".toRegex()).toTypedArray()
-            val time = timeAndDate[1];
+            var time = timeAndDate[1];
+            time = DateClass().convertTime(time);
             val timeArray = time.split(':');
+            val date = DateClass().convertDate(timeAndDate[0]);
             var timeHourAndMinutes:String;
             if(timeArray.size==1){
                 timeHourAndMinutes = time;
