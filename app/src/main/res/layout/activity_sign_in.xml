@@ -40,8 +40,8 @@
         app:layout_constraintTop_toBottomOf="@id/tvWelcome"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Find and interact with people
-having similar skils and interest"
+        android:text="Find and interact with People
+having similar skills and interests"
         android:layout_marginEnd="20dp"
         android:fontFamily="@font/montserrat_regular"
         android:textSize="16sp"
