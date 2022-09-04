@@ -58,7 +58,7 @@ class DiscoverFragment : Fragment() ,CardListener{
         };
 
         myView = inflater.inflate(R.layout.fragment_discover, container, false)
-        sharedViewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
+        sharedViewModel = ViewModelProvider(requireActivity())[SharedViewModel::class.java]
         setupViews(myView)
         setupButtons()
 
@@ -146,9 +146,17 @@ class DiscoverFragment : Fragment() ,CardListener{
     {
         val userDao = UserDao()
         runBlocking {
-            currentUserModel =userDao.getUserById(currentUser!!.uid).await().toObject(UserModel::class.java)!!
+            currentUserModel =userDao.getUserById(currentUser.uid).await().toObject(UserModel::class.java)!!
             sharedViewModel.currentUserModel = currentUserModel
         }
+
+//        GlobalScope.launch(Dispatchers.IO) {
+//
+//            currentUserModel = db.collection("users").document(currentUser.uid).get().await()
+//                .toObject(UserModel::class.java)!!
+//            sharedViewModel.currentUserModel = currentUserModel
+//        }
+
     }
 
     fun setupButtons()
