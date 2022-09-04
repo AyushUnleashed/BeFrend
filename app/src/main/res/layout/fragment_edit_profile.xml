@@ -7,6 +7,8 @@
     tools:context=".fragments.EditProfileFragment"
     android:background="@color/themeSecondaryApp">
 
+
+
     <TextView
         android:id="@+id/tvPageTitle"
         android:layout_width="wrap_content"
@@ -28,6 +30,17 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvPageTitle" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@id/userImage"
+        app:layout_constraintBottom_toBottomOf="@id/userImage"
+        app:layout_constraintLeft_toLeftOf="@id/userImage"
+        app:layout_constraintRight_toRightOf="@id/userImage"
+        android:visibility="gone">
+    </ProgressBar>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/btnEditImage"
