@@ -19,7 +19,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/background_received_message">
 
@@ -32,7 +32,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="8dp"
-                tools:text="Long Lssong lasdaadsdadaong long long long ssss longlonogonglsfkdsggsdfgfgfgvsgfvsdfvdvs"
+                tools:text="hello"
                 android:fontFamily="@font/montserrat_regular"
                 android:textSize="14sp"
                 android:textColor="@color/black" />

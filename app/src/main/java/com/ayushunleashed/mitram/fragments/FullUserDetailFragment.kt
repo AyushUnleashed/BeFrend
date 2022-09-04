@@ -1,5 +1,6 @@
 package com.ayushunleashed.mitram.fragments
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -9,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import com.ayushunleashed.mitram.R
 import com.ayushunleashed.mitram.databinding.FragmentFullUserDetailBinding
@@ -23,6 +25,7 @@ import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 
 class FullUserDetailFragment : Fragment() {
+    lateinit var thisContext: Context
 
     private lateinit var binding:FragmentFullUserDetailBinding
 
@@ -33,6 +36,10 @@ class FullUserDetailFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+        if (container != null) {
+            thisContext = container.context
+        };
 
         // Inflate the layout for this fragment
         val view =  inflater.inflate(R.layout.fragment_full_user_detail, container, false)
@@ -46,20 +53,23 @@ class FullUserDetailFragment : Fragment() {
         userToLoad = requireArguments().getParcelable<UserModel>("currentUser")
         Log.d("GENERAL","userToLoad:${userToLoad.toString()}")
         loadUserDetails()
-        handleBackButton()
+        handleButtons()
 
     }
 
-    fun handleBackButton()
+    fun handleButtons()
     {
         binding.btnGoBackToDiscoverPage.setOnClickListener{
             findNavController().navigate(R.id.action_fullUserProfileFragment_to_discoverFragment)
+        }
+
+        binding.btnRightSwipe.setOnClickListener {
+            Toast.makeText(thisContext,"This Feature is Not Yet Available",Toast.LENGTH_SHORT).show()
         }
     }
 
     fun loadUserDetails()
     {
-
         // load image
         Glide.with(binding.imgViewUserProfile.context).load(userToLoad!!.imageUrl).placeholder(R.drawable.img_user_place_holder)
             .error(R.drawable.img_user_not_found).into(binding.imgViewUserProfile)
@@ -69,7 +79,6 @@ class FullUserDetailFragment : Fragment() {
 
         //load bio
         binding.tvUserBioDetailPage.text = userToLoad!!.bio
-
 
     }
 

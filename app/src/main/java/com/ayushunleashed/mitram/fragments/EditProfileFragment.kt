@@ -105,11 +105,10 @@ class EditProfileFragment : Fragment() {
     fun uploadImage(){
         Log.d("GENERAL","Upload Image Called")
         val fileName = currentUserModel.uid + "_profile_image"
-        Toast.makeText(thisContext,"$fileName",Toast.LENGTH_SHORT).show()
 
         val storageReference = FirebaseStorage.getInstance().getReference("images/profileImages/$fileName")
         storageReference.putFile(profileImageURI).addOnSuccessListener {
-            Toast.makeText(thisContext,"Succesfully Uploaded Profile Picture",Toast.LENGTH_SHORT).show()
+            Toast.makeText(thisContext,"Successfully Uploaded Profile Picture",Toast.LENGTH_SHORT).show()
             Log.d("GENERAL","Image Uploaded Successfully")
 
             binding.progressBar.visibility = View.GONE

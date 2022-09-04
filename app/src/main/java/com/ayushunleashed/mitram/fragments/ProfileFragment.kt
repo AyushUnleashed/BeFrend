@@ -13,8 +13,10 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.ayushunleashed.mitram.R
+import com.ayushunleashed.mitram.SharedViewModel
 import com.ayushunleashed.mitram.databinding.FragmentProfileBinding
 import com.ayushunleashed.mitram.models.UserModel
 import com.bumptech.glide.Glide
@@ -40,12 +42,12 @@ class ProfileFragment : Fragment() {
     lateinit var thisContext: Context
 
     lateinit var db: FirebaseFirestore
-//    lateinit var btnLogout:Button
-//    lateinit var userImage: ImageView
-    //lateinit var tvUserName:TextView
     lateinit var currentUser: FirebaseUser
     private lateinit var googleSignInClient: GoogleSignInClient
     private lateinit var mAuth: FirebaseAuth
+
+    lateinit var sharedViewModel:SharedViewModel
+    lateinit var currentUserModel:UserModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -71,19 +73,29 @@ class ProfileFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding = FragmentProfileBinding.bind(view)
+        sharedViewModel = ViewModelProvider(requireActivity())[SharedViewModel::class.java]
+        currentUserModel = sharedViewModel.currentUserModel;
 
 
         handleButtons()
         mAuth= Firebase.auth
-//        btnLogout = view.findViewById(R.id.btnLogout)
-//        userImage = view.findViewById(R.id.userImage)
-//        tvUserName = view.findViewById(R.id.tvUserName)
-
 
         loadUserImage()
+        loadAllDetails()
+
 
         currentUser = FirebaseAuth.getInstance().currentUser!!
+    }
 
+    fun loadAllDetails(){
+        binding.tvUserName.text = currentUserModel.displayName
+        binding.tvUserBio.text = currentUserModel.bio
+    }
+
+    fun loadUserImage()
+    {
+        Glide.with(binding.userImage.context).load(currentUserModel.imageUrl).circleCrop().placeholder(R.drawable.img_user_place_holder)
+            .error(R.drawable.img_user_profile_sample).into(binding.userImage)
     }
 
     fun handleButtons(){
@@ -135,23 +147,4 @@ class ProfileFragment : Fragment() {
         }
     }
 
-    fun loadUserImage()
-    {
-        GlobalScope.launch(Dispatchers.IO) {
-            val user = db.collection("users").document(currentUser.uid).get().await().toObject(
-                UserModel::class.java)
-            val displayName = user?.displayName
-
-            withContext(Dispatchers.Main)
-            {
-                if (user != null) {
-                    binding.tvUserName.text = displayName
-
-                    Glide.with(binding.userImage.context).load(user.imageUrl).circleCrop().placeholder(R.drawable.img_user_place_holder)
-                        .error(R.drawable.img_user_profile_sample).into(binding.userImage)
-                }
-            }
-        }
-
-    }
 }
