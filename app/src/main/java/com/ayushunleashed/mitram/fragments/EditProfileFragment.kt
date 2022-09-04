@@ -17,6 +17,7 @@ import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat.startActivityForResult
+import androidx.core.net.toFile
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.ayushunleashed.mitram.FragmentHomeActivity
@@ -35,6 +36,9 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
+import me.shouheng.compress.Compress
+import me.shouheng.compress.concrete
+import me.shouheng.compress.strategy.config.ScaleMode
 import java.net.URI
 
 class EditProfileFragment : Fragment() {
@@ -150,8 +154,25 @@ class EditProfileFragment : Fragment() {
                 123 -> {
                     Log.d("GENERAL","Successful activity result")
                     profileImageURI = data?.data!!
-                    binding.userImage.setImageURI(profileImageURI)
-                    uploadImage()
+
+                    GlobalScope.launch {
+                        val myResult = Compress.with(thisContext, profileImageURI)
+                            .setQuality(80)
+                            .concrete {
+//                                withMaxWidth(400f)
+//                                withMaxHeight(400f)
+//                                withScaleMode(ScaleMode.SCALE_HEIGHT)
+//                                withIgnoreIfSmaller(true)
+                            }
+                            .get(Dispatchers.IO)
+                        withContext(Dispatchers.Main) {
+
+                            profileImageURI = Uri.fromFile(myResult)
+                            binding.userImage.setImageURI(profileImageURI)
+                            uploadImage()
+                        }
+                    }
+
                 }
             }
         }
