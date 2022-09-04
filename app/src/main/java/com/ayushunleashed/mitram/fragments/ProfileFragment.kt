@@ -95,7 +95,7 @@ class ProfileFragment : Fragment() {
     fun loadUserImage()
     {
         Glide.with(binding.userImage.context).load(currentUserModel.imageUrl).circleCrop().placeholder(R.drawable.img_user_place_holder)
-            .error(R.drawable.img_user_profile_sample).into(binding.userImage)
+            .error(R.drawable.img_keep_calm_reload).into(binding.userImage)
     }
 
     fun handleButtons(){
