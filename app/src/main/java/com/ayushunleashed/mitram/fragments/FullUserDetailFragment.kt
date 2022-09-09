@@ -72,7 +72,7 @@ class FullUserDetailFragment : Fragment() {
     {
         // load image
         Glide.with(binding.imgViewUserProfile.context).load(userToLoad!!.imageUrl).placeholder(R.drawable.img_user_place_holder)
-            .error(R.drawable.img_user_not_found).into(binding.imgViewUserProfile)
+            .error(R.drawable.img_keep_calm_reload).into(binding.imgViewUserProfile)
 
         //load name
         binding.tvUserNameDetailPage.text = userToLoad!!.displayName

@@ -47,7 +47,7 @@ class UserCardAdapter(var users: List<UserModel>,context: Context): CardContaine
         tvUserName.text = users[position].displayName
         tvUserBio.text = users[position].bio
         Glide.with(imgViewUserProfile.context).load(users[position].imageUrl).placeholder(R.drawable.img_user_place_holder)
-            .error(R.drawable.img_user_profile_sample).into(imgViewUserProfile)
+            .error(R.drawable.img_keep_calm_reload).into(imgViewUserProfile)
 
 
 

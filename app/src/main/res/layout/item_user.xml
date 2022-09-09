@@ -49,15 +49,24 @@
 
                 <TextView
                     android:id="@+id/tvUserName"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
+                    android:layout_marginEnd="30dp"
                     android:layout_marginTop="18dp"
+                    android:maxLines="2"
+                    android:ellipsize="end"
                     android:fontFamily="@font/montserrat_semi_bold"
-                    android:text="Ayush Yadav"
+                    android:text="Ayush Yadav don’t know what to write right now so i’m just
+typing random, LBC is my wI don’t know what to write right now so i’m just
+typing random, LBC is my wI don’t know what to write right now so i’m just
+typing random, LBC is my wI don’t knoat to write right now so i’m just
+typing random, LBC is my w"
                     android:textColor="@color/white"
                     android:textSize="20sp"
                     app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:flow_horizontalBias="0"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
@@ -68,8 +77,12 @@
                     android:layout_marginTop="3dp"
                     android:layout_marginEnd="20dp"
                     android:fontFamily="@font/montserrat_regular"
-                    android:text="Interested in Software Developement, I Try to Expose Myself to new Things, I like MultiLingual Songs btw."
+                    android:text="Interested in Softwarr we Developement, I Try to Expose Myself to new Things, I like MultiLingual Songs btw."
                     android:textColor="@color/white"
+                    android:maxLines="4"
+                    android:ellipsize="end"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:flow_verticalBias="0"
                     android:textSize="12sp"
                     app:layout_constraintEnd_toStartOf="@id/btnShowFullProfile"
                     app:layout_constraintStart_toStartOf="parent"

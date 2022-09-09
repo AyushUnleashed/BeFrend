@@ -253,7 +253,7 @@ class ChatFragment : Fragment() {
     {
         // load image
         Glide.with(binding.imgReceiverUserProfile.context).load(chatUser!!.imageUrl).circleCrop().placeholder(R.drawable.img_user_place_holder)
-            .error(R.drawable.img_user_not_found).into(binding.imgReceiverUserProfile)
+            .error(R.drawable.img_keep_calm_reload).into(binding.imgReceiverUserProfile)
 
         //load name
         binding.tvReceiverName.text = chatUser!!.displayName

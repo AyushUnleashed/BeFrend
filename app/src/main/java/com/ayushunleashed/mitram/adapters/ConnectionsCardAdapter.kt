@@ -60,7 +60,7 @@ class ConnectionsCardAdapter(var users: MutableList<UserModel>,context: Context)
         val words = name?.split("\\s".toRegex())?.toTypedArray()
         holder.tvUserName.text = name?.toUpperCase()
         Glide.with(holder.imgViewUserProfile.context).load(users[position].imageUrl).circleCrop().placeholder(R.drawable.img_user_place_holder)
-            .error(R.drawable.img_user_not_found).into(holder.imgViewUserProfile)
+            .error(R.drawable.img_keep_calm_reload).into(holder.imgViewUserProfile)
 
         holder.tvLastMessage.text =  getLastMessage(position)
 
