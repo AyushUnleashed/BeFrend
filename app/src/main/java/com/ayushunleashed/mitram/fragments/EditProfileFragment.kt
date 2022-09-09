@@ -180,8 +180,12 @@ class EditProfileFragment : Fragment() {
 
     fun saveDataToDB(){
 
-        currentUserModel.displayName =  binding.etvUserNameEditProfile.text.toString()
-        currentUserModel.bio = binding.etvUserBioEditBio.text.toString()
+        var userName = binding.etvUserNameEditProfile.text.toString()
+        userName = userName.replace("(^[\\r\\n]+|[\\r\\n]+$)".toRegex(), "");
+        var userBio = binding.etvUserBioEditBio.text.toString()
+        userBio = userBio.replace("(^[\\r\\n]+|[\\r\\n]+$)".toRegex(), "");
+        currentUserModel.displayName =  userName
+        currentUserModel.bio = userBio
 
         Log.d("GENERAL",currentUserModel.toString())
 
