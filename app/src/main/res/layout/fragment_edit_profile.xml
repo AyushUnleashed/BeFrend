@@ -96,12 +96,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="I don’t know what to write right now so i’m just
-typing random, LBC is my wI don’t know what to write right now so i’m just
-typing random, LBC is my wI don’t know what to write right now so i’m just
-typing random, LBC is my wI don’t knoat to write right now so i’m just
-typing random, LBC is my wI don’t know what to write right now so i’m just
-typing random, LBC is my wI don’t know what to write right now so i’m just
-typing random, LBC is my w"
+typing random, LBC is my way"
         app:layout_constraintVertical_bias="0"
         android:layout_marginStart="30dp"
         app:layout_constraintBottom_toBottomOf="parent"
