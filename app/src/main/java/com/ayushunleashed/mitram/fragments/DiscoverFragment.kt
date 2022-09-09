@@ -183,7 +183,7 @@ class DiscoverFragment : Fragment() ,CardListener{
     fun loadCurrentUserImage()
     {
         Glide.with(userImage.context).load(currentUserModel.imageUrl).circleCrop().placeholder(R.drawable.img_user_place_holder)
-            .error(R.drawable.img_user_profile_sample).into(userImage)
+            .error(R.drawable.img_keep_calm_reload).into(userImage)
     }
 
     fun loadUsersForDiscoverPageOrignal()
