@@ -22,6 +22,7 @@ import com.ayushunleashed.mitram.databinding.FragmentEditProfileBinding
 import com.ayushunleashed.mitram.models.UserModel
 import com.ayushunleashed.mitram.utils.StringHelperClass
 import com.bumptech.glide.Glide
+import com.google.android.material.chip.Chip
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
@@ -79,6 +80,7 @@ class EditProfileFragment : Fragment() {
         currentUser = FirebaseAuth.getInstance().currentUser!!
         loadUserImage()
         loadAllDetails()
+        loadChipsFromDB()
 
 
     }
@@ -92,6 +94,25 @@ class EditProfileFragment : Fragment() {
         binding.btnSaveProfileDetails.setOnClickListener {
             saveDataToDB()
         }
+
+        binding.btnEditSkills.setOnClickListener {
+            findNavController().navigate(R.id.action_editProfileFragment_to_editSkillsFragment);
+        }
+    }
+
+    private fun loadChipsFromDB(){
+        for(skill in currentUserModel.skills){
+            addChip(skill)
+        }
+    }
+
+    private fun addChip(input:String){
+        val chip = layoutInflater.inflate(R.layout.single_chip_layout, binding.skillsChipGroup, false) as Chip
+        chip.text = input
+        chip.setOnCloseIconClickListener{
+            binding.skillsChipGroup.removeView(chip)
+        }
+        binding.skillsChipGroup.addView(chip)
     }
 
     fun loadAllDetails(){
@@ -110,7 +131,7 @@ class EditProfileFragment : Fragment() {
         }
 
         binding.etvUserInterestsEditProfile.setText(userInterestsString)
-        binding.etvUserSkillsEditProfile.setText(userSkillsString)
+        //binding.etvUserSkillsEditProfile.setText(userSkillsString)
     }
 
     fun uploadImage(){
@@ -210,32 +231,32 @@ class EditProfileFragment : Fragment() {
         var userBio = binding.etvUserBioEditBio.text.toString()
         userBio = stringHelper.removeEmptyLinesFromStartAndEnd(userBio)
 
-        var userSkillsString = binding.etvUserSkillsEditProfile.text.toString()
-        userSkillsString = stringHelper.removeEmptyLinesFromStartAndEnd(userSkillsString)
+        //var userSkillsString = binding.etvUserSkillsEditProfile.text.toString()
+        //userSkillsString = stringHelper.removeEmptyLinesFromStartAndEnd(userSkillsString)
 
-        var userSkillsArray:ArrayList<String> = userSkillsString.split(",") as ArrayList<String>
-        Log.d("GENERAL",userSkillsArray.toString())
-        userSkillsArray = removeEmptyInterestOrSkill(userSkillsArray)
-        Log.d("GENERAL",userSkillsArray.toString())
-        userSkillsArray = removeSpacesFromArrayElements(userSkillsArray)
-        Log.d("GENERAL",userSkillsArray.toString())
-
-        var userInterestsString = binding.etvUserInterestsEditProfile.text.toString()
-        userInterestsString = stringHelper.removeEmptyLinesFromStartAndEnd(userInterestsString)
-
-
-        var userInterestsArray:ArrayList<String> = userInterestsString.split(",") as ArrayList<String>
-        Log.d("GENERAL",userInterestsArray.toString())
-        userInterestsArray = removeEmptyInterestOrSkill(userInterestsArray)
-        Log.d("GENERAL",userInterestsArray.toString())
-        userInterestsArray = removeSpacesFromArrayElements(userInterestsArray)
-        Log.d("GENERAL",userInterestsArray.toString())
+        //var userSkillsArray:ArrayList<String> = userSkillsString.split(",") as ArrayList<String>
+//        Log.d("GENERAL",userSkillsArray.toString())
+//        userSkillsArray = removeEmptyInterestOrSkill(userSkillsArray)
+//        Log.d("GENERAL",userSkillsArray.toString())
+//        userSkillsArray = removeSpacesFromArrayElements(userSkillsArray)
+//        Log.d("GENERAL",userSkillsArray.toString())
+//
+//        var userInterestsString = binding.etvUserInterestsEditProfile.text.toString()
+//        userInterestsString = stringHelper.removeEmptyLinesFromStartAndEnd(userInterestsString)
+//
+//
+//        var userInterestsArray:ArrayList<String> = userInterestsString.split(",") as ArrayList<String>
+//        Log.d("GENERAL",userInterestsArray.toString())
+//        userInterestsArray = removeEmptyInterestOrSkill(userInterestsArray)
+//        Log.d("GENERAL",userInterestsArray.toString())
+//        userInterestsArray = removeSpacesFromArrayElements(userInterestsArray)
+//        Log.d("GENERAL",userInterestsArray.toString())
 
 
         currentUserModel.displayName =  userName
         currentUserModel.bio = userBio
-        currentUserModel.interests = userInterestsArray
-        currentUserModel.skills = userSkillsArray
+       // currentUserModel.interests = userInterestsArray
+        //currentUserModel.skills = userSkillsArray
 
         Log.d("GENERAL",currentUserModel.toString())
 

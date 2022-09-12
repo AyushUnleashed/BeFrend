@@ -100,5 +100,17 @@
         <action
             android:id="@+id/action_editProfileFragment_to_profileFragment"
             app:destination="@id/profileFragment" />
+        <action
+            android:id="@+id/action_editProfileFragment_to_editSkillsFragment"
+            app:destination="@id/editSkillsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/editSkillsFragment"
+        android:name="com.ayushunleashed.mitram.fragments.EditSkillsFragment"
+        android:label="fragment_edit_skills"
+        tools:layout="@layout/fragment_edit_skills" >
+        <action
+            android:id="@+id/action_editSkillsFragment_to_editProfileFragment"
+            app:destination="@id/editProfileFragment" />
     </fragment>
 </navigation>
