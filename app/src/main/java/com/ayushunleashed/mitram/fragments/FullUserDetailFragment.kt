@@ -16,6 +16,7 @@ import com.ayushunleashed.mitram.R
 import com.ayushunleashed.mitram.databinding.FragmentFullUserDetailBinding
 import com.ayushunleashed.mitram.models.UserModel
 import com.bumptech.glide.Glide
+import com.google.android.material.chip.Chip
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.Dispatchers
@@ -54,7 +55,37 @@ class FullUserDetailFragment : Fragment() {
         Log.d("GENERAL","userToLoad:${userToLoad.toString()}")
         loadUserDetails()
         handleButtons()
+        loadChipsFromDB()
 
+    }
+
+
+    private fun loadChipsFromDB(){
+        for(skill in userToLoad?.skills!!){
+            addSkillsChip(skill)
+        }
+
+        for(interest in userToLoad?.interests!!){
+            addInterestsChip(interest)
+        }
+    }
+
+    private fun addSkillsChip(input:String){
+        val chip = layoutInflater.inflate(R.layout.single_chip_layout, binding.skillsChipGroup, false) as Chip
+        chip.text = input
+        chip.setOnCloseIconClickListener{
+            binding.skillsChipGroup.removeView(chip)
+        }
+        binding.skillsChipGroup.addView(chip)
+    }
+
+    private fun addInterestsChip(input:String){
+        val chip = layoutInflater.inflate(R.layout.single_chip_layout, binding.interestsChipGroup, false) as Chip
+        chip.text = input
+        chip.setOnCloseIconClickListener{
+            binding.interestsChipGroup.removeView(chip)
+        }
+        binding.interestsChipGroup.addView(chip)
     }
 
     fun handleButtons()
@@ -80,10 +111,10 @@ class FullUserDetailFragment : Fragment() {
         //load bio
         binding.tvUserBioDetailPage.text = userToLoad!!.bio
 
-        binding.tvUserSkills.text = userToLoad!!.skills.toString()
-        Log.d("GENERAL",userToLoad!!.skills.toString())
-        binding.tvUserInterests.text = userToLoad!!.interests.toString()
-        Log.d("GENERAL",userToLoad!!.interests.toString())
+//        binding.tvUserSkills.text = userToLoad!!.skills.toString()
+//        Log.d("GENERAL",userToLoad!!.skills.toString())
+//        binding.tvUserInterests.text = userToLoad!!.interests.toString()
+//        Log.d("GENERAL",userToLoad!!.interests.toString())
 
 
     }

@@ -13,4 +13,14 @@
         <item name="android:statusBarColor" tools:targetApi="l">#DCDCDC</item>
         <!-- Customize your theme here. -->
     </style>
+
+    <style name="GeneralFABStyle1" parent="ShapeAppearance.Material3.SmallComponent">
+    </style>
+    <style name="TagChipStyle1" parent="Widget.MaterialComponents.Chip.Filter">
+        <item name="chipStrokeColor">@color/themeApp</item>
+        <item name="chipBackgroundColor">@color/themeSecondaryApp</item>
+        <item name="android:textColor">@color/newBlack</item>
+        <item name="android:strokeWidth">2.0</item>
+    </style>
+
 </resources>
