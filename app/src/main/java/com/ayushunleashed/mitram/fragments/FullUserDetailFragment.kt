@@ -80,6 +80,12 @@ class FullUserDetailFragment : Fragment() {
         //load bio
         binding.tvUserBioDetailPage.text = userToLoad!!.bio
 
+        binding.tvUserSkills.text = userToLoad!!.skills.toString()
+        Log.d("GENERAL",userToLoad!!.skills.toString())
+        binding.tvUserInterests.text = userToLoad!!.interests.toString()
+        Log.d("GENERAL",userToLoad!!.interests.toString())
+
+
     }
 
 }

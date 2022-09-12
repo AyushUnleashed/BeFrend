@@ -64,7 +64,7 @@
         android:layout_width="match_parent"
         app:flow_horizontalBias="0"
         android:layout_height="wrap_content"
-        android:text="Ayudosh Yadav"
+        android:text="Ayush Yadav"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginStart="30dp"
         android:layout_marginEnd="30dp"
@@ -99,10 +99,9 @@
 typing random, LBC is my way"
         app:layout_constraintVertical_bias="0"
         android:layout_marginStart="30dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/tvSkills"
         android:layout_marginEnd="30dp"
         android:layout_marginTop="12dp"
-        android:layout_marginBottom="40dp"
         app:layout_constrainedHeight="true"
         android:textColor="@color/black"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -111,6 +110,78 @@ typing random, LBC is my way"
         android:textSize="12sp"
         app:layout_constraintTop_toBottomOf="@id/tvAboutMe"
         />
+
+    <TextView
+        android:id="@+id/tvSkills"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Skills"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="32dp"
+        android:textColor="@color/black"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:fontFamily="@font/montserrat_medium"
+        android:textSize="14sp"
+        app:layout_constraintTop_toBottomOf="@id/etvUserBioEditBio"
+        />
+
+
+    <EditText
+        android:id="@+id/etvUserSkillsEditProfile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Android, Robotics, DSA"
+        android:hint="Write Skills Separated by ,"
+        app:layout_constraintVertical_bias="0"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginTop="12dp"
+        app:layout_constrainedHeight="true"
+        android:textColor="@color/black"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:fontFamily="@font/montserrat_regular"
+        android:textSize="12sp"
+        app:layout_constraintTop_toBottomOf="@id/tvSkills"
+        app:layout_constraintBottom_toTopOf="@id/tvInterests"
+        />
+
+    <TextView
+        android:id="@+id/tvInterests"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Interests"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="32dp"
+        android:textColor="@color/black"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:fontFamily="@font/montserrat_medium"
+        android:textSize="14sp"
+        app:layout_constraintTop_toBottomOf="@id/etvUserSkillsEditProfile"
+        />
+
+
+    <EditText
+        android:id="@+id/etvUserInterestsEditProfile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Movies, Dance, Music"
+        android:hint="Write Skills Separated by ,"
+        app:layout_constraintVertical_bias="0"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginTop="12dp"
+        app:layout_constrainedHeight="true"
+        android:textColor="@color/black"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:fontFamily="@font/montserrat_regular"
+        android:textSize="12sp"
+        app:layout_constraintTop_toBottomOf="@id/tvInterests"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
+
+
 
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
