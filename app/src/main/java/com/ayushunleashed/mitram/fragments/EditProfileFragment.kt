@@ -1,11 +1,9 @@
 package com.ayushunleashed.mitram.fragments
 
 import android.app.Activity
-import android.app.Activity.RESULT_OK
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import android.opengl.Visibility
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -16,16 +14,13 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.app.ActivityCompat.startActivityForResult
-import androidx.core.net.toFile
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import com.ayushunleashed.mitram.FragmentHomeActivity
 import com.ayushunleashed.mitram.R
 import com.ayushunleashed.mitram.SharedViewModel
 import com.ayushunleashed.mitram.databinding.FragmentEditProfileBinding
-import com.ayushunleashed.mitram.databinding.FragmentFullUserDetailBinding
 import com.ayushunleashed.mitram.models.UserModel
+import com.ayushunleashed.mitram.utils.StringHelperClass
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -38,8 +33,6 @@ import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 import me.shouheng.compress.Compress
 import me.shouheng.compress.concrete
-import me.shouheng.compress.strategy.config.ScaleMode
-import java.net.URI
 
 class EditProfileFragment : Fragment() {
     lateinit var thisContext: Context
@@ -51,7 +44,7 @@ class EditProfileFragment : Fragment() {
     lateinit var sharedViewModel:SharedViewModel
     lateinit var currentUserModel:UserModel
     lateinit var checkPermission: ActivityResultLauncher<Intent>
-
+    var stringHelper:StringHelperClass = StringHelperClass()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -104,6 +97,20 @@ class EditProfileFragment : Fragment() {
     fun loadAllDetails(){
         binding.etvUserNameEditProfile.setText(currentUserModel.displayName)
         binding.etvUserBioEditBio.setText(currentUserModel.bio)
+
+
+        var userSkillsString:String=""
+        for(skill in currentUserModel.skills){
+            userSkillsString+= "$skill,";
+        }
+
+        var userInterestsString:String=""
+        for(interest in currentUserModel.interests){
+            userInterestsString+= "$interest,";
+        }
+
+        binding.etvUserInterestsEditProfile.setText(userInterestsString)
+        binding.etvUserSkillsEditProfile.setText(userSkillsString)
     }
 
     fun uploadImage(){
@@ -178,14 +185,57 @@ class EditProfileFragment : Fragment() {
         }
     }
 
+    fun removeEmptyInterestOrSkill(array: ArrayList<String>): ArrayList<String> {
+        // if ,,,, you write something like this array will have empty elements
+        var toDelete: ArrayList<String> = ArrayList()
+        for (element in array) {
+            if (element.isEmpty() || element.trim().isEmpty()) {
+                toDelete.add(element)
+            }
+        }
+        return (array - toDelete) as ArrayList<String>
+    }
+
+    fun removeSpacesFromArrayElements(array: ArrayList<String>): ArrayList<String>{
+        var modifiedArray: ArrayList<String> = ArrayList()
+        for (element in array) {
+               modifiedArray.add(stringHelper.removeEmptyLinesFromStartAndEnd(element).trim())
+        }
+        return  modifiedArray
+    }
     fun saveDataToDB(){
 
         var userName = binding.etvUserNameEditProfile.text.toString()
-        userName = userName.replace("(^[\\r\\n]+|[\\r\\n]+$)".toRegex(), "");
+        userName = stringHelper.removeEmptyLinesFromStartAndEnd(userName)
         var userBio = binding.etvUserBioEditBio.text.toString()
-        userBio = userBio.replace("(^[\\r\\n]+|[\\r\\n]+$)".toRegex(), "");
+        userBio = stringHelper.removeEmptyLinesFromStartAndEnd(userBio)
+
+        var userSkillsString = binding.etvUserSkillsEditProfile.text.toString()
+        userSkillsString = stringHelper.removeEmptyLinesFromStartAndEnd(userSkillsString)
+
+        var userSkillsArray:ArrayList<String> = userSkillsString.split(",") as ArrayList<String>
+        Log.d("GENERAL",userSkillsArray.toString())
+        userSkillsArray = removeEmptyInterestOrSkill(userSkillsArray)
+        Log.d("GENERAL",userSkillsArray.toString())
+        userSkillsArray = removeSpacesFromArrayElements(userSkillsArray)
+        Log.d("GENERAL",userSkillsArray.toString())
+
+        var userInterestsString = binding.etvUserInterestsEditProfile.text.toString()
+        userInterestsString = stringHelper.removeEmptyLinesFromStartAndEnd(userInterestsString)
+
+
+        var userInterestsArray:ArrayList<String> = userInterestsString.split(",") as ArrayList<String>
+        Log.d("GENERAL",userInterestsArray.toString())
+        userInterestsArray = removeEmptyInterestOrSkill(userInterestsArray)
+        Log.d("GENERAL",userInterestsArray.toString())
+        userInterestsArray = removeSpacesFromArrayElements(userInterestsArray)
+        Log.d("GENERAL",userInterestsArray.toString())
+
+
         currentUserModel.displayName =  userName
         currentUserModel.bio = userBio
+        currentUserModel.interests = userInterestsArray
+        currentUserModel.skills = userSkillsArray
 
         Log.d("GENERAL",currentUserModel.toString())
 
