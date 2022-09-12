@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".fragments.EditSkillsFragment">
+    tools:context=".fragments.EditInterestsFragment">
 
 
     <TextView
@@ -18,7 +18,7 @@
         android:textColor="@color/black"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:text="Edit Skills"/>
+        android:text="Edit Interests"/>
 
     <TextView
         android:id="@+id/tvPageDescription"
@@ -33,31 +33,32 @@
         android:textColor="@color/gray70"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvPageTitle"
-        android:text="Enter Your Skills"/>
+        android:text="Enter Your Interests"/>
 
     <EditText
-        android:id="@+id/etvUserSkills"
+        android:id="@+id/etvUserInterests"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="Write Your Skills here"
+        android:hint="Ex: Music, Movies .."
         app:layout_constraintVertical_bias="0"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="10dp"
         android:layout_marginTop="12dp"
-        android:maxLines="1"
+        android:singleLine="true"
         android:ellipsize="end"
         android:textColorHint="@color/myGray"
+        android:imeOptions="actionDone"
         app:layout_constrainedHeight="true"
         android:textColor="@color/black"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@id/btnSaveSkills"
+        app:layout_constraintRight_toLeftOf="@id/btnSaveInterests"
         android:fontFamily="@font/montserrat_regular"
         android:textSize="12sp"
         app:layout_constraintTop_toBottomOf="@id/tvPageDescription"
         />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/btnSaveSkills"
+        android:id="@+id/btnSaveInterests"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/themeApp"
@@ -66,21 +67,21 @@
         app:borderWidth="0dp"
         app:elevation="2dp"
         app:fabCustomSize="36dp"
-        app:layout_constraintBottom_toBottomOf="@id/etvUserSkills"
+        app:layout_constraintBottom_toBottomOf="@id/etvUserInterests"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1"
         android:layout_marginRight="30dp"
-        app:layout_constraintTop_toTopOf="@id/etvUserSkills"
+        app:layout_constraintTop_toTopOf="@id/etvUserInterests"
         app:maxImageSize="24dp"
         app:tint="@color/white" />
 
     <com.google.android.material.chip.ChipGroup
-        android:id="@+id/skillsChipGroup"
+        android:id="@+id/interestsChipGroup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/etvUserSkills"
+        app:layout_constraintTop_toBottomOf="@id/etvUserInterests"
         android:layout_marginTop="30dp"
         android:layout_marginStart="30dp"
         android:layout_marginEnd="30dp"
@@ -90,11 +91,11 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Save All Skills"
-        android:id="@+id/btnSaveAllSkills"
+        android:text="Save All Interests"
+        android:id="@+id/btnSaveAllInterests"
         android:textColor="@color/white"
         android:layout_marginTop="30dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/skillsChipGroup"/>
+        app:layout_constraintTop_toBottomOf="@id/interestsChipGroup"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -98,21 +98,38 @@ class EditProfileFragment : Fragment() {
         binding.btnEditSkills.setOnClickListener {
             findNavController().navigate(R.id.action_editProfileFragment_to_editSkillsFragment);
         }
+
+        binding.btnEditInterests.setOnClickListener {
+            findNavController().navigate(R.id.action_editProfileFragment_to_editInterestsFragment);
+        }
     }
 
     private fun loadChipsFromDB(){
         for(skill in currentUserModel.skills){
-            addChip(skill)
+            addSkillsChip(skill)
+        }
+
+        for(interest in currentUserModel.interests){
+            addInterestsChip(interest)
         }
     }
 
-    private fun addChip(input:String){
+    private fun addSkillsChip(input:String){
         val chip = layoutInflater.inflate(R.layout.single_chip_layout, binding.skillsChipGroup, false) as Chip
         chip.text = input
         chip.setOnCloseIconClickListener{
             binding.skillsChipGroup.removeView(chip)
         }
         binding.skillsChipGroup.addView(chip)
+    }
+
+    private fun addInterestsChip(input:String){
+        val chip = layoutInflater.inflate(R.layout.single_chip_layout, binding.interestsChipGroup, false) as Chip
+        chip.text = input
+        chip.setOnCloseIconClickListener{
+            binding.interestsChipGroup.removeView(chip)
+        }
+        binding.interestsChipGroup.addView(chip)
     }
 
     fun loadAllDetails(){
@@ -130,7 +147,7 @@ class EditProfileFragment : Fragment() {
             userInterestsString+= "$interest,";
         }
 
-        binding.etvUserInterestsEditProfile.setText(userInterestsString)
+        //binding.etvUserInterestsEditProfile.setText(userInterestsString)
         //binding.etvUserSkillsEditProfile.setText(userSkillsString)
     }
 

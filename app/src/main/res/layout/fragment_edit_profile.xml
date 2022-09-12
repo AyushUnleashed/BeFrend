@@ -1,202 +1,239 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".fragments.EditProfileFragment"
-    android:background="@color/themeSecondaryApp">
-
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/themeSecondaryApp"
-    android:paddingBottom="100dp">
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".fragments.EditProfileFragment">
 
-    <TextView
-        android:id="@+id/tvPageTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:textSize="28sp"
-        android:fontFamily="@font/montserrat_medium"
-        android:textColor="@color/black"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginStart="20dp"
-        android:text="Edit Profile"/>
-
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:id="@+id/userImage"
-        android:layout_marginTop="48dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvPageTitle" />
-
-    <ProgressBar
-        android:id="@+id/progressBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="@id/userImage"
-        app:layout_constraintBottom_toBottomOf="@id/userImage"
-        app:layout_constraintLeft_toLeftOf="@id/userImage"
-        app:layout_constraintRight_toRightOf="@id/userImage"
-        android:visibility="gone">
-    </ProgressBar>
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/btnEditImage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_edit_image"
-        app:tint = "@color/themeApp"
-        app:fabCustomSize="36dp"
-        android:outlineAmbientShadowColor="@color/themeApp"
-        app:maxImageSize="36dp"
-        app:borderWidth="0dp"
-        app:elevation="5dp"
-        android:backgroundTint="#00433831"
-        app:layout_constraintEnd_toEndOf="@id/userImage"
-        app:layout_constraintBottom_toBottomOf="@id/userImage"
-        />
-
-
-    <EditText
-        android:id="@+id/etvUserNameEditProfile"
-        android:layout_width="match_parent"
-        app:flow_horizontalBias="0"
-        android:layout_height="wrap_content"
-        android:text="Ayush Yadav"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginStart="30dp"
-        android:layout_marginEnd="30dp"
-        android:layout_marginTop="32dp"
-        android:textColor="@color/black"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:fontFamily="@font/montserrat_semi_bold"
-        android:textSize="20sp"
-        android:singleLine="true"
-        app:layout_constraintTop_toBottomOf="@id/userImage"
-        />
-
-    <TextView
-        android:id="@+id/tvAboutMe"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="About Me"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="32dp"
-        android:textColor="@color/black"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:fontFamily="@font/montserrat_medium"
-        android:textSize="14sp"
-        app:layout_constraintTop_toBottomOf="@id/etvUserNameEditProfile"
-        />
-
-    <EditText
-        android:id="@+id/etvUserBioEditBio"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="I don’t know what to write right now so i’m just
-typing random, LBC is my way"
-        app:layout_constraintVertical_bias="0"
-        android:layout_marginStart="30dp"
-        app:layout_constraintBottom_toTopOf="@id/tvSkills"
-        android:layout_marginEnd="30dp"
-        android:layout_marginTop="12dp"
-        app:layout_constrainedHeight="true"
-        android:textColor="@color/black"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        android:fontFamily="@font/montserrat_regular"
-        android:textSize="12sp"
-        app:layout_constraintTop_toBottomOf="@id/tvAboutMe"
-        />
-
-    <TextView
-        android:id="@+id/tvSkills"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Skills"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="32dp"
-        android:textColor="@color/black"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:fontFamily="@font/montserrat_medium"
-        android:textSize="14sp"
-        app:layout_constraintTop_toBottomOf="@id/etvUserBioEditBio"
-        />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/btnEditSkills"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:backgroundTint="#00433831"
-        android:outlineAmbientShadowColor="@color/themeApp"
-        android:src="@drawable/ic_edit_image"
-        app:borderWidth="0dp"
-        app:elevation="5dp"
-        app:fabCustomSize="24dp"
-        app:layout_constraintBottom_toBottomOf="@id/tvSkills"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1"
-        android:layout_marginRight="30dp"
-        app:layout_constraintStart_toEndOf="@id/tvSkills"
-        app:layout_constraintTop_toTopOf="@id/tvSkills"
-        app:layout_constraintVertical_bias="0.566"
-        app:maxImageSize="24dp"
-        app:tint="@color/themeApp" />
-
-    <com.google.android.material.chip.ChipGroup
-        android:id="@+id/skillsChipGroup"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvSkills"
-        app:layout_constraintBottom_toTopOf="@id/tvInterests"
-        android:layout_marginTop="12dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginEnd="30dp"
-        style="@style/TagChipStyle1"
-        />
-
-    <TextView
-        android:id="@+id/tvInterests"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Interests"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="32dp"
-        android:textColor="@color/black"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:fontFamily="@font/montserrat_medium"
-        android:textSize="14sp"
-        app:layout_constraintTop_toBottomOf="@id/skillsChipGroup"
-        />
-
-
-    <EditText
-        android:id="@+id/etvUserInterestsEditProfile"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Movies, Dance, Music"
-        android:hint="Write Skills Separated by ,"
-        app:layout_constraintVertical_bias="0"
-        android:layout_marginStart="30dp"
-        android:layout_marginEnd="30dp"
-        android:layout_marginTop="12dp"
-        app:layout_constrainedHeight="true"
-        android:textColor="@color/black"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        android:fontFamily="@font/montserrat_regular"
-        android:textSize="12sp"
-        app:layout_constraintTop_toBottomOf="@id/tvInterests"
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@color/themeSecondaryApp"
         app:layout_constraintBottom_toBottomOf="parent"
-        />
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/themeSecondaryApp"
+            android:paddingBottom="100dp">
+
+            <TextView
+                android:id="@+id/tvPageTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/montserrat_medium"
+                android:text="Edit Profile"
+                android:textColor="@color/black"
+                android:textSize="28sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/userImage"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_marginTop="48dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvPageTitle" />
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@id/userImage"
+                app:layout_constraintLeft_toLeftOf="@id/userImage"
+                app:layout_constraintRight_toRightOf="@id/userImage"
+                app:layout_constraintTop_toTopOf="@id/userImage" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/btnEditImage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#00433831"
+                android:outlineAmbientShadowColor="@color/themeApp"
+                android:src="@drawable/ic_edit_image"
+                app:borderWidth="0dp"
+                app:elevation="5dp"
+                app:fabCustomSize="36dp"
+                app:layout_constraintBottom_toBottomOf="@id/userImage"
+                app:layout_constraintEnd_toEndOf="@id/userImage"
+                app:maxImageSize="36dp"
+                app:tint="@color/themeApp" />
+
+
+            <EditText
+                android:id="@+id/etvUserNameEditProfile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="32dp"
+                android:layout_marginEnd="30dp"
+                android:fontFamily="@font/montserrat_semi_bold"
+                android:singleLine="true"
+                android:text="Ayush Yadav"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                app:flow_horizontalBias="0"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/userImage" />
+
+            <TextView
+                android:id="@+id/tvAboutMe"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="32dp"
+                android:fontFamily="@font/montserrat_medium"
+                android:text="About Me"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/etvUserNameEditProfile" />
+
+            <EditText
+                android:id="@+id/etvUserBioEditBio"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="30dp"
+                android:textColorHint="@color/myGray"
+                android:fontFamily="@font/montserrat_regular"
+                android:hint="Enter Your Bio here"
+                android:textColor="@color/black"
+                android:textSize="12sp"
+                app:layout_constrainedHeight="true"
+                app:layout_constraintBottom_toTopOf="@id/tvSkills"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvAboutMe"
+                app:layout_constraintVertical_bias="0" />
+
+            <TextView
+                android:id="@+id/tvSkills"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="32dp"
+                android:fontFamily="@font/montserrat_medium"
+                android:text="Skills"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/etvUserBioEditBio" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/btnEditSkills"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="30dp"
+                android:backgroundTint="@color/themeApp"
+                android:src="@drawable/ic_baseline_add_24"
+                app:borderWidth="0dp"
+                app:elevation="1dp"
+                app:fabCustomSize="24dp"
+                app:maxImageSize="24dp"
+                app:tint="@color/white"
+                app:layout_constraintHorizontal_bias="1"
+                app:layout_constraintStart_toEndOf="@id/tvSkills"
+                app:layout_constraintTop_toTopOf="@id/tvSkills"
+                app:layout_constraintBottom_toBottomOf="@id/tvSkills"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/skillsChipGroup"
+                style="@style/TagChipStyle1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="30dp"
+                app:layout_constraintBottom_toTopOf="@id/tvInterests"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvSkills" />
+
+            <TextView
+                android:id="@+id/tvInterests"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="32dp"
+                android:fontFamily="@font/montserrat_medium"
+                android:text="Interests"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/skillsChipGroup" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/btnEditInterests"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="30dp"
+                android:backgroundTint="@color/themeApp"
+                android:src="@drawable/ic_baseline_add_24"
+                app:borderWidth="0dp"
+                app:elevation="1dp"
+                app:fabCustomSize="24dp"
+                app:maxImageSize="24dp"
+                app:tint="@color/white"
+
+                app:layout_constraintHorizontal_bias="1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="@id/tvInterests"
+                app:layout_constraintStart_toEndOf="@id/tvInterests"
+                app:layout_constraintTop_toTopOf="@id/tvInterests"/>
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/interestsChipGroup"
+                style="@style/TagChipStyle1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="30dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvInterests" />
+
+
+            <!--    <EditText-->
+            <!--        android:id="@+id/etvUserInterestsEditProfile"-->
+            <!--        android:layout_width="match_parent"-->
+            <!--        android:layout_height="wrap_content"-->
+            <!--        android:text="Movies, Dance, Music"-->
+            <!--        android:hint="Write Skills Separated by ,"-->
+            <!--        app:layout_constraintVertical_bias="0"-->
+            <!--        android:layout_marginStart="30dp"-->
+            <!--        android:layout_marginEnd="30dp"-->
+            <!--        android:layout_marginTop="12dp"-->
+            <!--        app:layout_constrainedHeight="true"-->
+            <!--        android:textColor="@color/black"-->
+            <!--        app:layout_constraintLeft_toLeftOf="parent"-->
+            <!--        app:layout_constraintRight_toRightOf="parent"-->
+            <!--        android:fontFamily="@font/montserrat_regular"-->
+            <!--        android:textSize="12sp"-->
+            <!--        app:layout_constraintTop_toBottomOf="@id/tvInterests"-->
+            <!--        app:layout_constraintBottom_toBottomOf="parent"-->
+            <!--        />-->
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/btnSaveProfileDetails"
@@ -215,8 +252,4 @@ typing random, LBC is my way"
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginStart="20dp"
         />
-
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>
-</ScrollView>

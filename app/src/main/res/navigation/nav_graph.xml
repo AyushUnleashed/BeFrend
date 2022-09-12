@@ -103,6 +103,9 @@
         <action
             android:id="@+id/action_editProfileFragment_to_editSkillsFragment"
             app:destination="@id/editSkillsFragment" />
+        <action
+            android:id="@+id/action_editProfileFragment_to_editInterestsFragment"
+            app:destination="@id/editInterestsFragment" />
     </fragment>
     <fragment
         android:id="@+id/editSkillsFragment"
@@ -111,6 +114,15 @@
         tools:layout="@layout/fragment_edit_skills" >
         <action
             android:id="@+id/action_editSkillsFragment_to_editProfileFragment"
+            app:destination="@id/editProfileFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/editInterestsFragment"
+        android:name="com.ayushunleashed.mitram.fragments.EditInterestsFragment"
+        android:label="fragment_edit_interests"
+        tools:layout="@layout/fragment_edit_interests" >
+        <action
+            android:id="@+id/action_editInterestsFragment_to_editProfileFragment"
             app:destination="@id/editProfileFragment" />
     </fragment>
 </navigation>

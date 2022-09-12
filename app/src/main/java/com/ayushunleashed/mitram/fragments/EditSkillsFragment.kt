@@ -3,10 +3,12 @@ package com.ayushunleashed.mitram.fragments
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
+import android.view.KeyEvent
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.ayushunleashed.mitram.R
@@ -38,6 +40,8 @@ class EditSkillsFragment : Fragment() {
     var skillsArrayList = ArrayList<String>()
     var stringHelper: StringHelperClass = StringHelperClass()
 
+    lateinit var editText:EditText
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -53,6 +57,8 @@ class EditSkillsFragment : Fragment() {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_edit_skills, container, false)
         db  = FirebaseFirestore.getInstance()
+
+        editText = view.findViewById<EditText>(R.id.etvUserSkills)
         return view
     }
 
@@ -64,25 +70,40 @@ class EditSkillsFragment : Fragment() {
         currentUserModel = sharedViewModel.currentUserModel;
         handleButtons()
 
+
         currentUser = FirebaseAuth.getInstance().currentUser!!
 
         loadChipsFromDB()
+    }
+
+    fun handleAddSkill(){
+        var userSkillsInput =binding.etvUserSkills.text.toString()
+        userSkillsInput = stringHelper.removeEmptyLinesFromStartAndEnd(userSkillsInput)
+        userSkillsInput = userSkillsInput.trim()
+        Log.d("GENERAL",userSkillsInput)
+        if(userSkillsInput.trim().isNotEmpty()){
+            addChip(userSkillsInput)
+            binding.etvUserSkills.setText("")
+        }
     }
 
     private fun handleButtons() {
 
 
         binding.btnSaveSkills.setOnClickListener {
-
-            var userSkillsInput =binding.etvUserSkills.text.toString()
-            userSkillsInput = stringHelper.removeEmptyLinesFromStartAndEnd(userSkillsInput)
-            userSkillsInput = userSkillsInput.trim()
-            Log.d("GENERAL",userSkillsInput)
-            if(userSkillsInput.trim().isNotEmpty()){
-                addChip(userSkillsInput)
-                binding.etvUserSkills.setText("")
-            }
+            handleAddSkill()
         }
+
+        editText.setOnKeyListener(View.OnKeyListener { v, keyCode, event ->
+            Log.d("GENERAL", "KeyClicked")
+            if (keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_UP) {
+                Log.d("GENERAL", "Enter Clicked")
+                handleAddSkill()
+                return@OnKeyListener true
+            }
+            false
+        })
+
 
         binding.btnSaveAllSkills.setOnClickListener {
             saveDataToDB()
@@ -95,6 +116,7 @@ class EditSkillsFragment : Fragment() {
             addChip(skill)
         }
     }
+
 
     private fun addChip(input:String){
         val chip = layoutInflater.inflate(R.layout.single_chip_layout, binding.skillsChipGroup, false) as Chip
