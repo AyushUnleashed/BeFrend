@@ -16,5 +16,5 @@ data class UserModel(
     val usersYouLiked:ArrayList<String> = ArrayList(),
     var fcmToken:String? = "",
     var skills:ArrayList<String> = ArrayList(),
-    var interests:ArrayList<String> = ArrayList()
+    var interests:ArrayList<String> = ArrayList(),
 ): Parcelable
