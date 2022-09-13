@@ -21,6 +21,8 @@ import com.ayushunleashed.mitram.models.UserModel
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
+import com.google.android.material.chip.Chip
+import com.google.android.material.chip.ChipGroup
 import eightbitlab.com.blurview.BlurView
 import eightbitlab.com.blurview.RenderScriptBlur
 
@@ -30,6 +32,29 @@ class UserCardAdapter(var users: List<UserModel>,context: Context): CardContaine
     var layoutInflater: LayoutInflater = LayoutInflater.from(context)
     var thisContext:Context = context
     lateinit var myBlurView :View
+    lateinit var userCardChipGroup :ChipGroup
+
+
+    private fun loadChipsFromDB(position: Int){
+        var count =0;
+        for(item in users[position].interests){
+            addChip(item)
+            count++;
+            if(count==3){
+               return;
+            }
+        }
+    }
+
+    private fun addChip(input:String){
+        val chip = layoutInflater.inflate(R.layout.single_chip_layout2, userCardChipGroup, false) as Chip
+        chip.text = input
+        chip.setOnCloseIconClickListener{
+            userCardChipGroup.removeView(chip)
+        }
+        userCardChipGroup.addView(chip)
+    }
+
 
 
     @SuppressLint("InflateParams")
@@ -49,7 +74,9 @@ class UserCardAdapter(var users: List<UserModel>,context: Context): CardContaine
         Glide.with(imgViewUserProfile.context).load(users[position].imageUrl).placeholder(R.drawable.img_user_place_holder)
             .error(R.drawable.img_keep_calm_reload).into(imgViewUserProfile)
 
+        userCardChipGroup = view.findViewById<ChipGroup>(R.id.userCardChipGroup)
 
+        loadChipsFromDB(position)
 
 
 
@@ -88,6 +115,7 @@ class UserCardAdapter(var users: List<UserModel>,context: Context): CardContaine
         return users[position]
     }
 }
+
 
 //
 //class UserCardAdapter(var users: List<UserModel>,context: Context):RecyclerView.Adapter<UserCardAdapter.UserCardViewHolder>() {
