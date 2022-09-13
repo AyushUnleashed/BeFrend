@@ -94,10 +94,11 @@
 
     <TextView
         android:id="@+id/tvUserNameDetailPage"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Ayush Yadav"
         android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
         android:layout_marginTop="32dp"
         android:textColor="@color/black"
         app:layout_constraintLeft_toLeftOf="parent"
