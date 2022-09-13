@@ -155,12 +155,16 @@ class DiscoverFragment : Fragment() ,CardListener{
             sharedViewModel.currentUserModel = currentUserModel
         }
 
-//        GlobalScope.launch(Dispatchers.IO) {
-//
-//            currentUserModel = db.collection("users").document(currentUser.uid).get().await()
-//                .toObject(UserModel::class.java)!!
-//            sharedViewModel.currentUserModel = currentUserModel
-//        }
+        //if email is not there , get email
+        if(currentUserModel.email.isNullOrEmpty()){
+            currentUserModel.email = currentUser.email
+            GlobalScope.launch(Dispatchers.IO) {
+                db.collection("users").document(currentUser.uid).set(currentUserModel).await()
+                Log.d("GENERAL","Skills added to Server")
+            }
+        }
+
+
 
     }
 
@@ -374,8 +378,9 @@ class DiscoverFragment : Fragment() ,CardListener{
             "onRightSwipe pos: $position model: " + (model as UserModel).toString()
         )
 
-        val userWhoGotRightSwiped:UserModel = model as UserModel
 
+        val userWhoGotRightSwiped:UserModel = model as UserModel
+        //Toast.makeText(thisContext,"Like Request Send",Toast.LENGTH_SHORT).show()
         // for matching
          GlobalScope.launch(Dispatchers.IO) {
 
@@ -407,7 +412,7 @@ class DiscoverFragment : Fragment() ,CardListener{
 
                 withContext(Dispatchers.Main)
                 {
-                    //Toast.makeText(thisContext,"It's a match",Toast.LENGTH_SHORT).show()
+                    Toast.makeText(thisContext,"It's a match",Toast.LENGTH_SHORT).show()
                 }
             }
         }
