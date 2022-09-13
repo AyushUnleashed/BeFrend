@@ -8,8 +8,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.core.os.bundleOf
 import com.asynctaskcoffee.cardstack.CardContainer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.asynctaskcoffee.cardstack.CardListener
 import com.asynctaskcoffee.cardstack.pulse
 import com.ayushunleashed.mitram.R
@@ -177,6 +179,12 @@ class DiscoverFragment : Fragment() ,CardListener{
             it.pulse() // for sweet animation
             userCardAdapter.swipeLeft()
         }
+
+        userImage.setOnClickListener{
+            val myBundle = bundleOf("currentUser" to currentUserModel,"previousFragmentName" to "DiscoverFragment")
+            findNavController().navigate(R.id.action_discoverFragment_to_fullUserProfileFragment,myBundle)
+        }
+
 
     }
 

@@ -11,8 +11,11 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.os.bundleOf
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.ayushunleashed.mitram.R
+import com.ayushunleashed.mitram.SharedViewModel
 import com.ayushunleashed.mitram.databinding.FragmentFullUserDetailBinding
 import com.ayushunleashed.mitram.models.UserModel
 import com.bumptech.glide.Glide
@@ -24,6 +27,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
+import org.json.JSONObject.NULL
 
 class FullUserDetailFragment : Fragment() {
     lateinit var thisContext: Context
@@ -31,6 +35,9 @@ class FullUserDetailFragment : Fragment() {
     private lateinit var binding:FragmentFullUserDetailBinding
 
     var userToLoad:UserModel? = null
+    lateinit var previousFragmentName:String
+    lateinit var sharedViewModel: SharedViewModel
+    lateinit var currentUserModel: UserModel
 
 
     override fun onCreateView(
@@ -47,11 +54,20 @@ class FullUserDetailFragment : Fragment() {
         return view
     }
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        sharedViewModel = ViewModelProvider(requireActivity())[SharedViewModel::class.java]
+        currentUserModel = sharedViewModel.currentUserModel;
+
         binding = FragmentFullUserDetailBinding.bind(view)
+        previousFragmentName = requireArguments().getString("previousFragmentName").toString()
         userToLoad = requireArguments().getParcelable<UserModel>("currentUser")
+        if(userToLoad==NULL){
+            Log.d("GENERAL","Got null user in user detail page")
+            userToLoad = currentUserModel
+        }
         Log.d("GENERAL","userToLoad:${userToLoad.toString()}")
         loadUserDetails()
         handleButtons()
@@ -91,7 +107,18 @@ class FullUserDetailFragment : Fragment() {
     fun handleButtons()
     {
         binding.btnGoBackToDiscoverPage.setOnClickListener{
-            findNavController().navigate(R.id.action_fullUserProfileFragment_to_discoverFragment)
+
+            if(previousFragmentName == "ConnectionsFragment"){
+                findNavController().navigate(R.id.action_fullUserProfileFragment_to_connectionsFragment)
+            }else if(previousFragmentName == "LikesFragment"){
+                findNavController().navigate(R.id.action_fullUserProfileFragment_to_likesFragment)
+            }else if(previousFragmentName == "ChatFragment"){
+                // sending user back because chat fragment needs a user to load chat with
+                val bundle = bundleOf("userToSend" to userToLoad)
+                findNavController().navigate(R.id.action_fullUserProfileFragment_to_chatFragment,bundle)
+            }else{
+                findNavController().navigate(R.id.action_fullUserProfileFragment_to_discoverFragment)
+            }
         }
 
         binding.btnRightSwipe.setOnClickListener {

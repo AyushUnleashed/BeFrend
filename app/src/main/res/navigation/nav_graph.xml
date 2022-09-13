@@ -31,7 +31,11 @@
         android:id="@+id/likesFragment"
         android:name="com.ayushunleashed.mitram.fragments.LikesFragment"
         android:label="fragment_likes"
-        tools:layout="@layout/fragment_likes" />
+        tools:layout="@layout/fragment_likes" >
+        <action
+            android:id="@+id/action_likesFragment_to_fullUserProfileFragment"
+            app:destination="@id/fullUserProfileFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/connectionsFragment"
@@ -79,6 +83,15 @@
         <argument
             android:name="currentUser"
             app:argType="com.ayushunleashed.mitram.models.UserModel" />
+        <action
+            android:id="@+id/action_fullUserProfileFragment_to_likesFragment"
+            app:destination="@id/likesFragment" />
+        <action
+            android:id="@+id/action_fullUserProfileFragment_to_connectionsFragment"
+            app:destination="@id/connectionsFragment" />
+        <action
+            android:id="@+id/action_fullUserProfileFragment_to_chatFragment"
+            app:destination="@id/chatFragment" />
 
     </fragment>
     <fragment
@@ -91,6 +104,12 @@
         <action
             android:id="@+id/action_chatFragment_to_connectionsFragment"
             app:destination="@id/connectionsFragment" />
+        <action
+            android:id="@+id/action_chatFragment_to_fullUserProfileFragment"
+            app:destination="@id/fullUserProfileFragment" />
+        <action
+            android:id="@+id/action_chatFragment_to_fullUserProfileFragment2"
+            app:destination="@id/fullUserProfileFragment" />
     </fragment>
     <fragment
         android:id="@+id/editProfileFragment"

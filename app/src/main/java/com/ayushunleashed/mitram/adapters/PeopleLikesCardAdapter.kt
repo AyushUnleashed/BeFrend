@@ -10,6 +10,9 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.compose.ui.text.toUpperCase
+import androidx.core.os.bundleOf
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.asynctaskcoffee.cardstack.CardContainerAdapter
 import com.ayushunleashed.mitram.R
@@ -57,6 +60,17 @@ class PeopleLikesCardAdapter(var users: MutableList<UserModel>):RecyclerView.Ada
         val db = FirebaseFirestore.getInstance()
         val currentUser = FirebaseAuth.getInstance().currentUser
         val likeCardUserModel = users[position]
+
+        val bundle = bundleOf("userToSend" to users[position])
+
+        //defining nav controller for navigation
+        var navController: NavController?=null
+
+        holder.imgViewUserProfile.setOnClickListener{
+            val myBundle = bundleOf("currentUser" to users[position],"previousFragmentName" to "LikesFragment")
+            navController = Navigation.findNavController(holder.itemView)
+            navController!!.navigate(R.id.action_likesFragment_to_fullUserProfileFragment,myBundle)
+        }
 
 
         holder.btnAcceptConnection.setOnClickListener {

@@ -11,6 +11,8 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.ayushunleashed.mitram.R
 import com.ayushunleashed.mitram.adapters.PeopleLikesCardAdapter
+import com.ayushunleashed.mitram.databinding.FragmentEditSkillsBinding
+import com.ayushunleashed.mitram.databinding.FragmentLikesBinding
 import com.ayushunleashed.mitram.models.UserModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -24,7 +26,7 @@ class LikesFragment : Fragment() {
     private lateinit var usersList:MutableList<UserModel>
     private lateinit var currentUser:FirebaseUser
     lateinit var tvNoUsersToShow: TextView
-
+    private lateinit var binding: FragmentLikesBinding
     lateinit var recyclerView:RecyclerView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,13 +45,14 @@ class LikesFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         currentUser = FirebaseAuth.getInstance().currentUser!!
+        binding = FragmentLikesBinding.bind(view)
         tvNoUsersToShow =view.findViewById(R.id.tvNoUsers)
         loadData(view)
     }
 
     fun loadData(view: View)
     {        val db = FirebaseFirestore.getInstance()
-
+        binding.progressBar.visibility = View.VISIBLE
 
         GlobalScope.launch(Dispatchers.IO) {
 
@@ -83,6 +86,7 @@ class LikesFragment : Fragment() {
 
             withContext(Dispatchers.Main)
             {
+                binding.progressBar.visibility = View.GONE
                 if (likedByArray != null) {
                     if(likedByArray.size == 0) {
                         //Toast.makeText(requireContext(),"No Likes",Toast.LENGTH_SHORT).show()
