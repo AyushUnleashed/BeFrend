@@ -10,6 +10,7 @@ data class UserModel(
     var displayName: String? = "",
     var imageUrl: String? ="",
     var bio: String? ="",
+    var email:String?="",
     var isOnline:Boolean = false,
     val likedBy: ArrayList<String> = ArrayList(),
     val connections: ArrayList<String> = ArrayList(),

@@ -1,5 +1,6 @@
 package com.ayushunleashed.mitram.fragments
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
@@ -126,6 +127,7 @@ class FullUserDetailFragment : Fragment() {
         }
     }
 
+
     fun loadUserDetails()
     {
         // load image
@@ -137,6 +139,14 @@ class FullUserDetailFragment : Fragment() {
 
         //load bio
         binding.tvUserBioDetailPage.text = userToLoad!!.bio
+
+        val email = "Email: "+userToLoad!!.email
+        //load email
+        binding.tvUserEmail.text = email
+
+        if(userToLoad!!.email.isNullOrEmpty()){
+            binding.tvUserEmail.visibility = View.GONE
+        }
 
 //        binding.tvUserSkills.text = userToLoad!!.skills.toString()
 //        Log.d("GENERAL",userToLoad!!.skills.toString())

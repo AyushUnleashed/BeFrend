@@ -139,6 +139,7 @@ class SignInActivity : AppCompatActivity() {
                 UserModel(
                     firebaseuser.uid,
                     it, firebaseuser.photoUrl.toString(),"Hey there! My name is ${firebaseuser.displayName} . \nI am glad to be here"
+                ,firebaseuser.email,true
                 )
             }
             val userDao = UserDao()
