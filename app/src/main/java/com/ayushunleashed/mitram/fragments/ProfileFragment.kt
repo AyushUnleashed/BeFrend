@@ -90,6 +90,7 @@ class ProfileFragment : Fragment() {
     fun loadAllDetails(){
         binding.tvUserName.text = currentUserModel.displayName
         binding.tvUserBio.text = currentUserModel.bio
+        binding.tvUserEmail.text = currentUserModel.email
     }
 
     fun loadUserImage()
