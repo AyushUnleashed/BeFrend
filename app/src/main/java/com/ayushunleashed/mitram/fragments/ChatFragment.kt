@@ -11,6 +11,9 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
+import androidx.core.os.bundleOf
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ayushunleashed.mitram.R
@@ -133,6 +136,11 @@ class ChatFragment : Fragment() {
         binding.btnMoreOptionsChat.setOnClickListener {
             Toast.makeText(thisContext,"You clicked on More Options",Toast.LENGTH_SHORT).show()
         }
+
+        binding.imgReceiverUserProfile.setOnClickListener{
+            val myBundle = bundleOf("currentUser" to chatUser,"previousFragmentName" to "ChatFragment")
+            findNavController().navigate(R.id.action_chatFragment_to_fullUserProfileFragment,myBundle)
+        }
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -164,7 +172,7 @@ class ChatFragment : Fragment() {
 
 
     fun getMessages()
-    {
+    {        messagesArray.clear()
             val senderId = currentUser!!.uid
             Log.d("MESSAGE_LIST","Sender $senderId")
             db.collection("chat").whereEqualTo("senderId",senderId)
