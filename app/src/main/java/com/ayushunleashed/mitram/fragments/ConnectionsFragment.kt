@@ -3,21 +3,23 @@ package com.ayushunleashed.mitram.fragments
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.TextView
-import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.ayushunleashed.mitram.R
 import com.ayushunleashed.mitram.SharedViewModel
 import com.ayushunleashed.mitram.adapters.ConnectionsCardAdapter
-import com.ayushunleashed.mitram.adapters.PeopleLikesCardAdapter
+import com.ayushunleashed.mitram.adapters.ConnectionsFirestoreRVCardAdapter
 import com.ayushunleashed.mitram.models.UserModel
+import com.firebase.ui.auth.data.model.User
+import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
@@ -37,6 +39,9 @@ class ConnectionsFragment : Fragment() {
     lateinit var tvNoUsersToShow: TextView
     private lateinit var progressBar: ProgressBar
     lateinit var recyclerView: RecyclerView
+
+    var connectionsListArray = ArrayList<String>()
+    var firestoreAdapter: ConnectionsFirestoreRVCardAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -78,8 +83,9 @@ class ConnectionsFragment : Fragment() {
 //        {
 //            loadData(view)
 //        }
-        loadData(view)
 
+        loadData(view) // old method
+        //setupFirestoreRecyclerView(view) - new method incomplete
     }
 
     fun setupViews(view: View)
@@ -88,6 +94,49 @@ class ConnectionsFragment : Fragment() {
         tvNoUsersToShow = view.findViewById(R.id.tvNoUsers)
         progressBar = view.findViewById(R.id.progressBar)
         recyclerView = view.findViewById(R.id.myRecyclerView)
+    }
+
+    fun loadConnectionArray(){
+        myConnectionsList.clear()
+        progressBar.visibility = View.VISIBLE
+
+
+        GlobalScope.launch(Dispatchers.IO) {
+            currentUserModel = db.collection("users").document(currentUser.uid).get().await()
+                .toObject(UserModel::class.java)
+            connectionsListArray = currentUserModel?.connections!!
+        }
+
+
+    }
+
+//    override fun onStart() {
+//        super.onStart()
+//        firestoreAdapter.startListening()
+//    }
+//
+//    override fun onStop() {
+//        super.onStop()
+//        firestoreAdapter.stopListening()
+//    }
+
+    fun setupFirestoreRecyclerView(view: View){
+        //progressBar.visibility = View.VISIBLE
+        //loadConnectionArray()
+        connectionsListArray = sharedViewModel.currentUserModel.connections
+        Log.d("GENERAL","ConnectionsListArray:$connectionsListArray")
+
+        val usersCollection = db.collection("users")
+        val query = usersCollection.whereIn("uid",connectionsListArray)
+
+        val options: FirestoreRecyclerOptions<UserModel> =
+            FirestoreRecyclerOptions.Builder<UserModel>()
+                .setQuery(query, UserModel::class.java)
+                .build()
+
+        firestoreAdapter = ConnectionsFirestoreRVCardAdapter(options)
+        recyclerView.adapter =firestoreAdapter
+        recyclerView.layoutManager = LinearLayoutManager(thisContext)
     }
 
     fun loadData(view: View)
