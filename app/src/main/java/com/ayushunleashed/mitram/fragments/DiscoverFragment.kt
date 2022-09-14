@@ -26,6 +26,7 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.*
 import kotlinx.coroutines.tasks.await
+import org.json.JSONObject.NULL
 
 
 class DiscoverFragment : Fragment() ,CardListener{
@@ -70,6 +71,7 @@ class DiscoverFragment : Fragment() ,CardListener{
         currentUser = FirebaseAuth.getInstance().currentUser!!
         db  = FirebaseFirestore.getInstance()
 
+        Log.d("GENERAL","CurrentUserUid:+${currentUser.uid}") //not null
         getCurrentUser()
         return myView
     }
@@ -146,13 +148,26 @@ class DiscoverFragment : Fragment() ,CardListener{
 
     fun getCurrentUser()
     {
-        val userDao = UserDao()
-        runBlocking {
-            //currentUserModel =userDao.getUserById(currentUser.uid).await().toObject(UserModel::class.java)!!
+        //val userDao = UserDao()
+//        runBlocking {
+//            //currentUserModel =userDao.getUserById(currentUser.uid).await().toObject(UserModel::class.java)!!
+//                currentUserModel = db.collection("users").document(currentUser.uid).get().await()
+//                    .toObject(UserModel::class.java)!!
+//                sharedViewModel.currentUserModel = currentUserModel
+//                Log.d("GENERAL","Got User from db, not null");
+//        }
 
-            currentUserModel = db.collection("users").document(currentUser.uid).get().await()
-                .toObject(UserModel::class.java)!!
+        runBlocking {
+            Log.d("GENERAL","Inside run blocking")
+
+            currentUserModel = db.collection("users").document(currentUser.uid).get().await().toObject(UserModel::class.java)!!
+            Log.d("GENERAL","After Model Request")
             sharedViewModel.currentUserModel = currentUserModel
+
+            //UserModel("123", "NULLUSer", "https://picsum.photos/200", "Task Failed")
+        }
+        if(currentUserModel==NULL){
+            Log.d("GENERAL","User is NULL");
         }
 
         //if email is not there , get email
@@ -160,7 +175,7 @@ class DiscoverFragment : Fragment() ,CardListener{
             currentUserModel.email = currentUser.email
             GlobalScope.launch(Dispatchers.IO) {
                 db.collection("users").document(currentUser.uid).set(currentUserModel).await()
-                Log.d("GENERAL","Skills added to Server")
+                Log.d("GENERAL","Email added to Server")
             }
         }
 
