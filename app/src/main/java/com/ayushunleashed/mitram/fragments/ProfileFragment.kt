@@ -80,7 +80,6 @@ class ProfileFragment : Fragment() {
         handleButtons()
         mAuth= Firebase.auth
 
-        loadUserImage()
         loadAllDetails()
 
         binding.refreshLayout.setOnRefreshListener {
@@ -106,6 +105,7 @@ class ProfileFragment : Fragment() {
         binding.tvUserName.text = currentUserModel.displayName
         binding.tvUserBio.text = currentUserModel.bio
         binding.tvUserEmail.text = currentUserModel.email
+        loadUserImage()
     }
 
     fun loadUserImage()

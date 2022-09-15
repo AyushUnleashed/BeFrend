@@ -240,21 +240,21 @@ class DiscoverFragment : Fragment() ,CardListener{
             //remove all users you already liked or are in connections
             // get all users
 
-//            val allUsers = db.collection("users").get().await().toObjects(UserModel::class.java)
-//
-//            val arrayOfPeopleYouDontWant = mutableListOf<UserModel>()
-//            for( uid in combinedArray)
-//            {
-//                val eachUserNotToInclude = db.collection("users").document(uid).get().await().toObject(UserModel::class.java)
-//                if (eachUserNotToInclude != null) {
-//                    arrayOfPeopleYouDontWant.add(eachUserNotToInclude)
-//                }
-//            }
-//
-//            usersList = (allUsers - arrayOfPeopleYouDontWant - currentUserModel) as MutableList<UserModel>
+            val allUsers = db.collection("users").get().await().toObjects(UserModel::class.java)
+
+            val arrayOfPeopleYouDontWant = mutableListOf<UserModel>()
+            for( uid in combinedArray)
+            {
+                val eachUserNotToInclude = db.collection("users").document(uid).get().await().toObject(UserModel::class.java)
+                if (eachUserNotToInclude != null) {
+                    arrayOfPeopleYouDontWant.add(eachUserNotToInclude)
+                }
+            }
+
+            usersList = (allUsers - arrayOfPeopleYouDontWant - currentUserModel) as MutableList<UserModel>
 
             //getting all those users who are not in combined array
-            usersList = db.collection("users").whereNotIn("uid",combinedArray).get().await().toObjects(UserModel::class.java)
+            //usersList = db.collection("users").whereNotIn("uid",combinedArray).get().await().toObjects(UserModel::class.java)
 
             Log.d("SwipeLog","Deleted ${currentUserModel.displayName}")
             // usersList has list of final users that we need to show.
