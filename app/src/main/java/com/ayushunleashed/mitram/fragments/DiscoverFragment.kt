@@ -19,6 +19,8 @@ import com.ayushunleashed.mitram.SharedViewModel
 import com.ayushunleashed.mitram.adapters.UserCardAdapter
 import com.ayushunleashed.mitram.models.UserModel
 import com.ayushunleashed.mitram.daos.UserDao
+import com.ayushunleashed.mitram.databinding.FragmentConnectionsBinding
+import com.ayushunleashed.mitram.databinding.FragmentDiscoverBinding
 import com.bumptech.glide.Glide
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
@@ -49,6 +51,8 @@ class DiscoverFragment : Fragment() ,CardListener{
     lateinit var tvNoUsersToShow:TextView
     private lateinit var progressBar: ProgressBar
 
+    private lateinit var binding: FragmentDiscoverBinding
+
     lateinit var myView:View
 
     override fun onCreateView(
@@ -62,6 +66,7 @@ class DiscoverFragment : Fragment() ,CardListener{
 
         myView = inflater.inflate(R.layout.fragment_discover, container, false)
         sharedViewModel = ViewModelProvider(requireActivity())[SharedViewModel::class.java]
+        binding = FragmentDiscoverBinding.bind(myView)
         setupViews(myView)
         setupButtons()
 
@@ -78,6 +83,7 @@ class DiscoverFragment : Fragment() ,CardListener{
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
 
         //Load User Image
         loadCurrentUserImage()
@@ -229,23 +235,27 @@ class DiscoverFragment : Fragment() ,CardListener{
             //val currentUserModel = db.collection("users").document(currentUser.uid).get().await().toObject(UserModel::class.java)
             val usersYouLiked = currentUserModel!!.usersYouLiked
             val connections = currentUserModel.connections
-            val combinedArray = usersYouLiked + connections
+            val combinedArray = usersYouLiked + connections +currentUser.uid
 
             //remove all users you already liked or are in connections
             // get all users
 
-            val allUsers = db.collection("users").get().await().toObjects(UserModel::class.java)
+//            val allUsers = db.collection("users").get().await().toObjects(UserModel::class.java)
+//
+//            val arrayOfPeopleYouDontWant = mutableListOf<UserModel>()
+//            for( uid in combinedArray)
+//            {
+//                val eachUserNotToInclude = db.collection("users").document(uid).get().await().toObject(UserModel::class.java)
+//                if (eachUserNotToInclude != null) {
+//                    arrayOfPeopleYouDontWant.add(eachUserNotToInclude)
+//                }
+//            }
+//
+//            usersList = (allUsers - arrayOfPeopleYouDontWant - currentUserModel) as MutableList<UserModel>
 
-            val arrayOfPeopleYouDontWant = mutableListOf<UserModel>()
-            for( uid in combinedArray)
-            {
-                val eachUserNotToInclude = db.collection("users").document(uid).get().await().toObject(UserModel::class.java)
-                if (eachUserNotToInclude != null) {
-                    arrayOfPeopleYouDontWant.add(eachUserNotToInclude)
-                }
-            }
+            //getting all those users who are not in combined array
+            usersList = db.collection("users").whereNotIn("uid",combinedArray).get().await().toObjects(UserModel::class.java)
 
-            usersList = (allUsers - arrayOfPeopleYouDontWant - currentUserModel) as MutableList<UserModel>
             Log.d("SwipeLog","Deleted ${currentUserModel.displayName}")
             // usersList has list of final users that we need to show.
 

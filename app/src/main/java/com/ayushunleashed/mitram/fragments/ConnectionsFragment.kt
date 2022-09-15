@@ -1,5 +1,6 @@
 package com.ayushunleashed.mitram.fragments
 
+import android.content.ContentValues.TAG
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
@@ -17,12 +18,17 @@ import com.ayushunleashed.mitram.R
 import com.ayushunleashed.mitram.SharedViewModel
 import com.ayushunleashed.mitram.adapters.ConnectionsCardAdapter
 import com.ayushunleashed.mitram.adapters.ConnectionsFirestoreRVCardAdapter
+import com.ayushunleashed.mitram.databinding.FragmentConnectionsBinding
+import com.ayushunleashed.mitram.databinding.FragmentEditSkillsBinding
+import com.ayushunleashed.mitram.databinding.FragmentFullUserDetailBinding
+import com.ayushunleashed.mitram.models.ChatMessageModel
 import com.ayushunleashed.mitram.models.UserModel
 import com.firebase.ui.auth.data.model.User
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import kotlinx.coroutines.*
 import kotlinx.coroutines.tasks.await
 
@@ -33,12 +39,14 @@ class ConnectionsFragment : Fragment() {
     private lateinit var usersList:MutableList<UserModel>
     private lateinit var currentUser: FirebaseUser
     private lateinit var db:FirebaseFirestore
-    var  currentUserModel:UserModel? = null
+    lateinit var  currentUserModel:UserModel
     var myConnectionsList:MutableList<UserModel> = mutableListOf()
 
     lateinit var tvNoUsersToShow: TextView
     private lateinit var progressBar: ProgressBar
     lateinit var recyclerView: RecyclerView
+
+    private lateinit var binding: FragmentConnectionsBinding
 
     var connectionsListArray = ArrayList<String>()
     var firestoreAdapter: ConnectionsFirestoreRVCardAdapter? = null
@@ -58,9 +66,12 @@ class ConnectionsFragment : Fragment() {
         };
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_connections, container, false)
+        binding = FragmentConnectionsBinding.bind(view)
 
         db = FirebaseFirestore.getInstance()
         sharedViewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
+        currentUserModel = sharedViewModel.currentUserModel
+
         return view
     }
 
@@ -70,22 +81,48 @@ class ConnectionsFragment : Fragment() {
         currentUser = FirebaseAuth.getInstance().currentUser!!
 
         setupViews(view)
+        //giveRealtimeUpdate(view)
 
-//        if(sharedViewModel.loadedConnectionsFragmentBefore == true)
-//        {
-//            val adapter = sharedViewModel.myConnectionsList.let { ConnectionsCardAdapter(it,thisContext) }
-//            recyclerView.adapter = adapter
-//            recyclerView.layoutManager = StaggeredGridLayoutManager(
-//                1,
-//                StaggeredGridLayoutManager.VERTICAL
-//            )
-//        }else
-//        {
-//            loadData(view)
-//        }
+        binding.refreshLayout.setOnRefreshListener {
+            loadData(view)
+            binding.refreshLayout.isRefreshing = false
+        }
 
-        loadData(view) // old method
+        if(sharedViewModel.loadedConnectionsFragmentBefore == true) {
+            val adapter =
+                sharedViewModel.myConnectionsList.let { ConnectionsCardAdapter(sharedViewModel.messagesHashMap,it, thisContext) }
+            recyclerView.adapter = adapter
+            recyclerView.layoutManager = StaggeredGridLayoutManager(
+                1,
+                StaggeredGridLayoutManager.VERTICAL
+            )
+        }else
+        {
+            loadData(view)
+            sharedViewModel.loadedConnectionsFragmentBefore = true
+        }
+
+        //loadData(view) // old method
         //setupFirestoreRecyclerView(view) - new method incomplete
+    }
+
+    fun giveRealtimeUpdate(view: View){
+        Log.d("Snap", "Inside Give Realtime Update")
+        db.collection("users").document(currentUser.uid).addSnapshotListener { snapshot, e ->
+            if (e != null) {
+                Log.d("Snap", "Listen failed.", e)
+                return@addSnapshotListener
+            }
+
+            if (snapshot != null && snapshot.exists()) {
+                Log.d("Snap", "Current data: ${snapshot.data}")
+                loadData(view)
+                Log.d("Snap","After Load Data in snapshot listener")
+
+            } else {
+                Log.d("Snap", "Current data: null")
+            }
+        }
     }
 
     fun setupViews(view: View)
@@ -103,7 +140,7 @@ class ConnectionsFragment : Fragment() {
 
         GlobalScope.launch(Dispatchers.IO) {
             currentUserModel = db.collection("users").document(currentUser.uid).get().await()
-                .toObject(UserModel::class.java)
+                .toObject(UserModel::class.java)!!
             connectionsListArray = currentUserModel?.connections!!
         }
 
@@ -147,14 +184,14 @@ class ConnectionsFragment : Fragment() {
 
         GlobalScope.launch(Dispatchers.IO) {
             currentUserModel = db.collection("users").document(currentUser.uid).get().await()
-                .toObject(UserModel::class.java)
+                .toObject(UserModel::class.java)!!
 
             val connectionsArray = currentUserModel?.connections
 
             val addingUsers = launch(Dispatchers.IO) {
                 if (connectionsArray != null) {
                     for (uid in connectionsArray) {
-
+                        sharedViewModel.messagesHashMap[uid] = getLastMessage(uid);
                         var user = db.collection("users").document(uid).get().await().toObject(UserModel::class.java)!!
                         user?.let { myConnectionsList.add(it) }
 
@@ -181,7 +218,8 @@ class ConnectionsFragment : Fragment() {
                 }
                 //Toast.makeText(thisContext,"Size:${myConnectionsList.size}", Toast.LENGTH_SHORT).show()
 
-                val adapter = myConnectionsList.let { ConnectionsCardAdapter(it,thisContext) }
+                sharedViewModel.myConnectionsList = myConnectionsList
+                val adapter = myConnectionsList.let { ConnectionsCardAdapter(sharedViewModel.messagesHashMap,it, thisContext) }
                 recyclerView.adapter = adapter
                 recyclerView.layoutManager = StaggeredGridLayoutManager(
                     1,
@@ -189,6 +227,56 @@ class ConnectionsFragment : Fragment() {
                 )
             }
         }
+    }
+
+    fun getLastMessage(receiverUId: String):String
+    {
+        var senderId = currentUser.uid
+        var db = FirebaseFirestore.getInstance()
+        var receiverId = receiverUId
+        var chatsSender:MutableList<ChatMessageModel> = mutableListOf()
+        var chatsReceiver:MutableList<ChatMessageModel> = mutableListOf()
+        var chats:MutableList<ChatMessageModel> = mutableListOf()
+        var lastMessage:String = "Start Conversation"
+
+        val task1 = GlobalScope.launch(Dispatchers.IO) {
+
+            // get chats of both of them
+            chatsSender = db.collection("chat").whereEqualTo("senderId",senderId)
+                .whereEqualTo("receiverId",receiverId).orderBy("dateTime", Query.Direction.DESCENDING).limit(1).get().await().toObjects(
+                    ChatMessageModel::class.java)
+
+            if(chatsSender.isNotEmpty()) //otherwise crash
+            {
+                chatsSender[0].messageText = "You: "+chatsSender[0].messageText
+            }
+
+            chatsReceiver= db.collection("chat").whereEqualTo("senderId",receiverId)
+                .whereEqualTo("receiverId",senderId).orderBy("dateTime", Query.Direction.DESCENDING).limit(1).get().await().toObjects(
+                    ChatMessageModel::class.java)
+
+            //add chats of both users
+            chats.addAll(chatsSender)
+            chats.addAll(chatsReceiver)
+            Log.d("GENERAL",chats.toString())
+        }
+        runBlocking{
+            task1.join()
+        }
+
+        // if its not empty
+        if(chats.size!=0)
+        {
+            chats = chats.sortedWith(compareBy { it.dateTime }) as MutableList<ChatMessageModel>
+
+            // chats only has 2 messages , 0 ,1 , set the last message, chats[1] to last message
+            if(chats.size==1){
+                lastMessage = chats[0].messageText
+            }else if(chats.size==2){
+                lastMessage = chats[1].messageText
+            }
+        }
+        return lastMessage
     }
 
     fun removeConnection(connectionUidToBeRemoved: String)
