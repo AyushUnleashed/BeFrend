@@ -77,6 +77,8 @@ class ChatFragment : Fragment() {
 
     }
 
+
+
     fun setupRecyclerView()
     {
         chatAdapter = ChatAdapter(messagesArray,senderId!!)

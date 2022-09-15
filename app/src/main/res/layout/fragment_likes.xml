@@ -7,6 +7,19 @@
     tools:context=".fragments.LikesFragment"
     android:background="@color/themeSecondaryApp">
 
+    <!--Swipe Refresh Layout -->
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout android:id="@+id/refreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintTop_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
     <TextView
         android:id="@+id/tvPageTitle"
         android:layout_width="wrap_content"
@@ -20,16 +33,7 @@
         app:layout_constraintTop_toTopOf="parent"
         android:text="Likes"/>
 
-    <ProgressBar
-        android:id="@+id/progressBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        android:visibility="gone">
-    </ProgressBar>
+
 
     <TextView
         android:visibility="gone"
@@ -76,8 +80,22 @@
         android:layout_marginEnd="16dp"
         tools:listitem="@layout/item_people_likes_modern">
 
+
+
     </androidx.recyclerview.widget.RecyclerView>
 
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:visibility="gone">
+        </ProgressBar>
 
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

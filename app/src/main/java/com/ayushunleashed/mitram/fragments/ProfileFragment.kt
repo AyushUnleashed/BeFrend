@@ -83,8 +83,23 @@ class ProfileFragment : Fragment() {
         loadUserImage()
         loadAllDetails()
 
+        binding.refreshLayout.setOnRefreshListener {
+            reloadCurrentUserModel()
 
+        }
         currentUser = FirebaseAuth.getInstance().currentUser!!
+    }
+
+    fun reloadCurrentUserModel(){
+        runBlocking {
+            Log.d("GENERAL","Inside run blocking")
+
+            currentUserModel = db.collection("users").document(currentUser.uid).get().await().toObject(UserModel::class.java)!!
+            Log.d("GENERAL","After Model Request")
+            sharedViewModel.currentUserModel = currentUserModel
+        }
+        loadAllDetails()
+        binding.refreshLayout.isRefreshing = false
     }
 
     fun loadAllDetails(){

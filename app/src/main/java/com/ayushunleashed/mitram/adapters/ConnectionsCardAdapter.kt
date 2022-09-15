@@ -8,10 +8,12 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.cardview.widget.CardView
 import androidx.core.os.bundleOf
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.ayushunleashed.mitram.R
+import com.ayushunleashed.mitram.SharedViewModel
 import com.ayushunleashed.mitram.fragments.ConnectionsFragment
 import com.ayushunleashed.mitram.models.ChatMessageModel
 import com.ayushunleashed.mitram.models.UserModel
@@ -24,7 +26,7 @@ import kotlinx.coroutines.*
 import kotlinx.coroutines.tasks.await
 
 
-class ConnectionsCardAdapter(var users: MutableList<UserModel>,context: Context):RecyclerView.Adapter<ConnectionsCardAdapter.ConnectionsCardViewHolder>() {
+class ConnectionsCardAdapter(var lastMessageHashMap: HashMap<String,String>,var users: MutableList<UserModel>,context: Context):RecyclerView.Adapter<ConnectionsCardAdapter.ConnectionsCardViewHolder>() {
 
     var thisContext = context
     private var currentUser = FirebaseAuth.getInstance().currentUser
@@ -43,7 +45,6 @@ class ConnectionsCardAdapter(var users: MutableList<UserModel>,context: Context)
             cardViewConnections = itemview.findViewById(R.id.cardViewConnections)
             btnMessageConnection = itemview.findViewById(R.id.btnMessageConnection)
             tvLastMessage = itemview.findViewById(R.id.tvLastMessage)
-
         }
     }
 
@@ -62,7 +63,7 @@ class ConnectionsCardAdapter(var users: MutableList<UserModel>,context: Context)
         Glide.with(holder.imgViewUserProfile.context).load(users[position].imageUrl).circleCrop().placeholder(R.drawable.img_user_place_holder)
             .error(R.drawable.img_keep_calm_reload).into(holder.imgViewUserProfile)
 
-        holder.tvLastMessage.text =  getLastMessage(position)
+        holder.tvLastMessage.text = lastMessageHashMap[users[position].uid]
 
 
 
@@ -103,53 +104,6 @@ class ConnectionsCardAdapter(var users: MutableList<UserModel>,context: Context)
             navController = Navigation.findNavController(holder.itemView)
             navController!!.navigate(R.id.action_connectionsFragment_to_fullUserProfileFragment,myBundle)
         }
-    }
-
-    fun getLastMessage(position: Int):String
-    {
-        var db = FirebaseFirestore.getInstance()
-        var receiverId = users[position].uid
-        var chatsSender:MutableList<ChatMessageModel> = mutableListOf()
-        var chatsReceiver:MutableList<ChatMessageModel> = mutableListOf()
-        var chats:MutableList<ChatMessageModel> = mutableListOf()
-        var lastMessage:String = "Start Conversation"
-
-        val task1 = GlobalScope.launch(Dispatchers.IO) {
-
-            // get chats of both of them
-            chatsSender = db.collection("chat").whereEqualTo("senderId",senderId)
-                .whereEqualTo("receiverId",receiverId).orderBy("dateTime",Query.Direction.DESCENDING).limit(1).get().await().toObjects(ChatMessageModel::class.java)
-
-            if(chatsSender.isNotEmpty()) //otherwise crash
-            {
-                chatsSender[0].messageText = "You: "+chatsSender[0].messageText
-            }
-
-            chatsReceiver= db.collection("chat").whereEqualTo("senderId",receiverId)
-                .whereEqualTo("receiverId",senderId).orderBy("dateTime",Query.Direction.DESCENDING).limit(1).get().await().toObjects(ChatMessageModel::class.java)
-
-            //add chats of both users
-            chats.addAll(chatsSender)
-            chats.addAll(chatsReceiver)
-            Log.d("GENERAL",chats.toString())
-        }
-        runBlocking {
-            task1.join()
-        }
-
-        // if its not empty
-        if(chats.size!=0)
-        {
-            chats = chats.sortedWith(compareBy { it.dateTime }) as MutableList<ChatMessageModel>
-
-            // chats only has 2 messages , 0 ,1 , set the last message, chats[1] to last message
-            if(chats.size==1){
-                lastMessage = chats[0].messageText
-            }else if(chats.size==2){
-                lastMessage = chats[1].messageText
-            }
-        }
-        return lastMessage
     }
 
     override fun getItemCount(): Int {
