@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.ProgressBar
+import android.widget.Toast
 import com.ayushunleashed.mitram.models.UserModel
 import com.ayushunleashed.mitram.daos.UserDao
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -142,13 +143,15 @@ class SignInActivity : AppCompatActivity() {
                 ,firebaseuser.email,true
                 )
             }
+            //Toast.makeText(this,"BEFORE dao",Toast.LENGTH_SHORT).show()
             val userDao = UserDao()
             userDao.addUsers(user)
 
 
+            //Toast.makeText(this,"Going to dISCOVER",Toast.LENGTH_SHORT).show()
             val intent = Intent(this, FragmentHomeActivity::class.java)
             startActivity(intent);
-            //Toast.makeText(this,"Going to Notes",Toast.LENGTH_SHORT).show()
+
             finish()
         } else {
             gSignInButton.visibility = View.VISIBLE

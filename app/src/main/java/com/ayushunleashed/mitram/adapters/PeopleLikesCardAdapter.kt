@@ -83,7 +83,7 @@ class PeopleLikesCardAdapter(var users: MutableList<UserModel>):RecyclerView.Ada
 
                 // if current user is not empty and current user does not has this person already as connections
 
-                if (currentUserModel != null  && !currentUserModel.connections.contains(likeCardUserModel.uid)) {
+                if (currentUserModel != null  && !(currentUserModel.connections.contains(likeCardUserModel.uid)  || likeCardUserModel.connections.contains(currentUserModel.uid))) {
 
                     //add the connection request person's id to current users list of connection
                     currentUserModel.connections.add(likeCardUserModel.uid!!)
@@ -115,7 +115,7 @@ class PeopleLikesCardAdapter(var users: MutableList<UserModel>):RecyclerView.Ada
                     // request user's connection list is updated
                     db.collection("users").document(likeCardUserModel.uid).set(likeCardUserModel).await()
                 }
-                else if (currentUserModel != null  && currentUserModel.connections.contains(likeCardUserModel.uid))
+                else if (currentUserModel != null  && (currentUserModel.connections.contains(likeCardUserModel.uid) || likeCardUserModel.connections.contains(currentUserModel.uid)) )
                 {
                     // if duplicacy occured, we have person already in connections
 
@@ -126,6 +126,15 @@ class PeopleLikesCardAdapter(var users: MutableList<UserModel>):RecyclerView.Ada
                     currentUserModel.usersYouLiked.remove(likeCardUserModel.uid)
                     likeCardUserModel.likedBy.remove(currentUserModel.uid)
                     likeCardUserModel.usersYouLiked.remove(currentUserModel.uid)
+
+                    //lets say one side has connection, other doesn't in that case we make it both side connection
+
+
+                    //add the connection request person's id to current users list of connection
+                    currentUserModel.connections.add(likeCardUserModel.uid!!)
+
+                    // also add current user to the request person's connection list
+                    likeCardUserModel.connections.add(currentUserModel.uid!!)
 
                     //updating this to database
                     // current user's like list and connections list both are updated

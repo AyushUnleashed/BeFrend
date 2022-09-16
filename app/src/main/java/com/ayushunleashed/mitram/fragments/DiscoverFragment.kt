@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.annotation.MainThread
 import androidx.core.os.bundleOf
 import com.asynctaskcoffee.cardstack.CardContainer
 import androidx.lifecycle.ViewModelProvider
@@ -163,15 +164,15 @@ class DiscoverFragment : Fragment() ,CardListener{
 //                Log.d("GENERAL","Got User from db, not null");
 //        }
 
-        runBlocking {
+        runBlocking{
             Log.d("GENERAL","Inside run blocking")
 
             currentUserModel = db.collection("users").document(currentUser.uid).get().await().toObject(UserModel::class.java)!!
             Log.d("GENERAL","After Model Request")
             sharedViewModel.currentUserModel = currentUserModel
-
             //UserModel("123", "NULLUSer", "https://picsum.photos/200", "Task Failed")
         }
+
         if(currentUserModel==NULL){
             Log.d("GENERAL","User is NULL");
         }
