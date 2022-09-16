@@ -26,6 +26,11 @@ class FragmentHomeActivity : AppCompatActivity() {
     var db =  FirebaseFirestore.getInstance()
     var currentUser: FirebaseUser? = FirebaseAuth.getInstance().currentUser
 
+    override fun onStart() {
+        super.onStart()
+        db.collection("users").document(currentUser!!.uid).update("isOnline",true)
+        Log.d("Status","User Online");
+    }
 
     override fun onResume() {
         super.onResume()
@@ -40,6 +45,12 @@ class FragmentHomeActivity : AppCompatActivity() {
 
     }
 
+    override fun onStop() {
+        super.onStop()
+        db.collection("users").document(currentUser!!.uid).update("isOnline",false)
+        Log.d("Status","User Offline");
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_fragment_home)
@@ -48,9 +59,6 @@ class FragmentHomeActivity : AppCompatActivity() {
 
         setupNav()
         getTokenFun()
-
-        db.collection("users").document(currentUser!!.uid).update("isOnline",true)
-        Log.d("Status","User Online");
     }
 
 
