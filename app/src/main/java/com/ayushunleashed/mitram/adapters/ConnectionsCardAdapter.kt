@@ -1,29 +1,22 @@
 package com.ayushunleashed.mitram.adapters
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.cardview.widget.CardView
 import androidx.core.os.bundleOf
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.ayushunleashed.mitram.R
-import com.ayushunleashed.mitram.SharedViewModel
 import com.ayushunleashed.mitram.fragments.ConnectionsFragment
-import com.ayushunleashed.mitram.models.ChatMessageModel
 import com.ayushunleashed.mitram.models.UserModel
 import com.bumptech.glide.Glide
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.Query
 import kotlinx.coroutines.*
-import kotlinx.coroutines.tasks.await
 
 
 class ConnectionsCardAdapter(var lastMessageHashMap: HashMap<String,String>,var users: MutableList<UserModel>,context: Context):RecyclerView.Adapter<ConnectionsCardAdapter.ConnectionsCardViewHolder>() {

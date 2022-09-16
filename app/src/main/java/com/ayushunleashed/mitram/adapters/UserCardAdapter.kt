@@ -2,12 +2,8 @@ package com.ayushunleashed.mitram.adapters
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.graphics.Bitmap
-import android.graphics.BlurMaskFilter
-import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
@@ -19,8 +15,6 @@ import com.asynctaskcoffee.cardstack.CardContainerAdapter
 import com.ayushunleashed.mitram.R
 import com.ayushunleashed.mitram.models.UserModel
 import com.bumptech.glide.Glide
-import com.bumptech.glide.request.target.CustomTarget
-import com.bumptech.glide.request.transition.Transition
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import eightbitlab.com.blurview.BlurView

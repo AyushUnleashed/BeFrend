@@ -8,7 +8,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import androidx.annotation.MainThread
 import androidx.core.os.bundleOf
 import com.asynctaskcoffee.cardstack.CardContainer
 import androidx.lifecycle.ViewModelProvider
@@ -19,8 +18,6 @@ import com.ayushunleashed.mitram.R
 import com.ayushunleashed.mitram.SharedViewModel
 import com.ayushunleashed.mitram.adapters.UserCardAdapter
 import com.ayushunleashed.mitram.models.UserModel
-import com.ayushunleashed.mitram.daos.UserDao
-import com.ayushunleashed.mitram.databinding.FragmentConnectionsBinding
 import com.ayushunleashed.mitram.databinding.FragmentDiscoverBinding
 import com.bumptech.glide.Glide
 import com.google.android.material.floatingactionbutton.FloatingActionButton

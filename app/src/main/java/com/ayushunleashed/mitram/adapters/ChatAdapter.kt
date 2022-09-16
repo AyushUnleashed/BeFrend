@@ -11,7 +11,6 @@ import com.ayushunleashed.mitram.databinding.ItemContainerReceivedMessageBinding
 import com.ayushunleashed.mitram.databinding.ItemContainerSentMessageBinding
 import com.ayushunleashed.mitram.models.ChatMessageModel
 import com.ayushunleashed.mitram.utils.DateClass
-import java.text.SimpleDateFormat
 
 public class ChatAdapter(chatMessages:MutableList<ChatMessageModel>, senderId:String): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 

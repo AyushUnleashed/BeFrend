@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.ProgressBar
-import android.widget.Toast
 import com.ayushunleashed.mitram.models.UserModel
 import com.ayushunleashed.mitram.daos.UserDao
 import com.google.android.gms.auth.api.signin.GoogleSignIn

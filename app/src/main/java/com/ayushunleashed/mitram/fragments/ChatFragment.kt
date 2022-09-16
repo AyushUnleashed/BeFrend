@@ -12,17 +12,15 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
-import androidx.navigation.NavController
-import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.ayushunleashed.mitram.R
 import com.ayushunleashed.mitram.adapters.ChatAdapter
 import com.ayushunleashed.mitram.databinding.FragmentChatBinding
 import com.ayushunleashed.mitram.models.ChatMessageModel
 import com.ayushunleashed.mitram.models.UserModel
 import com.ayushunleashed.mitram.utils.DateClass
 import com.bumptech.glide.Glide
+import com.ayushunleashed.mitram.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.*
 import kotlinx.coroutines.*
@@ -51,6 +49,7 @@ class ChatFragment : Fragment() {
         if (container != null) {
             thisContext = container.getContext()
         };
+
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_chat, container, false)
 

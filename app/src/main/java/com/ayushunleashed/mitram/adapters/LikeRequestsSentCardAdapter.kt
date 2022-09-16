@@ -1,28 +1,21 @@
 package com.ayushunleashed.mitram.adapters
 
-import android.annotation.SuppressLint
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.compose.ui.text.toUpperCase
 import androidx.core.os.bundleOf
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
-import com.asynctaskcoffee.cardstack.CardContainerAdapter
 import com.ayushunleashed.mitram.R
 import com.ayushunleashed.mitram.models.UserModel
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.*
-import kotlinx.coroutines.NonDisposableHandle.parent
 import kotlinx.coroutines.tasks.await
 
 
