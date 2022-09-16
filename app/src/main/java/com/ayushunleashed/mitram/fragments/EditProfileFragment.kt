@@ -11,6 +11,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.addCallback
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -18,6 +19,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.ayushunleashed.mitram.R
 import com.ayushunleashed.mitram.SharedViewModel
+import com.ayushunleashed.mitram.UtilitySharedViewModel
 import com.ayushunleashed.mitram.databinding.FragmentEditProfileBinding
 import com.ayushunleashed.mitram.models.UserModel
 import com.ayushunleashed.mitram.utils.StringHelperClass
@@ -43,15 +45,26 @@ class EditProfileFragment : Fragment() {
     lateinit var profileImageURI: Uri
 
     lateinit var sharedViewModel:SharedViewModel
+    lateinit var utilitySharedViewModel:UtilitySharedViewModel
     lateinit var currentUserModel:UserModel
     lateinit var checkPermission: ActivityResultLauncher<Intent>
     var stringHelper:StringHelperClass = StringHelperClass()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         checkPermission =        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             onActivityResult(123, result)
         }
+        // This callback will only be called when MyFragment is at least Started.
+        val callback = requireActivity().onBackPressedDispatcher.addCallback(this) {
+            // Handle the back button event
+            utilitySharedViewModel.bioBufferEP =""
+            utilitySharedViewModel.nameBufferEP =""
+            findNavController().navigate(R.id.action_editProfileFragment_to_profileFragment)
+
+        }
+
 
     }
 
@@ -74,8 +87,15 @@ class EditProfileFragment : Fragment() {
 
         binding = FragmentEditProfileBinding.bind(view)
         sharedViewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
+        utilitySharedViewModel  = ViewModelProvider(requireActivity()).get(UtilitySharedViewModel::class.java)
+
+
+
+
         currentUserModel = sharedViewModel.currentUserModel;
         handleButtons()
+
+
 
         currentUser = FirebaseAuth.getInstance().currentUser!!
         loadUserImage()
@@ -96,10 +116,14 @@ class EditProfileFragment : Fragment() {
         }
 
         binding.btnEditSkills.setOnClickListener {
+            utilitySharedViewModel.nameBufferEP = binding.etvUserNameEditProfile.text.toString()
+            utilitySharedViewModel.bioBufferEP = binding.etvUserBioEditBio.text.toString()
             findNavController().navigate(R.id.action_editProfileFragment_to_editSkillsFragment);
         }
 
         binding.btnEditInterests.setOnClickListener {
+            utilitySharedViewModel.nameBufferEP = binding.etvUserNameEditProfile.text.toString()
+            utilitySharedViewModel.bioBufferEP = binding.etvUserBioEditBio.text.toString()
             findNavController().navigate(R.id.action_editProfileFragment_to_editInterestsFragment);
         }
     }
@@ -132,9 +156,16 @@ class EditProfileFragment : Fragment() {
         binding.interestsChipGroup.addView(chip)
     }
 
+
     fun loadAllDetails(){
         binding.etvUserNameEditProfile.setText(currentUserModel.displayName)
         binding.etvUserBioEditBio.setText(currentUserModel.bio)
+
+        if(utilitySharedViewModel.nameBufferEP!=""){
+            binding.etvUserNameEditProfile.setText(utilitySharedViewModel.nameBufferEP)
+            binding.etvUserBioEditBio.setText(utilitySharedViewModel.bioBufferEP)
+        }
+
 
 
         var userSkillsString:String=""
@@ -223,24 +254,6 @@ class EditProfileFragment : Fragment() {
         }
     }
 
-    fun removeEmptyInterestOrSkill(array: ArrayList<String>): ArrayList<String> {
-        // if ,,,, you write something like this array will have empty elements
-        var toDelete: ArrayList<String> = ArrayList()
-        for (element in array) {
-            if (element.isEmpty() || element.trim().isEmpty()) {
-                toDelete.add(element)
-            }
-        }
-        return (array - toDelete) as ArrayList<String>
-    }
-
-    fun removeSpacesFromArrayElements(array: ArrayList<String>): ArrayList<String>{
-        var modifiedArray: ArrayList<String> = ArrayList()
-        for (element in array) {
-               modifiedArray.add(stringHelper.removeEmptyLinesFromStartAndEnd(element).trim())
-        }
-        return  modifiedArray
-    }
     fun saveDataToDB(){
 
         var userName = binding.etvUserNameEditProfile.text.toString()
