@@ -85,10 +85,11 @@ class ConnectionsFragment : Fragment() {
 
         binding.refreshLayout.setOnRefreshListener {
             loadData(view)
-            binding.refreshLayout.isRefreshing = false
+
         }
 
         if(sharedViewModel.loadedConnectionsFragmentBefore == true) {
+            binding.tvUserCount.text = "( ${sharedViewModel.myConnectionsList.size} )"
             val adapter =
                 sharedViewModel.myConnectionsList.let { ConnectionsCardAdapter(sharedViewModel.messagesHashMap,it, thisContext) }
             recyclerView.adapter = adapter
@@ -205,7 +206,9 @@ class ConnectionsFragment : Fragment() {
 //            sharedViewModel.myConnectionsList = myConnectionsList
             withContext(Dispatchers.Main)
             {
+                binding.tvUserCount.text = "( ${myConnectionsList.size} )"
                 progressBar.visibility = View.GONE
+                binding.refreshLayout.isRefreshing = false
                 Log.d("GENERAL", "connectionsArray by users list" + myConnectionsList.toString());
 
                 if(myConnectionsList.isEmpty())

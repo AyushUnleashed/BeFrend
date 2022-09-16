@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".fragments.LikesFragment"
+    tools:context=".fragments.LikeRequestsSentFragment"
     android:background="@color/themeSecondaryApp">
 
     <!--Swipe Refresh Layout -->
@@ -31,44 +31,22 @@
         android:textColor="@color/black"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:text="Likes"/>
+        android:text="Like Requests Sent"/>
 
-            <TextView
-                android:id="@+id/tvUserCount"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="@id/tvPageTitle"
-                app:layout_constraintVertical_bias="0.7"
-                android:textSize="16sp"
-                android:layout_marginStart="5dp"
-                android:fontFamily="@font/montserrat_regular"
-                android:textColor="@color/gray70"
-                app:layout_constraintStart_toEndOf="@id/tvPageTitle"
-                app:layout_constraintBottom_toBottomOf="@id/tvPageTitle"
-                android:text="( 0 )"/>
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/btnLikeRequestsYouSent"
+        <TextView
+            android:id="@+id/tvUserCount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_highfi"
-            app:tint = "@color/themeApp"
-            app:fabCustomSize="36dp"
-            android:outlineAmbientShadowColor="@color/themeApp"
-            app:maxImageSize="24dp"
-            app:borderWidth="0dp"
-            app:elevation="2dp"
-            android:backgroundTint="@color/white"
-            app:layout_constraintStart_toEndOf="@id/tvPageTitle"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1"
-            android:layout_marginEnd="20dp"
+            app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="@id/tvPageTitle"
+            app:layout_constraintVertical_bias="0.7"
+            android:textSize="16sp"
+            android:layout_marginStart="5dp"
+            android:fontFamily="@font/montserrat_regular"
+            android:textColor="@color/gray70"
+            app:layout_constraintStart_toEndOf="@id/tvPageTitle"
             app:layout_constraintBottom_toBottomOf="@id/tvPageTitle"
-            />
-
-
+            android:text="( 0 )"/>
 
     <TextView
         android:visibility="gone"
@@ -100,7 +78,7 @@
         android:textColor="@color/gray70"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvPageTitle"
-        android:text="This is a list of people who liked your profile"/>
+        android:text="This is a list of people whom you have sent Likes"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_marginTop="40dp"
@@ -113,7 +91,7 @@
         android:layout_height="0dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        tools:listitem="@layout/item_people_likes_modern">
+        tools:listitem="@layout/item_people_like_requests">
 
 
 

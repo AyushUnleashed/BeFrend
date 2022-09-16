@@ -16,9 +16,11 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.ayushunleashed.mitram.R
 import com.ayushunleashed.mitram.SharedViewModel
 import com.ayushunleashed.mitram.adapters.ConnectionsCardAdapter
+import com.ayushunleashed.mitram.adapters.LikeRequestsSentCardAdapter
 import com.ayushunleashed.mitram.adapters.PeopleLikesCardAdapter
 import com.ayushunleashed.mitram.databinding.FragmentConnectionsBinding
 import com.ayushunleashed.mitram.databinding.FragmentEditSkillsBinding
+import com.ayushunleashed.mitram.databinding.FragmentLikeRequestsSentBinding
 import com.ayushunleashed.mitram.databinding.FragmentLikesBinding
 import com.ayushunleashed.mitram.models.UserModel
 import com.google.firebase.auth.FirebaseAuth
@@ -28,14 +30,14 @@ import kotlinx.coroutines.*
 import kotlinx.coroutines.tasks.await
 
 
-class LikesFragment : Fragment() {
+class LikeRequestsSentFragment : Fragment() {
 
     private lateinit var usersList:MutableList<UserModel>
     lateinit var thisContext: Context
     private lateinit var currentUser:FirebaseUser
     lateinit var sharedViewModel: SharedViewModel
     lateinit var tvNoUsersToShow: TextView
-    private lateinit var binding: FragmentLikesBinding
+    private lateinit var binding: FragmentLikeRequestsSentBinding
     lateinit var recyclerView:RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,7 +45,7 @@ class LikesFragment : Fragment() {
 
         val callback = requireActivity().onBackPressedDispatcher.addCallback(this) {
             // Handle the back button event
-            findNavController().navigate(R.id.action_likesFragment_to_discoverFragment)
+            findNavController().navigate(R.id.action_likeRequestsSentFragment_to_likesFragment)
 
         }
     }
@@ -56,9 +58,9 @@ class LikesFragment : Fragment() {
             thisContext = container.context
         };
         // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_likes, container, false)
-        binding = FragmentLikesBinding.bind(view)
-        sharedViewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
+        val view = inflater.inflate(R.layout.fragment_like_requests_sent, container, false)
+        binding = FragmentLikeRequestsSentBinding.bind(view)
+        sharedViewModel = ViewModelProvider(requireActivity())[SharedViewModel::class.java]
         return view
     }
 
@@ -69,30 +71,34 @@ class LikesFragment : Fragment() {
         recyclerView = view.findViewById(R.id.myRecyclerView)
         tvNoUsersToShow =view.findViewById(R.id.tvNoUsers)
 
-        binding.btnLikeRequestsYouSent.setOnClickListener {
-            findNavController().navigate(R.id.action_likesFragment_to_likeRequestsSentFragment)
-        }
-
 
         binding.refreshLayout.setOnRefreshListener {
             loadData(view)
 
         }
 
-        if(sharedViewModel.loadedLikesFragmentBefore == true) {
+        if(sharedViewModel.loadedLikeRequestsSentFragmentBefore == true) {
 
-            binding.tvUserCount.text = "( ${sharedViewModel.myLikesList.size} )"
+            binding.tvUserCount.text = "( ${sharedViewModel.myLikeRequestsSentList.size} )"
+
             val adapter =
-                sharedViewModel.myLikesList.let { PeopleLikesCardAdapter(it) }
+                sharedViewModel.myLikeRequestsSentList.let { LikeRequestsSentCardAdapter(it) }
             recyclerView.adapter = adapter
             recyclerView.layoutManager = StaggeredGridLayoutManager(
                 1,
                 StaggeredGridLayoutManager.VERTICAL
             )
+
+            if(sharedViewModel.myLikeRequestsSentList.size==0){
+                tvNoUsersToShow.visibility = View.VISIBLE
+            }else {
+                tvNoUsersToShow.visibility = View.GONE
+            }
+
         }else
         {
             loadData(view)
-            sharedViewModel.loadedLikesFragmentBefore = true
+            sharedViewModel.loadedLikeRequestsSentFragmentBefore = true
         }
         //loadData(view)
     }
@@ -107,38 +113,44 @@ class LikesFragment : Fragment() {
                 .toObject(UserModel::class.java)
             var users:MutableList<UserModel> = arrayListOf()
 
-            val likedByArray = currentUserModel?.likedBy
+            val likeRequestsSentArray = currentUserModel?.usersYouLiked
 
             val addingUsers = launch {
-                if (likedByArray != null) {
-                    for (uid in likedByArray) {
+                if (likeRequestsSentArray != null) {
+                    for (uid in likeRequestsSentArray) {
 
                         var user:UserModel? = null
                         val job = launch {
-                            user = db.collection("users").document(uid).get().await().toObject(UserModel::class.java)!!
+                            user = db.collection("users").document(uid).get().await().toObject(UserModel::class.java)
                         }
 
                         job.join()
 
                         if (users != null) {
                             user?.let { users.add(it) }
+                            Log.d("GENERAL", "${user?.displayName} is added to like requests page array" );
+
+                        }else{
+                            Log.d("GENERAL", "user is null, not added to like requests page array" );
                         }
 
-                        Log.d("GENERAL", "${user?.displayName} is added to Likes Page array" );
                     }
                 }
             }
-            sharedViewModel.myLikesList = users
+
+            sharedViewModel.myLikeRequestsSentList = users
+
 
             addingUsers.join()
 
             withContext(Dispatchers.Main)
             {
-                binding.tvUserCount.text = "( ${users.size} )"
                 binding.progressBar.visibility = View.GONE
                 binding.refreshLayout.isRefreshing = false
-                if (likedByArray != null) {
-                    if(likedByArray.size == 0) {
+                binding.tvUserCount.text = "( ${users.size} )"
+                if (users != null) {
+
+                    if(users.size == 0) {
                         //Toast.makeText(requireContext(),"No Likes",Toast.LENGTH_SHORT).show()
                             tvNoUsersToShow.visibility = View.VISIBLE
 
@@ -149,11 +161,11 @@ class LikesFragment : Fragment() {
                 }
 
                 if (users != null) {
-                    Log.d("GENERAL", "liked by users list" + users.toString());
+                    Log.d("GENERAL", "users you liked -> users list" + users.toString());
                     //Toast.makeText(requireContext(),"Size:${users.size}",Toast.LENGTH_SHORT).show()
                 }
 
-                val adapter = users?.let { PeopleLikesCardAdapter(it) }
+                val adapter = users?.let {  LikeRequestsSentCardAdapter(it) }
                 recyclerView.adapter = adapter
                 recyclerView.layoutManager = StaggeredGridLayoutManager(
                     1,

@@ -211,6 +211,10 @@ class DiscoverFragment : Fragment() ,CardListener{
             findNavController().navigate(R.id.action_discoverFragment_to_fullUserProfileFragment,myBundle)
         }
 
+        binding.btnSmallReloadDiscoverPage.setOnClickListener {
+            handleReloadUsersButton()
+        }
+
 
     }
 
@@ -227,6 +231,7 @@ class DiscoverFragment : Fragment() ,CardListener{
 
         sharedViewModel.loadedDiscoverFragmentBefore = true
         progressBar.visibility = View.VISIBLE // starts loading
+        binding.btnSmallReloadDiscoverPage.visibility = View.GONE
 
 
         // we make a network call to fetch user list
@@ -261,7 +266,7 @@ class DiscoverFragment : Fragment() ,CardListener{
             // usersList has list of final users that we need to show.
 
 
-
+            usersList.shuffle()
             sharedViewModel.myUsersList = usersList
             sharedViewModel.isUsersPresentForDiscoverFragment = if(usersList.size==0){
                 false
@@ -277,6 +282,7 @@ class DiscoverFragment : Fragment() ,CardListener{
             withContext(Dispatchers.Main)
             {
                 progressBar.visibility = View.GONE
+                binding.btnSmallReloadDiscoverPage.visibility = View.VISIBLE
                 if(usersList.size == 0)
                 {
                     tvNoUsersToShow.visibility = View.VISIBLE
