@@ -15,13 +15,8 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.ayushunleashed.mitram.R
 import com.ayushunleashed.mitram.SharedViewModel
-import com.ayushunleashed.mitram.adapters.ConnectionsCardAdapter
 import com.ayushunleashed.mitram.adapters.LikeRequestsSentCardAdapter
-import com.ayushunleashed.mitram.adapters.PeopleLikesCardAdapter
-import com.ayushunleashed.mitram.databinding.FragmentConnectionsBinding
-import com.ayushunleashed.mitram.databinding.FragmentEditSkillsBinding
 import com.ayushunleashed.mitram.databinding.FragmentLikeRequestsSentBinding
-import com.ayushunleashed.mitram.databinding.FragmentLikesBinding
 import com.ayushunleashed.mitram.models.UserModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser

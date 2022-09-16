@@ -13,7 +13,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.ayushunleashed.mitram.R
 import com.ayushunleashed.mitram.SharedViewModel
-import com.ayushunleashed.mitram.databinding.FragmentEditProfileBinding
 import com.ayushunleashed.mitram.databinding.FragmentEditSkillsBinding
 import com.ayushunleashed.mitram.models.UserModel
 import com.ayushunleashed.mitram.utils.StringHelperClass

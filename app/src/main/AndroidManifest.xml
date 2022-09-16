@@ -13,7 +13,7 @@
         android:theme="@style/Theme.Mitram" >
 
         <activity
-            android:name=".SignInActivity"
+            android:name="com.ayushunleashed.mitram.SignInActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,17 +23,17 @@
 
         </activity>
         <activity
-            android:name=".MainActivity">
+            android:name="com.ayushunleashed.mitram.MainActivity">
 
         </activity>
-        <activity android:name=".FragmentHomeActivity"
+        <activity android:name="com.ayushunleashed.mitram.FragmentHomeActivity"
             >
 
         </activity>
 
         <!-- [START firebase_service] -->
         <service
-            android:name=".firebase.MessagingService"
+            android:name="com.ayushunleashed.mitram.firebase.MessagingService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />

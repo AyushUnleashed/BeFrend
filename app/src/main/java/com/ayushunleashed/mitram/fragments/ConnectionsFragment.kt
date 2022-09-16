@@ -1,6 +1,5 @@
 package com.ayushunleashed.mitram.fragments
 
-import android.content.ContentValues.TAG
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
@@ -19,11 +18,8 @@ import com.ayushunleashed.mitram.SharedViewModel
 import com.ayushunleashed.mitram.adapters.ConnectionsCardAdapter
 import com.ayushunleashed.mitram.adapters.ConnectionsFirestoreRVCardAdapter
 import com.ayushunleashed.mitram.databinding.FragmentConnectionsBinding
-import com.ayushunleashed.mitram.databinding.FragmentEditSkillsBinding
-import com.ayushunleashed.mitram.databinding.FragmentFullUserDetailBinding
 import com.ayushunleashed.mitram.models.ChatMessageModel
 import com.ayushunleashed.mitram.models.UserModel
-import com.firebase.ui.auth.data.model.User
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
