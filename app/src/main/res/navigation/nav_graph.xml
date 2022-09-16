@@ -35,6 +35,15 @@
         <action
             android:id="@+id/action_likesFragment_to_fullUserProfileFragment"
             app:destination="@id/fullUserProfileFragment" />
+        <action
+            android:id="@+id/action_likesFragment_to_likeRequestsSentFragment"
+            app:destination="@id/likeRequestsSentFragment" />
+        <action
+            android:id="@+id/action_likesFragment_to_fullUserProfileFragment2"
+            app:destination="@id/fullUserProfileFragment" />
+        <action
+            android:id="@+id/action_likesFragment_to_discoverFragment"
+            app:destination="@id/discoverFragment" />
     </fragment>
 
     <fragment
@@ -92,6 +101,9 @@
         <action
             android:id="@+id/action_fullUserProfileFragment_to_chatFragment"
             app:destination="@id/chatFragment" />
+        <action
+            android:id="@+id/action_fullUserProfileFragment_to_likeRequestsSentFragment"
+            app:destination="@id/likeRequestsSentFragment" />
 
     </fragment>
     <fragment
@@ -143,5 +155,17 @@
         <action
             android:id="@+id/action_editInterestsFragment_to_editProfileFragment"
             app:destination="@id/editProfileFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/likeRequestsSentFragment"
+        android:name="com.ayushunleashed.mitram.fragments.LikeRequestsSentFragment"
+        android:label="fragment_like_requests_sent"
+        tools:layout="@layout/fragment_like_requests_sent" >
+        <action
+            android:id="@+id/action_likeRequestsSentFragment_to_likesFragment"
+            app:destination="@id/likesFragment" />
+        <action
+            android:id="@+id/action_likeRequestsSentFragment_to_fullUserProfileFragment"
+            app:destination="@id/fullUserProfileFragment" />
     </fragment>
 </navigation>

@@ -19,6 +19,7 @@
         <entry key="..\:/Users/ayush/AndroidStudioProjects/Mitram/app/src/main/res/drawable/ic_heat_bottom_nav_2.xml" value="0.221" />
         <entry key="..\:/Users/ayush/AndroidStudioProjects/Mitram/app/src/main/res/drawable/ic_highfi.xml" value="0.221" />
         <entry key="..\:/Users/ayush/AndroidStudioProjects/Mitram/app/src/main/res/drawable/ic_img_blur_background.xml" value="0.221" />
+        <entry key="..\:/Users/ayush/AndroidStudioProjects/Mitram/app/src/main/res/drawable/ic_log_out.xml" value="0.198" />
         <entry key="..\:/Users/ayush/AndroidStudioProjects/Mitram/app/src/main/res/drawable/ic_messages_bottom_nav_2.xml" value="0.221" />
         <entry key="..\:/Users/ayush/AndroidStudioProjects/Mitram/app/src/main/res/drawable/ic_more_options.xml" value="0.2345" />
         <entry key="..\:/Users/ayush/AndroidStudioProjects/Mitram/app/src/main/res/drawable/ic_profile_bottom_nav.xml" value="0.221" />
@@ -37,14 +38,15 @@
         <entry key="..\:/Users/ayush/AndroidStudioProjects/Mitram/app/src/main/res/layout/activity_sign_in.xml" value="0.22826086956521738" />
         <entry key="..\:/Users/ayush/AndroidStudioProjects/Mitram/app/src/main/res/layout/fragment_chat.xml" value="0.4" />
         <entry key="..\:/Users/ayush/AndroidStudioProjects/Mitram/app/src/main/res/layout/fragment_connections.xml" value="0.19021739130434784" />
-        <entry key="..\:/Users/ayush/AndroidStudioProjects/Mitram/app/src/main/res/layout/fragment_discover.xml" value="0.176" />
+        <entry key="..\:/Users/ayush/AndroidStudioProjects/Mitram/app/src/main/res/layout/fragment_discover.xml" value="0.264" />
         <entry key="..\:/Users/ayush/AndroidStudioProjects/Mitram/app/src/main/res/layout/fragment_edit_interests.xml" value="0.536" />
         <entry key="..\:/Users/ayush/AndroidStudioProjects/Mitram/app/src/main/res/layout/fragment_edit_profile.xml" value="0.4606643356643357" />
         <entry key="..\:/Users/ayush/AndroidStudioProjects/Mitram/app/src/main/res/layout/fragment_edit_skills.xml" value="0.4" />
         <entry key="..\:/Users/ayush/AndroidStudioProjects/Mitram/app/src/main/res/layout/fragment_full_user_detail.xml" value="0.43734439834024896" />
         <entry key="..\:/Users/ayush/AndroidStudioProjects/Mitram/app/src/main/res/layout/fragment_full_user_page.xml" value="0.19021739130434784" />
         <entry key="..\:/Users/ayush/AndroidStudioProjects/Mitram/app/src/main/res/layout/fragment_full_user_profile.xml" value="0.19021739130434784" />
-        <entry key="..\:/Users/ayush/AndroidStudioProjects/Mitram/app/src/main/res/layout/fragment_likes.xml" value="0.19021739130434784" />
+        <entry key="..\:/Users/ayush/AndroidStudioProjects/Mitram/app/src/main/res/layout/fragment_like_requests_sent.xml" value="0.264" />
+        <entry key="..\:/Users/ayush/AndroidStudioProjects/Mitram/app/src/main/res/layout/fragment_likes.xml" value="0.4154704944178628" />
         <entry key="..\:/Users/ayush/AndroidStudioProjects/Mitram/app/src/main/res/layout/fragment_messages.xml" value="0.19021739130434784" />
         <entry key="..\:/Users/ayush/AndroidStudioProjects/Mitram/app/src/main/res/layout/fragment_profile.xml" value="0.2" />
         <entry key="..\:/Users/ayush/AndroidStudioProjects/Mitram/app/src/main/res/layout/item.xml" value="0.19021739130434784" />
@@ -55,6 +57,7 @@
         <entry key="..\:/Users/ayush/AndroidStudioProjects/Mitram/app/src/main/res/layout/item_container_received_message_fixed.xml" value="0.3998109640831758" />
         <entry key="..\:/Users/ayush/AndroidStudioProjects/Mitram/app/src/main/res/layout/item_container_sent_message.xml" value="0.4" />
         <entry key="..\:/Users/ayush/AndroidStudioProjects/Mitram/app/src/main/res/layout/item_container_sent_message_fixed.xml" value="0.4" />
+        <entry key="..\:/Users/ayush/AndroidStudioProjects/Mitram/app/src/main/res/layout/item_people_like_requests.xml" value="0.21214868540344514" />
         <entry key="..\:/Users/ayush/AndroidStudioProjects/Mitram/app/src/main/res/layout/item_people_likes.xml" value="0.4" />
         <entry key="..\:/Users/ayush/AndroidStudioProjects/Mitram/app/src/main/res/layout/item_people_likes_modern.xml" value="0.5301204819277109" />
         <entry key="..\:/Users/ayush/AndroidStudioProjects/Mitram/app/src/main/res/layout/item_user.xml" value="0.264" />

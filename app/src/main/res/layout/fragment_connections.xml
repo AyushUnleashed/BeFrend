@@ -41,6 +41,21 @@
         app:layout_constraintTop_toTopOf="parent"
         android:text="Connections"/>
 
+        <TextView
+            android:id="@+id/tvUserCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tvPageTitle"
+            app:layout_constraintVertical_bias="0.7"
+            android:textSize="16sp"
+            android:layout_marginStart="5dp"
+            android:fontFamily="@font/montserrat_regular"
+            android:textColor="@color/gray70"
+            app:layout_constraintStart_toEndOf="@id/tvPageTitle"
+            app:layout_constraintBottom_toBottomOf="@id/tvPageTitle"
+            android:text="( 0 )"/>
+
     <TextView
         android:visibility="gone"
         android:id="@+id/tvNoUsers"

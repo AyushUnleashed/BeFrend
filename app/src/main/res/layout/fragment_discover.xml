@@ -110,6 +110,28 @@
         app:layout_constraintLeft_toRightOf="@id/guideline"
         />
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btnSmallReloadDiscoverPage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_reload"
+        app:tint = "@color/newBlack"
+        app:fabCustomSize="32dp"
+        android:visibility="visible"
+        android:outlineAmbientShadowColor="@color/themeApp"
+        app:maxImageSize="16dp"
+        app:borderWidth="0dp"
+        app:elevation="5dp"
+        android:backgroundTint="@color/white"
+        app:layout_constraintTop_toBottomOf="@id/cardContainer"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="1"
+        app:layout_constraintVertical_bias="0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="10dp"
+        />
+
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline"
         android:layout_width="wrap_content"

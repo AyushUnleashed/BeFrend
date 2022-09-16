@@ -113,6 +113,8 @@ class FullUserDetailFragment : Fragment() {
                 findNavController().navigate(R.id.action_fullUserProfileFragment_to_connectionsFragment)
             }else if(previousFragmentName == "LikesFragment"){
                 findNavController().navigate(R.id.action_fullUserProfileFragment_to_likesFragment)
+            }else if(previousFragmentName == "LikeRequestsSentFragment"){
+                findNavController().navigate(R.id.action_fullUserProfileFragment_to_likeRequestsSentFragment)
             }else if(previousFragmentName == "ChatFragment"){
                 // sending user back because chat fragment needs a user to load chat with
                 val bundle = bundleOf("userToSend" to userToLoad)
