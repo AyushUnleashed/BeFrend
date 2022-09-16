@@ -69,7 +69,7 @@ class LikesFragment : Fragment() {
         recyclerView = view.findViewById(R.id.myRecyclerView)
         tvNoUsersToShow =view.findViewById(R.id.tvNoUsers)
 
-        binding.btnLikeRequestsYouSent.setOnClickListener {
+        binding.btnMyLikes.setOnClickListener {
             findNavController().navigate(R.id.action_likesFragment_to_likeRequestsSentFragment)
         }
 

@@ -31,7 +31,7 @@
         android:textColor="@color/black"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:text="Like Requests Sent"/>
+        android:text="Likes Sent"/>
 
         <TextView
             android:id="@+id/tvUserCount"
