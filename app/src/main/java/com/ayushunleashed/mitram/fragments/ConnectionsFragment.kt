@@ -177,6 +177,7 @@ class ConnectionsFragment : Fragment() {
     {
         myConnectionsList.clear()
         progressBar.visibility = View.VISIBLE
+        //binding.myRecyclerView.visibility = View.GONE
 
 
         GlobalScope.launch(Dispatchers.IO) {
@@ -189,7 +190,7 @@ class ConnectionsFragment : Fragment() {
                 if (connectionsArray != null) {
                     for (uid in connectionsArray) {
                         sharedViewModel.messagesHashMap[uid] = getLastMessage(uid);
-                        var user = db.collection("users").document(uid).get().await().toObject(UserModel::class.java)!!
+                        var user = db.collection("users").document(uid).get().await().toObject(UserModel::class.java)
                         user?.let { myConnectionsList.add(it) }
 
                         Log.d("GENERAL", "${user?.displayName} is added to array" );
@@ -204,6 +205,7 @@ class ConnectionsFragment : Fragment() {
             {
                 binding.tvUserCount.text = "( ${myConnectionsList.size} )"
                 progressBar.visibility = View.GONE
+                //binding.myRecyclerView.visibility = View.VISIBLE
                 binding.refreshLayout.isRefreshing = false
                 Log.d("GENERAL", "connectionsArray by users list" + myConnectionsList.toString());
 

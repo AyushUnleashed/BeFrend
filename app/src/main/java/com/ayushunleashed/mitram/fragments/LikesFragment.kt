@@ -112,7 +112,7 @@ class LikesFragment : Fragment() {
 
                         var user:UserModel? = null
                         val job = launch {
-                            user = db.collection("users").document(uid).get().await().toObject(UserModel::class.java)!!
+                            user = db.collection("users").document(uid).get().await().toObject(UserModel::class.java)
                         }
 
                         job.join()
