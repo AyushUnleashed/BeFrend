@@ -66,10 +66,8 @@ class LikeRequestsSentFragment : Fragment() {
         recyclerView = view.findViewById(R.id.myRecyclerView)
         tvNoUsersToShow =view.findViewById(R.id.tvNoUsers)
 
-
         binding.refreshLayout.setOnRefreshListener {
             loadData(view)
-
         }
 
         if(sharedViewModel.loadedLikeRequestsSentFragmentBefore == true) {
@@ -101,6 +99,7 @@ class LikeRequestsSentFragment : Fragment() {
     fun loadData(view: View)
     {        val db = FirebaseFirestore.getInstance()
         binding.progressBar.visibility = View.VISIBLE
+        binding.myRecyclerView.visibility = View.GONE
 
         GlobalScope.launch(Dispatchers.IO) {
 
@@ -141,6 +140,7 @@ class LikeRequestsSentFragment : Fragment() {
             withContext(Dispatchers.Main)
             {
                 binding.progressBar.visibility = View.GONE
+                binding.myRecyclerView.visibility = View.VISIBLE
                 binding.refreshLayout.isRefreshing = false
                 binding.tvUserCount.text = "( ${users.size} )"
                 if (users != null) {

@@ -97,6 +97,7 @@ class LikesFragment : Fragment() {
     fun loadData(view: View)
     {        val db = FirebaseFirestore.getInstance()
         binding.progressBar.visibility = View.VISIBLE
+        binding.myRecyclerView.visibility = View.GONE
 
         GlobalScope.launch(Dispatchers.IO) {
 
@@ -133,6 +134,7 @@ class LikesFragment : Fragment() {
             {
                 binding.tvUserCount.text = "( ${users.size} )"
                 binding.progressBar.visibility = View.GONE
+                binding.myRecyclerView.visibility = View.VISIBLE
                 binding.refreshLayout.isRefreshing = false
                 if (likedByArray != null) {
                     if(likedByArray.size == 0) {
