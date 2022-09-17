@@ -66,10 +66,8 @@ class LikeRequestsSentFragment : Fragment() {
         recyclerView = view.findViewById(R.id.myRecyclerView)
         tvNoUsersToShow =view.findViewById(R.id.tvNoUsers)
 
-
         binding.refreshLayout.setOnRefreshListener {
             loadData(view)
-
         }
 
         if(sharedViewModel.loadedLikeRequestsSentFragmentBefore == true) {
