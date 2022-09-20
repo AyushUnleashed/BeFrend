@@ -76,10 +76,18 @@ class PeopleLikesCardAdapter(var users: MutableList<UserModel>):RecyclerView.Ada
 
                 // if current user is not empty and current user does not has this person already as connections
 
-                if (currentUserModel != null  && !(currentUserModel.connections.contains(likeCardUserModel.uid)  || likeCardUserModel.connections.contains(currentUserModel.uid))) {
+                if (currentUserModel != null  && !(currentUserModel.connections.contains(likeCardUserModel.uid)  && likeCardUserModel.connections.contains(currentUserModel.uid))) {
+
+
+                    //removing will make sure when i add there is only one connection
+                    currentUserModel.connections.remove(likeCardUserModel.uid!!)
 
                     //add the connection request person's id to current users list of connection
                     currentUserModel.connections.add(likeCardUserModel.uid!!)
+
+
+                    //removing will make sure when i add there is only one connection
+                    likeCardUserModel.connections.remove(currentUserModel.uid!!)
 
                     // also add current user to the request person's connection list
                     likeCardUserModel.connections.add(currentUserModel.uid!!)

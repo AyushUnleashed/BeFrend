@@ -131,8 +131,9 @@ class LikeRequestsSentFragment : Fragment() {
                     }
                 }
             }
-
-            sharedViewModel.myLikeRequestsSentList = users
+            val usersReadOnly = users as MutableList<UserModel>
+            val reversedUsers = usersReadOnly.asReversed()
+            sharedViewModel.myLikeRequestsSentList = reversedUsers
 
 
             addingUsers.join()
@@ -160,7 +161,7 @@ class LikeRequestsSentFragment : Fragment() {
                     //Toast.makeText(requireContext(),"Size:${users.size}",Toast.LENGTH_SHORT).show()
                 }
 
-                val adapter = users?.let {  LikeRequestsSentCardAdapter(it) }
+                val adapter = reversedUsers?.let {  LikeRequestsSentCardAdapter(it) }
                 recyclerView.adapter = adapter
                 recyclerView.layoutManager = StaggeredGridLayoutManager(
                     1,
