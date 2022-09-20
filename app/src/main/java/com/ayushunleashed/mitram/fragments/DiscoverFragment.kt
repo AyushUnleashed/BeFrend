@@ -411,45 +411,57 @@ class DiscoverFragment : Fragment() ,CardListener{
         val userWhoGotRightSwiped:UserModel = model as UserModel
         //Toast.makeText(thisContext,"Like Request Send",Toast.LENGTH_SHORT).show()
         // for matching
+
+        if(currentUserModel.likedBy.contains(userWhoGotRightSwiped.uid) || userWhoGotRightSwiped.usersYouLiked.contains(currentUserModel!!.uid))
+        {
          GlobalScope.launch(Dispatchers.IO) {
 
-            if(currentUserModel!!.likedBy.contains(userWhoGotRightSwiped.uid) || userWhoGotRightSwiped.usersYouLiked.contains(currentUserModel!!.uid))
-            {
+
                 // if you already have the person you liked on in your likes list
 
                 // remove him from your like list
-                currentUserModel!!.likedBy.remove(userWhoGotRightSwiped.uid)
-
-                userWhoGotRightSwiped.usersYouLiked.remove(currentUserModel!!.uid)
+                currentUserModel.likedBy.remove(userWhoGotRightSwiped.uid)
+                Log.d("GENERAL","SwipeRight: Removed ${userWhoGotRightSwiped.displayName} from likedBy array of ${currentUserModel.displayName}")
+                userWhoGotRightSwiped.usersYouLiked.remove(currentUserModel.uid)
+                Log.d("GENERAL","SwipeRight: Removed ${currentUserModel.displayName} from users you liked array of ${userWhoGotRightSwiped.displayName}")
 
                 //precautions
-                currentUserModel!!.usersYouLiked.remove(userWhoGotRightSwiped.uid)
-                userWhoGotRightSwiped.likedBy.remove(currentUserModel!!.uid)
+                currentUserModel.usersYouLiked.remove(userWhoGotRightSwiped.uid)
+                Log.d("GENERAL","SwipeRight: Removed ${userWhoGotRightSwiped.displayName} from users you liked array of ${currentUserModel.displayName}")
+
+                userWhoGotRightSwiped.likedBy.remove(currentUserModel.uid)
+                Log.d("GENERAL","SwipeRight: Removed ${currentUserModel.displayName} from likedBy array of ${userWhoGotRightSwiped.displayName}")
 
 
                 // add him to your connection list
-                currentUserModel!!.connections.add(userWhoGotRightSwiped.uid!!)
+                if(!currentUserModel.connections.contains(userWhoGotRightSwiped.uid)){
 
-                // add yourself to his connection list
-                userWhoGotRightSwiped.connections.add(currentUserModel!!.uid!!)
+                    currentUserModel.connections.add(userWhoGotRightSwiped.uid!!)
+                    Log.d("GENERAL","SwipeRight: Added ${userWhoGotRightSwiped.displayName} in connection list of ${currentUserModel.displayName}")
+                }
+
+
+                if(!userWhoGotRightSwiped.connections.contains(currentUserModel.uid)){
+                    // add yourself to his connection list
+                    userWhoGotRightSwiped.connections.add(currentUserModel.uid!!)
+                    Log.d("GENERAL","SwipeRight: Added ${currentUserModel.displayName} in connection list of ${userWhoGotRightSwiped.displayName}")
+                }
+
+
 
                 //updating this to database
                 // current user's like list and connections list both are updated
-                db.collection("users").document(currentUser.uid).set(currentUserModel!!).await()
+                db.collection("users").document(currentUser.uid).set(currentUserModel).await()
                 // request user's connection list is updated
-                db.collection("users").document(userWhoGotRightSwiped.uid).set(userWhoGotRightSwiped).await()
+                db.collection("users").document(userWhoGotRightSwiped.uid!!).set(userWhoGotRightSwiped).await()
 
                 withContext(Dispatchers.Main)
                 {
                     Toast.makeText(thisContext,"It's a match",Toast.LENGTH_SHORT).show()
                 }
             }
-        }
-
-        if(!userWhoGotRightSwiped.likedBy.contains(currentUser.uid) && !userWhoGotRightSwiped.connections.contains(currentUser.uid))
+        }else if(!userWhoGotRightSwiped.likedBy.contains(currentUser.uid) && !userWhoGotRightSwiped.connections.contains(currentUser.uid))
         {
-
-            userWhoGotRightSwiped.likedBy.add(currentUser.uid)
 
             Log.e(
                 "SwipeLog",
@@ -457,6 +469,9 @@ class DiscoverFragment : Fragment() ,CardListener{
             )
 
             GlobalScope.launch(Dispatchers.IO) {
+
+                userWhoGotRightSwiped.likedBy.add(currentUser.uid)
+
                 db.collection("users").document(userWhoGotRightSwiped.uid!!).set(userWhoGotRightSwiped).
                 addOnSuccessListener {
                     Toast.makeText(thisContext,"Like request Sent", Toast.LENGTH_SHORT).show()
