@@ -75,6 +75,9 @@
         <action
             android:id="@+id/action_profileFragment_to_editProfileFragment"
             app:destination="@id/editProfileFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_utilityFragment"
+            app:destination="@id/utilityFragment" />
     </fragment>
     <activity
         android:id="@+id/signInActivity"
@@ -167,5 +170,14 @@
         <action
             android:id="@+id/action_likeRequestsSentFragment_to_fullUserProfileFragment"
             app:destination="@id/fullUserProfileFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/utilityFragment"
+        android:name="com.ayushunleashed.mitram.fragments.UtilityFragment"
+        android:label="fragment_utility"
+        tools:layout="@layout/fragment_utility" >
+        <action
+            android:id="@+id/action_utilityFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
     </fragment>
 </navigation>

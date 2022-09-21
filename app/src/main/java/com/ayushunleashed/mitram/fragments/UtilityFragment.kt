@@ -2,40 +2,37 @@ package com.ayushunleashed.mitram.fragments
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController
 import com.ayushunleashed.mitram.R
 import com.ayushunleashed.mitram.SharedViewModel
-import com.ayushunleashed.mitram.databinding.FragmentProfileBinding
+import com.ayushunleashed.mitram.databinding.FragmentUtilityBinding
 import com.ayushunleashed.mitram.models.UserModel
-import com.bumptech.glide.Glide
-import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInClient
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.ayushunleashed.mitram.models.UtilityModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
-import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
+import kotlinx.coroutines.withContext
 
 
-class ProfileFragment : Fragment() {
+class UtilityFragment : Fragment() {
 
-    lateinit var binding:FragmentProfileBinding
+    lateinit var binding:FragmentUtilityBinding
 
     lateinit var thisContext: Context
 
     lateinit var db: FirebaseFirestore
     lateinit var currentUser: FirebaseUser
-    private lateinit var googleSignInClient: GoogleSignInClient
     private lateinit var mAuth: FirebaseAuth
 
     lateinit var sharedViewModel:SharedViewModel
@@ -54,7 +51,7 @@ class ProfileFragment : Fragment() {
             thisContext = container.getContext()
         };
         // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_profile, container, false)
+        val view = inflater.inflate(R.layout.fragment_utility, container, false)
 
         db  = FirebaseFirestore.getInstance()
 
@@ -64,7 +61,7 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding = FragmentProfileBinding.bind(view)
+        binding = FragmentUtilityBinding.bind(view)
         sharedViewModel = ViewModelProvider(requireActivity())[SharedViewModel::class.java]
         currentUserModel = sharedViewModel.currentUserModel;
 
@@ -72,87 +69,59 @@ class ProfileFragment : Fragment() {
         handleButtons()
         mAuth= Firebase.auth
 
-        loadAllDetails()
-
         binding.refreshLayout.setOnRefreshListener {
-            reloadCurrentUserModel()
+
 
         }
         currentUser = FirebaseAuth.getInstance().currentUser!!
     }
 
-    fun reloadCurrentUserModel(){
-        runBlocking {
-            Log.d("GENERAL","Inside run blocking")
-
-            currentUserModel = db.collection("users").document(currentUser.uid).get().await().toObject(UserModel::class.java)!!
-            Log.d("GENERAL","After Model Request")
-            sharedViewModel.currentUserModel = currentUserModel
-        }
-        loadAllDetails()
-        binding.refreshLayout.isRefreshing = false
-    }
-
-    fun loadAllDetails(){
-        binding.tvUserName.text = currentUserModel.displayName
-        binding.tvUserBio.text = currentUserModel.bio
-        binding.tvUserEmail.text = currentUserModel.email
-        loadUserImage()
-    }
-
-    fun loadUserImage()
-    {
-        Glide.with(binding.userImage.context).load(currentUserModel.imageUrl).circleCrop().placeholder(R.drawable.img_user_place_holder)
-            .error(R.drawable.img_keep_calm_reload).into(binding.userImage)
-    }
 
     fun handleButtons(){
         binding.btnLogout.setOnClickListener {
-            logOut()
+
         }
 
-        binding.btnEditProfile.setOnClickListener {
-            findNavController().navigate(R.id.action_profileFragment_to_editProfileFragment)
-        }
-    }
+        binding.btnCollect.setOnClickListener {
+            binding.progressBar.visibility = View.VISIBLE
+            binding.btnCollect.visibility = View.GONE
+            handleCollectAllUserData()
 
-    fun logOut() {
-        val user = Firebase.auth.currentUser!!
-        deleteToken()
-        mAuth.signOut();
-        clearOldLogin()
-        Toast.makeText(thisContext,"LoggedOut",Toast.LENGTH_SHORT).show()
-
-        findNavController().navigate(R.id.action_profileFragment_to_signInActivity)
-    }
-
-    fun clearOldLogin()
-    {
-        // Configure Google Sign In
-        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken("584245718070-rmeqcca7nb9irbe156hu07u2ij6sv2g4.apps.googleusercontent.com")
-            .requestEmail()
-            .build()
-        googleSignInClient = GoogleSignIn.getClient(thisContext, gso)
-        googleSignInClient.signOut()
-        googleSignInClient.revokeAccess()
-    }
-
-
-
-    fun deleteToken()
-    {
-        currentUser = FirebaseAuth.getInstance().currentUser!!
-        db  = FirebaseFirestore.getInstance()
-
-        GlobalScope.launch {
-
-            var currentUserModel = db.collection("users").document(currentUser.uid).get().await().toObject(
-                UserModel::class.java)
-            currentUserModel?.fcmToken = null
-
-            db.collection("users").document(currentUser.uid).set(currentUserModel!!)
         }
     }
 
+    fun handleCollectAllUserData(){
+        var allUsersUidArray: ArrayList<String> = ArrayList()
+
+
+        GlobalScope.launch(Dispatchers.IO) {
+            allUsersUidArray = getALlUsersUidFromUsersCollection()
+            uploadAllUsersIdToUtilityCollection(allUsersUidArray)
+            withContext(Dispatchers.Main){
+                binding.progressBar.visibility = View.GONE
+                binding.btnCollect.visibility = View.VISIBLE
+                Toast.makeText(thisContext,"List of All users added to db",Toast.LENGTH_SHORT).show()
+            }
+        }
+
+
+
+    }
+
+    fun uploadAllUsersIdToUtilityCollection(allUsersUidArray: ArrayList<String>) {
+
+        var utilityModel = UtilityModel(allUsersUidArray)
+        db.collection("utility").document("utility_doc").set(utilityModel)
+    }
+
+    suspend fun getALlUsersUidFromUsersCollection():ArrayList<String>{
+
+        var listOfAllUserIds = ArrayList<String>()
+        var allUsersModel = db.collection("users").get().await().toObjects(UserModel::class.java)
+
+        for( userModel in allUsersModel){
+            userModel.uid?.let { listOfAllUserIds.add(it) }
+        }
+        return listOfAllUserIds
+    }
 }
