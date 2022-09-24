@@ -1,5 +1,6 @@
 package com.ayushunleashed.mitram.adapters
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -131,11 +132,24 @@ class PeopleLikesCardAdapter(var users: MutableList<UserModel>):RecyclerView.Ada
                     //lets say one side has connection, other doesn't in that case we make it both side connection
 
 
-                    //add the connection request person's id to current users list of connection
-                    currentUserModel.connections.add(likeCardUserModel.uid!!)
+                    if(!currentUserModel.connections.contains(likeCardUserModel.uid)){
 
-                    // also add current user to the request person's connection list
-                    likeCardUserModel.connections.add(currentUserModel.uid!!)
+                        //add the connection request person's id to current users list of connection
+                        currentUserModel.connections.add(likeCardUserModel.uid!!)
+                    }
+
+
+                    if(!likeCardUserModel.connections.contains(currentUserModel.uid)){
+                        // also add current user to the request person's connection list
+                        likeCardUserModel.connections.add(currentUserModel.uid!!)
+                    }
+
+                    withContext(Dispatchers.Main)
+                    {
+                        //delete from ui
+                        users.removeAt(position)
+                        notifyDataSetChanged()
+                    }
 
                     //updating this to database
                     // current user's like list and connections list both are updated
