@@ -19,6 +19,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.SetOptions
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -81,7 +82,7 @@ class SplashScreenFragment : Fragment() {
                 if (user != null) {
 
                     if(!user.uid?.let { db.collection("users").document(it).get().await().exists() }!!) {
-                        user.uid.let { db.collection("users").document(it).set(user) }
+                        user.uid.let { db.collection("users").document(it).set(user, SetOptions.merge()) }
                         addCurrentUserToUtilityList(user)
                     }
                     loadCurrentUserModel()

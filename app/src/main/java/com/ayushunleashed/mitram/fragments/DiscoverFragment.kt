@@ -28,6 +28,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.*
 import kotlinx.coroutines.tasks.await
 import org.json.JSONObject.NULL
+import java.util.Optional.empty
 
 
 class DiscoverFragment : Fragment() ,CardListener{
@@ -528,16 +529,16 @@ class DiscoverFragment : Fragment() ,CardListener{
         var usersToLoad = allUsersUid?.minus(combinedArray)
         Log.d("GENERAL", usersToLoad.toString())
 
-
-        var lastIndex = 0;
         var myUsersList:MutableList<UserModel> = mutableListOf()
         if (usersToLoad != null) {
-            for(i in usersToLoad.indices){
-                val uid = usersToLoad[i]
-                val user = db.collection("users").document(uid).get().await().toObject(UserModel::class.java)
-                if (user != null) {
-                    myUsersList.add(user)
-                    Log.d("GENERAL","user, ${user.displayName} added to easy list ")
+            for(uid in usersToLoad){
+
+                if(!uid.isNullOrEmpty()){
+                    val user = db.collection("users").document(uid).get().await().toObject(UserModel::class.java)
+                    if (user != null) {
+                        myUsersList.add(user)
+                        Log.d("GENERAL","user, ${user.displayName} added to easy list ")
+                    }
                 }
             }
         }

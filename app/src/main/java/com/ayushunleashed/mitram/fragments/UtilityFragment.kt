@@ -115,12 +115,17 @@ class UtilityFragment : Fragment() {
         var allUsersModel:MutableList<UserModel> = db.collection("users").get().await().toObjects(UserModel::class.java)
 
         for( userModel in allUsersModel){
+
             Log.d("UserModel","Fetched UserModel Before:${userModel.toString()}")
             userModel.isOnline = false //set all people status to false
             Log.d("UserModel","Fetched UserModel After:${userModel.toString()}")
-            userModel.uid?.let {
-                Log.d("UserModel","Updating to DB:${userModel.displayName.toString()}")
-                db.collection("users").document(it).update("isOnline",false) }
+
+            if(!userModel.uid.isNullOrEmpty()){
+                userModel.uid.let {
+                    Log.d("UserModel","Updating to DB:${userModel.displayName.toString()}")
+                    db.collection("users").document(it).set(userModel, SetOptions.merge()).await() }
+            }
+
         }
     }
 
