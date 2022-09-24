@@ -93,6 +93,15 @@ class ConnectionsFragment : Fragment() {
                 1,
                 StaggeredGridLayoutManager.VERTICAL
             )
+
+            if(sharedViewModel.myConnectionsList.size == 0) {
+                //Toast.makeText(requireContext(),"No Likes",Toast.LENGTH_SHORT).show()
+                tvNoUsersToShow.visibility = View.VISIBLE
+
+
+            }else {
+                tvNoUsersToShow.visibility = View.GONE
+            }
         }else
         {
             loadData(view)
