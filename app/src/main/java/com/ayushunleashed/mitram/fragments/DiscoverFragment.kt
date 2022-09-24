@@ -19,6 +19,7 @@ import com.ayushunleashed.mitram.SharedViewModel
 import com.ayushunleashed.mitram.adapters.UserCardAdapter
 import com.ayushunleashed.mitram.models.UserModel
 import com.ayushunleashed.mitram.databinding.FragmentDiscoverBinding
+import com.ayushunleashed.mitram.models.UtilityModel
 import com.bumptech.glide.Glide
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
@@ -201,7 +202,7 @@ class DiscoverFragment : Fragment() ,CardListener{
     {
         // first time, loadedDiscoverFragmentBefore was set to false,
         //from now on it will be true;
-
+        Log.d("GENERAL","Started Loading Discover Fragment Cards")
         sharedViewModel.loadedDiscoverFragmentBefore = true
         progressBar.visibility = View.VISIBLE // starts loading
         binding.btnSmallReloadDiscoverPage.visibility = View.GONE
@@ -210,31 +211,34 @@ class DiscoverFragment : Fragment() ,CardListener{
         // we make a network call to fetch user list
         GlobalScope.launch(Dispatchers.IO){
 
+            val currentUserModel = db.collection("users").document(currentUser.uid).get().await().toObject(UserModel::class.java)
             // get current user model from database
-            //val currentUserModel = db.collection("users").document(currentUser.uid).get().await().toObject(UserModel::class.java)
             val usersYouLiked = currentUserModel!!.usersYouLiked
             val connections = currentUserModel.connections
             val combinedArray = usersYouLiked + connections +currentUser.uid
 
+
+            //old method to get users list
+
             //remove all users you already liked or are in connections
             // get all users
 
-            val allUsers = db.collection("users").get().await().toObjects(UserModel::class.java)
+//            val allUsers = db.collection("users").get().await().toObjects(UserModel::class.java)
+//
+//            val arrayOfPeopleYouDontWant = mutableListOf<UserModel>()
+//            for( uid in combinedArray)
+//            {
+//                val eachUserNotToInclude = db.collection("users").document(uid).get().await().toObject(UserModel::class.java)
+//                if (eachUserNotToInclude != null) {
+//                    arrayOfPeopleYouDontWant.add(eachUserNotToInclude)
+//                }
+//            }
+//
+//            usersList = (allUsers - arrayOfPeopleYouDontWant - currentUserModel) as MutableList<UserModel>
 
-            val arrayOfPeopleYouDontWant = mutableListOf<UserModel>()
-            for( uid in combinedArray)
-            {
-                val eachUserNotToInclude = db.collection("users").document(uid).get().await().toObject(UserModel::class.java)
-                if (eachUserNotToInclude != null) {
-                    arrayOfPeopleYouDontWant.add(eachUserNotToInclude)
-                }
-            }
-
-            usersList = (allUsers - arrayOfPeopleYouDontWant - currentUserModel) as MutableList<UserModel>
-
-            //getting all those users who are not in combined array
-            //usersList = db.collection("users").whereNotIn("uid",combinedArray).get().await().toObjects(UserModel::class.java)
-
+           loadDiscoverPageCardsPaginated()
+            //usersList = myUsersList
+            Log.d("GENERAL", usersList.size.toString())
             Log.d("SwipeLog","Deleted ${currentUserModel.displayName}")
             // usersList has list of final users that we need to show.
 
@@ -256,6 +260,7 @@ class DiscoverFragment : Fragment() ,CardListener{
             {
                 progressBar.visibility = View.GONE
                 binding.btnSmallReloadDiscoverPage.visibility = View.VISIBLE
+                Log.d("GENERAL","Ended Loading Discover Fragment Cards")
                 if(usersList.size == 0)
                 {
                     tvNoUsersToShow.visibility = View.VISIBLE
@@ -505,6 +510,39 @@ class DiscoverFragment : Fragment() ,CardListener{
         btnReloadDiscoverUsers.visibility = View.GONE
         btnLeftSwipe.visibility = View.VISIBLE
         btnRightSwipe.visibility = View.VISIBLE
+    }
+
+    suspend fun loadDiscoverPageCardsPaginated(){
+        // get current user model from database
+        val usersYouLiked = currentUserModel.usersYouLiked
+        val connections = currentUserModel.connections
+        val combinedArray = usersYouLiked + connections +currentUser.uid
+
+
+        val utilityDoc = db.collection("utility").
+        document("utility_doc").get().await().toObject(UtilityModel::class.java)
+
+        var allUsersUid = utilityDoc?.allUsersUid
+        Log.d("GENERAL", allUsersUid.toString())
+
+        var usersToLoad = allUsersUid?.minus(combinedArray)
+        Log.d("GENERAL", usersToLoad.toString())
+
+
+        var lastIndex = 0;
+        var myUsersList:MutableList<UserModel> = mutableListOf()
+        if (usersToLoad != null) {
+            for(i in usersToLoad.indices){
+                val uid = usersToLoad[i]
+                val user = db.collection("users").document(uid).get().await().toObject(UserModel::class.java)
+                if (user != null) {
+                    myUsersList.add(user)
+                    Log.d("GENERAL","user, ${user.displayName} added to easy list ")
+                }
+            }
+        }
+
+        usersList = myUsersList
     }
 
 
