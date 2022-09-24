@@ -528,9 +528,12 @@ class DiscoverFragment : Fragment() ,CardListener{
         var usersToLoad = allUsersUid?.minus(combinedArray)
         Log.d("GENERAL", usersToLoad.toString())
 
+
+        var lastIndex = 0;
         var myUsersList:MutableList<UserModel> = mutableListOf()
         if (usersToLoad != null) {
-            for(uid in usersToLoad){
+            for(i in usersToLoad.indices){
+                val uid = usersToLoad[i]
                 val user = db.collection("users").document(uid).get().await().toObject(UserModel::class.java)
                 if (user != null) {
                     myUsersList.add(user)
