@@ -2,6 +2,7 @@ package com.ayushunleashed.mitram.fragments
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -17,6 +18,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.SetOptions
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -78,8 +80,11 @@ class UtilityFragment : Fragment() {
 
 
     fun handleButtons(){
-        binding.btnLogout.setOnClickListener {
-
+        binding.btnSetOnlineStatus.setOnClickListener {
+            binding.progressBar.visibility = View.VISIBLE
+            binding.btnCollect.visibility = View.GONE
+            binding.btnSetOnlineStatus.visibility = View.GONE
+            handleSetOnlineStatus()
         }
 
         binding.btnCollect.setOnClickListener {
@@ -87,6 +92,46 @@ class UtilityFragment : Fragment() {
             binding.btnCollect.visibility = View.GONE
             handleCollectAllUserData()
 
+        }
+    }
+
+
+
+    private fun handleSetOnlineStatus() {
+
+        GlobalScope.launch(Dispatchers.IO) {
+            setOnlineStatusForAllUsers()
+            withContext(Dispatchers.Main){
+                binding.progressBar.visibility = View.GONE
+                binding.btnCollect.visibility = View.VISIBLE
+                binding.btnSetOnlineStatus.visibility = View.VISIBLE
+                Toast.makeText(thisContext,"Online Status of All users changed to false in db",Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    suspend fun setOnlineStatusForAllUsers() {
+
+        var allUsersModel:MutableList<UserModel> = db.collection("users").get().await().toObjects(UserModel::class.java)
+
+        for( userModel in allUsersModel){
+            Log.d("UserModel","Fetched UserModel Before:${userModel.toString()}")
+            userModel.isOnline = false //set all people status to false
+            Log.d("UserModel","Fetched UserModel After:${userModel.toString()}")
+            userModel.uid?.let {
+                Log.d("UserModel","Updating to DB:${userModel.displayName.toString()}")
+                db.collection("users").document(it).update("isOnline",false) }
+        }
+    }
+
+    fun xyx(){
+        //if email is not there , get email
+        if(currentUserModel.email.isNullOrEmpty()){
+            currentUserModel.email = currentUser.email
+            GlobalScope.launch(Dispatchers.IO) {
+                db.collection("users").document(currentUser.uid).set(currentUserModel).await()
+                Log.d("GENERAL","Email added to Server")
+            }
         }
     }
 

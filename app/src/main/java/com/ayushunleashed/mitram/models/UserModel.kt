@@ -4,17 +4,17 @@ import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class UserModel(
-    val uid: String? = "",
-    var displayName: String? = "",
-    var imageUrl: String? ="",
-    var bio: String? ="",
-    var email:String?="",
-    var isOnline:Boolean = false,
-    val likedBy: ArrayList<String> = ArrayList(),
-    val connections: ArrayList<String> = ArrayList(),
-    val usersYouLiked:ArrayList<String> = ArrayList(),
-    var fcmToken:String? = "",
-    var skills:ArrayList<String> = ArrayList(),
-    var interests:ArrayList<String> = ArrayList(),
+public data class UserModel(
+    public val uid: String? = "",
+    public var displayName: String? = "",
+    public var imageUrl: String? ="",
+    public var bio: String? ="",
+    public var email:String?="",
+    public var isOnline:Boolean = false,
+    public val likedBy: ArrayList<String> = ArrayList(),
+    public val connections: ArrayList<String> = ArrayList(),
+    public val usersYouLiked:ArrayList<String> = ArrayList(),
+    public var fcmToken:String? = "",
+    public var skills:ArrayList<String> = ArrayList(),
+    public var interests:ArrayList<String> = ArrayList(),
 ): Parcelable

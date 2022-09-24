@@ -43,6 +43,7 @@
         app:layout_constraintRight_toRightOf="parent"
         />
 
+
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -50,7 +51,7 @@
         android:id="@+id/btnCollect"
         android:textColor="@color/themeApp"
         android:backgroundTint="@color/white"
-        app:layout_constraintBottom_toTopOf="@id/btnLogout"
+        app:layout_constraintBottom_toTopOf="@id/btnSetOnlineStatus"
         app:layout_constraintVertical_bias="1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -60,8 +61,8 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="XYZ"
-        android:id="@+id/btnLogout"
+        android:text="SetOnlineStatus"
+        android:id="@+id/btnSetOnlineStatus"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
