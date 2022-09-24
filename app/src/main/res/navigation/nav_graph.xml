@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/discoverFragment">
+    app:startDestination="@id/splashScreenFragment">
 
     <fragment
         android:id="@+id/discoverFragment"
@@ -179,5 +179,14 @@
         <action
             android:id="@+id/action_utilityFragment_to_profileFragment"
             app:destination="@id/profileFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/splashScreenFragment"
+        android:name="com.ayushunleashed.mitram.fragments.SplashScreenFragment"
+        android:label="fragment_splash_screen"
+        tools:layout="@layout/fragment_splash_screen" >
+        <action
+            android:id="@+id/action_splashScreenFragment_to_discoverFragment"
+            app:destination="@id/discoverFragment" />
     </fragment>
 </navigation>

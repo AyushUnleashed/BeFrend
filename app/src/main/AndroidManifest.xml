@@ -10,7 +10,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Mitram" >
+        android:theme="@style/Theme.Mitram">
 
         <activity
             android:name="com.ayushunleashed.mitram.SignInActivity"

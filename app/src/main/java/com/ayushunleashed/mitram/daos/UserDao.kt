@@ -1,10 +1,16 @@
 package com.ayushunleashed.mitram.daos
 
+import android.content.Intent
 import android.util.Log
+import com.ayushunleashed.mitram.FragmentHomeActivity
+import com.ayushunleashed.mitram.SignInActivity
 import com.ayushunleashed.mitram.models.UserModel
 import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.tasks.await
 
@@ -17,7 +23,7 @@ class UserDao {
     {   Log.d("GENERAL","INSIDE Add user function in dao")
         //GlobalScope.launch (Dispatchers.IO)
 
-        runBlocking{
+        GlobalScope.launch(Dispatchers.Main){
             Log.d("GENERAL","coroutine of Add user function in dao")
             //if user is not null
             user?.let{
