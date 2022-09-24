@@ -78,12 +78,13 @@ class FragmentHomeActivity : AppCompatActivity() {
         db  = FirebaseFirestore.getInstance()
 
         GlobalScope.launch {
+            if(db.collection("users").document(currentUser!!.uid).get().await().exists()){
+                var currentUserModel = db.collection("users").document(currentUser!!.uid).get().await().toObject(
+                    UserModel::class.java)
+                currentUserModel?.fcmToken = token
 
-            var currentUserModel = db.collection("users").document(currentUser!!.uid).get().await().toObject(
-                UserModel::class.java)
-            currentUserModel?.fcmToken = token
-
-            db.collection("users").document(currentUser!!.uid).set(currentUserModel!!, SetOptions.merge())
+                db.collection("users").document(currentUser!!.uid).set(currentUserModel!!, SetOptions.merge())
+            }
         }
     }
 

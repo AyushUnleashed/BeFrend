@@ -152,28 +152,7 @@ class DiscoverFragment : Fragment() ,CardListener{
 
     fun getCurrentUser()
     {
-        //val userDao = UserDao()
-//        runBlocking {
-//            //currentUserModel =userDao.getUserById(currentUser.uid).await().toObject(UserModel::class.java)!!
-//                currentUserModel = db.collection("users").document(currentUser.uid).get().await()
-//                    .toObject(UserModel::class.java)!!
-//                sharedViewModel.currentUserModel = currentUserModel
-//                Log.d("GENERAL","Got User from db, not null");
-//        }
-
-        runBlocking{
-            Log.d("GENERAL","Inside run blocking")
-
-            currentUserModel = db.collection("users").document(currentUser.uid).get().await().toObject(UserModel::class.java)!!
-            Log.d("GENERAL","After Model Request")
-            sharedViewModel.currentUserModel = currentUserModel
-            //UserModel("123", "NULLUSer", "https://picsum.photos/200", "Task Failed")
-        }
-
-        if(currentUserModel==NULL){
-            Log.d("GENERAL","User is NULL");
-        }
-
+        currentUserModel = sharedViewModel.currentUserModel
         //if email is not there , get email
         if(currentUserModel.email.isNullOrEmpty()){
             currentUserModel.email = currentUser.email
@@ -182,9 +161,6 @@ class DiscoverFragment : Fragment() ,CardListener{
                 Log.d("GENERAL","Email added to Server")
             }
         }
-
-
-
     }
 
     fun setupButtons()

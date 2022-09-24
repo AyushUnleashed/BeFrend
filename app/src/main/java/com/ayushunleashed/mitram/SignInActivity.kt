@@ -6,6 +6,9 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.ProgressBar
+import android.widget.Toast
+import androidx.core.os.bundleOf
+import androidx.navigation.fragment.findNavController
 import com.ayushunleashed.mitram.models.UserModel
 import com.ayushunleashed.mitram.daos.UserDao
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -19,7 +22,13 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.tasks.await
 
 
 class SignInActivity : AppCompatActivity() {
@@ -30,6 +39,7 @@ class SignInActivity : AppCompatActivity() {
 
     private lateinit var gSignInButton: SignInButton
     private lateinit var progressBar: ProgressBar
+    lateinit var db:FirebaseFirestore
 
     override fun onStart() {
         super.onStart()
@@ -47,6 +57,8 @@ class SignInActivity : AppCompatActivity() {
         setupViews()
         supportActionBar?.hide()
         mAuth = Firebase.auth
+        db  = FirebaseFirestore.getInstance()
+
 
 // Configure Google Sign In
         //Make google Sign in client first,
@@ -134,29 +146,44 @@ class SignInActivity : AppCompatActivity() {
     private fun updateUI(firebaseuser: FirebaseUser?) {
         //Toast.makeText(this,"Updating UI",Toast.LENGTH_SHORT).show()
 
+
         if (firebaseuser != null) {
-            val user = firebaseuser.displayName?.let {
-                UserModel(
-                    firebaseuser.uid,
-                    it, firebaseuser.photoUrl.toString(),"Hey there! My name is ${firebaseuser.displayName} . \nI am glad to be here"
-                ,firebaseuser.email,true
-                )
-            }
-            //Toast.makeText(this,"BEFORE dao",Toast.LENGTH_SHORT).show()
-            val userDao = UserDao()
-            userDao.addUsers(user)
 
+            gSignInButton.visibility = View.GONE
+            progressBar.visibility = View.VISIBLE
 
-            //Toast.makeText(this,"Going to dISCOVER",Toast.LENGTH_SHORT).show()
-            val intent = Intent(this, FragmentHomeActivity::class.java)
+            val intent = Intent(this@SignInActivity, FragmentHomeActivity::class.java)
             startActivity(intent);
-
             finish()
+//
+//            val user = firebaseuser.displayName?.let {
+//                UserModel(
+//                    firebaseuser.uid,
+//                    it, firebaseuser.photoUrl.toString(),"Hey there! My name is ${firebaseuser.displayName} . \nI am glad to be here"
+//                ,firebaseuser.email,true
+//                )
+//            }
+//
+//            GlobalScope.launch(Dispatchers.Main) {
+//                if (user != null) {
+//
+//                    if(!user.uid?.let { db.collection("users").document(it).get().await().exists() }!!) {
+//                        user.uid.let { db.collection("users").document(it).set(user) }
+//                    }
+//                }
+//                val myBundle = bundleOf("currentUser" to user)
+//                Log.d("GENERAL","Going to SplashScreen")
+//                val intent = Intent(this@SignInActivity, FragmentHomeActivity::class.java)
+//                startActivity(intent);
+//                finish()
+//            }
+
         } else {
             gSignInButton.visibility = View.VISIBLE
             progressBar.visibility = View.GONE
             //Toast.makeText(this,"Login Failed",Toast.LENGTH_SHORT).show()
         }
+
     }
 
 }
