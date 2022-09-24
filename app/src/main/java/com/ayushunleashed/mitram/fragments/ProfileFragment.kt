@@ -127,7 +127,7 @@ class ProfileFragment : Fragment() {
         deleteToken()
         mAuth.signOut();
         clearOldLogin()
-        Toast.makeText(thisContext,"LoggedOut",Toast.LENGTH_SHORT).show()
+        Toast.makeText(thisContext,"Logged out",Toast.LENGTH_SHORT).show()
 
         findNavController().navigate(R.id.action_profileFragment_to_signInActivity)
     }
