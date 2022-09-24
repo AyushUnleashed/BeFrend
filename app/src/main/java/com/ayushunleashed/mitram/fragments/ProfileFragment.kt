@@ -68,18 +68,15 @@ class ProfileFragment : Fragment() {
         sharedViewModel = ViewModelProvider(requireActivity())[SharedViewModel::class.java]
         currentUserModel = sharedViewModel.currentUserModel;
 
+        currentUser = FirebaseAuth.getInstance().currentUser!!
 
-        handleButtons()
         mAuth= Firebase.auth
 
         loadAllDetails()
+        handleButtons()
 
-        binding.refreshLayout.setOnRefreshListener {
-            reloadCurrentUserModel()
-
-        }
-        currentUser = FirebaseAuth.getInstance().currentUser!!
     }
+
 
     fun reloadCurrentUserModel(){
         runBlocking {
@@ -114,6 +111,15 @@ class ProfileFragment : Fragment() {
         binding.btnEditProfile.setOnClickListener {
             findNavController().navigate(R.id.action_profileFragment_to_editProfileFragment)
         }
+
+        binding.btnGoToUtility.setOnClickListener {
+            findNavController().navigate(R.id.action_profileFragment_to_utilityFragment)
+        }
+        binding.refreshLayout.setOnRefreshListener {
+            reloadCurrentUserModel()
+
+        }
+
     }
 
     fun logOut() {

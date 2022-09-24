@@ -32,6 +32,25 @@
         app:layout_constraintTop_toTopOf="parent"
         android:text="Profile"/>
 
+            <Button
+                android:textColor="@color/themeApp"
+                android:text="Utility"
+                android:elevation="10dp"
+                app:iconTint = "@color/themeApp"
+                android:id="@+id/btnGoToUtility"
+                android:layout_marginStart="4dp"
+                android:layout_width="wrap_content"
+                app:cornerRadius="10dp"
+                android:drawableTint="@color/themeApp"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/white"
+                app:layout_constraintStart_toEndOf="@id/tvPageTitle"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1"
+                android:layout_marginEnd="20dp"
+                app:layout_constraintTop_toTopOf="@id/tvPageTitle"
+                app:layout_constraintBottom_toBottomOf="@id/tvPageTitle"/>
+
     <ImageView
         android:layout_width="200dp"
         android:layout_height="200dp"

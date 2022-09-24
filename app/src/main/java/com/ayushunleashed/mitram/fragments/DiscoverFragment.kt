@@ -481,8 +481,11 @@ class DiscoverFragment : Fragment() ,CardListener{
 
                 //adding this person you swiped right on to users you liked
                 //val currentUserModel: UserModel? = db.collection("users").document(currentUser.uid).get().await().toObject(UserModel::class.java)
-                currentUserModel!!.usersYouLiked.add(userWhoGotRightSwiped.uid)
-                db.collection("users").document(currentUserModel!!.uid!!).set(currentUserModel!!).await()
+
+                if(!currentUserModel.usersYouLiked.contains(userWhoGotRightSwiped.uid)){
+                    currentUserModel.usersYouLiked.add(userWhoGotRightSwiped.uid)
+                }
+                db.collection("users").document(currentUserModel.uid!!).set(currentUserModel).await()
             }
         }
         else
