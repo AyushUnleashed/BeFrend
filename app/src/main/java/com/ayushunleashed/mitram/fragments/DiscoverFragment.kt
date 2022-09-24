@@ -211,8 +211,8 @@ class DiscoverFragment : Fragment() ,CardListener{
         // we make a network call to fetch user list
         GlobalScope.launch(Dispatchers.IO){
 
+            val currentUserModel = db.collection("users").document(currentUser.uid).get().await().toObject(UserModel::class.java)
             // get current user model from database
-            //val currentUserModel = db.collection("users").document(currentUser.uid).get().await().toObject(UserModel::class.java)
             val usersYouLiked = currentUserModel!!.usersYouLiked
             val connections = currentUserModel.connections
             val combinedArray = usersYouLiked + connections +currentUser.uid
@@ -236,26 +236,8 @@ class DiscoverFragment : Fragment() ,CardListener{
 //
 //            usersList = (allUsers - arrayOfPeopleYouDontWant - currentUserModel) as MutableList<UserModel>
 
-            val utilityDoc = db.collection("utility").
-            document("utility_doc").get().await().toObject(UtilityModel::class.java)
-
-            var allUsersUid = utilityDoc?.allUsersUid
-            Log.d("GENERAL", allUsersUid.toString())
-
-            var usersToLoad = allUsersUid?.minus(combinedArray)
-            Log.d("GENERAL", usersToLoad.toString())
-
-            var myUsersList:MutableList<UserModel> = mutableListOf()
-            if (usersToLoad != null) {
-                for(uid in usersToLoad){
-                    val user = db.collection("users").document(uid).get().await().toObject(UserModel::class.java)
-                    if (user != null) {
-                        myUsersList.add(user)
-                        Log.d("GENERAL","user, ${user.displayName} added to easy list ")
-                    }
-                }
-            }
-            usersList = myUsersList
+           loadDiscoverPageCardsPaginated()
+            //usersList = myUsersList
             Log.d("GENERAL", usersList.size.toString())
             Log.d("SwipeLog","Deleted ${currentUserModel.displayName}")
             // usersList has list of final users that we need to show.
@@ -528,6 +510,36 @@ class DiscoverFragment : Fragment() ,CardListener{
         btnReloadDiscoverUsers.visibility = View.GONE
         btnLeftSwipe.visibility = View.VISIBLE
         btnRightSwipe.visibility = View.VISIBLE
+    }
+
+    suspend fun loadDiscoverPageCardsPaginated(){
+        // get current user model from database
+        val usersYouLiked = currentUserModel.usersYouLiked
+        val connections = currentUserModel.connections
+        val combinedArray = usersYouLiked + connections +currentUser.uid
+
+
+        val utilityDoc = db.collection("utility").
+        document("utility_doc").get().await().toObject(UtilityModel::class.java)
+
+        var allUsersUid = utilityDoc?.allUsersUid
+        Log.d("GENERAL", allUsersUid.toString())
+
+        var usersToLoad = allUsersUid?.minus(combinedArray)
+        Log.d("GENERAL", usersToLoad.toString())
+
+        var myUsersList:MutableList<UserModel> = mutableListOf()
+        if (usersToLoad != null) {
+            for(uid in usersToLoad){
+                val user = db.collection("users").document(uid).get().await().toObject(UserModel::class.java)
+                if (user != null) {
+                    myUsersList.add(user)
+                    Log.d("GENERAL","user, ${user.displayName} added to easy list ")
+                }
+            }
+        }
+
+        usersList = myUsersList
     }
 
 
