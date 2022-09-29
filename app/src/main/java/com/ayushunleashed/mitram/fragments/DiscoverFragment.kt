@@ -526,6 +526,7 @@ class DiscoverFragment : Fragment() ,CardListener{
         var allUsersUid = utilityDoc?.allUsersUid
         Log.d("GENERAL", allUsersUid.toString())
 
+
         var usersToLoad = allUsersUid?.minus(combinedArray)
         Log.d("GENERAL", usersToLoad.toString())
 
