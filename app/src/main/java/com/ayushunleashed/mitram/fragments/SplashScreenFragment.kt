@@ -82,7 +82,7 @@ class SplashScreenFragment : Fragment() {
                 if (user != null) {
 
                     if(!user.uid?.let { db.collection("users").document(it).get().await().exists() }!!) {
-                        user.uid.let { db.collection("users").document(it).set(user, SetOptions.merge()) }
+                        user.uid.let { db.collection("users").document(it).set(user) }
                         addCurrentUserToUtilityList(user)
                     }
                     loadCurrentUserModel()
