@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/splashScreenFragment">
+    app:startDestination="@id/collegeSelectFragment">
 
     <fragment
         android:id="@+id/discoverFragment"
@@ -188,5 +188,14 @@
         <action
             android:id="@+id/action_splashScreenFragment_to_discoverFragment"
             app:destination="@id/discoverFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/collegeSelectFragment"
+        android:name="com.ayushunleashed.mitram.fragments.CollegeSelectFragment"
+        android:label="fragment_college_select"
+        tools:layout="@layout/fragment_college_select" >
+        <action
+            android:id="@+id/action_collegeSelectFragment_to_splashScreenFragment"
+            app:destination="@id/splashScreenFragment" />
     </fragment>
 </navigation>
