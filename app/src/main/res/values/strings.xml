@@ -4,4 +4,29 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="long_string">I don’t know what to write right now so i’m just
 typing random, LBC is my wI don’t know what to write right now so i’m just</string>
+    
+    <string-array name="years">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+    </string-array>
+
+    <string-array name="streams">
+        <item>Information Technology</item>
+        <item>Computer Science</item>
+        <item>Electronics &amp; Communication Engineering</item>
+        <item>Electrical Engineering</item>
+        <item>Civil Engineering</item>
+        <item>Mechanical Engineering</item>
+        <item>Mechatronics</item>
+        <item>Artificial Intelligence and Data Science</item>
+        <item>Industrial Production Engineering</item>
+        <item>M.Sc Mathematics</item>
+        <item>M.Sc Physics</item>
+        <item>M.Sc Chemistry</item>
+        <item>MCA</item>
+        <item>Other</item>
+    </string-array>
+
 </resources>

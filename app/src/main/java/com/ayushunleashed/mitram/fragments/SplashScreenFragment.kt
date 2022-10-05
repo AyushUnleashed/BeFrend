@@ -39,6 +39,11 @@ class SplashScreenFragment : Fragment() {
     var mAuth = Firebase.auth
     var firebaseuser = mAuth.currentUser
 
+    var userCollegeName = ""
+    var userCollegeYear = ""
+    var userCollegeStream = ""
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,6 +56,12 @@ class SplashScreenFragment : Fragment() {
         if (container != null) {
             thisContext = container.getContext()
         };
+
+        userCollegeName = requireArguments().getString("collegeName").toString()
+        userCollegeYear = requireArguments().getString("year").toString()
+        userCollegeStream = requireArguments().getString("stream").toString()
+
+
 
         sharedViewModel = ViewModelProvider(requireActivity())[SharedViewModel::class.java]
         currentUser = FirebaseAuth.getInstance().currentUser!!
@@ -74,7 +85,7 @@ class SplashScreenFragment : Fragment() {
                 UserModel(
                     firebaseuser!!.uid,
                     it, firebaseuser!!.photoUrl.toString(),"Hey there! My name is ${firebaseuser!!.displayName} . \nI am glad to be here"
-                    , firebaseuser!!.email,true
+                    , firebaseuser!!.email,true,userCollegeName,userCollegeYear,userCollegeStream
                 )
             }
 
