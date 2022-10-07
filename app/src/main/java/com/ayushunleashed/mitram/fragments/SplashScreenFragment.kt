@@ -24,6 +24,7 @@ import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.tasks.await
 
 
@@ -39,6 +40,11 @@ class SplashScreenFragment : Fragment() {
     var mAuth = Firebase.auth
     var firebaseuser = mAuth.currentUser
 
+    var userCollegeName = ""
+    var userCollegeYear = ""
+    var userCollegeStream = ""
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,9 +58,20 @@ class SplashScreenFragment : Fragment() {
             thisContext = container.getContext()
         };
 
+        db  = FirebaseFirestore.getInstance()
+        runBlocking {
+            if(!firebaseuser?.uid?.let { db.collection("users").document(it).get().await().exists() }!!) {
+                userCollegeName = requireArguments().getString("collegeName").toString()
+                userCollegeYear = requireArguments().getString("year").toString()
+                userCollegeStream = requireArguments().getString("stream").toString()
+            }
+        }
+
+
+
         sharedViewModel = ViewModelProvider(requireActivity())[SharedViewModel::class.java]
         currentUser = FirebaseAuth.getInstance().currentUser!!
-        db  = FirebaseFirestore.getInstance()
+
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_splash_screen, container, false)
         return view
@@ -74,7 +91,7 @@ class SplashScreenFragment : Fragment() {
                 UserModel(
                     firebaseuser!!.uid,
                     it, firebaseuser!!.photoUrl.toString(),"Hey there! My name is ${firebaseuser!!.displayName} . \nI am glad to be here"
-                    , firebaseuser!!.email,true
+                    , firebaseuser!!.email,true,userCollegeName,userCollegeYear,userCollegeStream
                 )
             }
 
