@@ -422,7 +422,6 @@ class DiscoverFragment : Fragment() ,CardListener{
                     Log.d("GENERAL","SwipeRight: Added ${userWhoGotRightSwiped.displayName} in connection list of ${currentUserModel.displayName}")
                 }
 
-
                 if(!userWhoGotRightSwiped.connections.contains(currentUserModel.uid)){
                     // add yourself to his connection list
                     userWhoGotRightSwiped.connections.add(currentUserModel.uid!!)

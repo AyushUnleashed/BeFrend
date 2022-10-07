@@ -24,6 +24,7 @@ import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.tasks.await
 
 
@@ -57,15 +58,20 @@ class SplashScreenFragment : Fragment() {
             thisContext = container.getContext()
         };
 
-        userCollegeName = requireArguments().getString("collegeName").toString()
-        userCollegeYear = requireArguments().getString("year").toString()
-        userCollegeStream = requireArguments().getString("stream").toString()
+        db  = FirebaseFirestore.getInstance()
+        runBlocking {
+            if(!firebaseuser?.uid?.let { db.collection("users").document(it).get().await().exists() }!!) {
+                userCollegeName = requireArguments().getString("collegeName").toString()
+                userCollegeYear = requireArguments().getString("year").toString()
+                userCollegeStream = requireArguments().getString("stream").toString()
+            }
+        }
 
 
 
         sharedViewModel = ViewModelProvider(requireActivity())[SharedViewModel::class.java]
         currentUser = FirebaseAuth.getInstance().currentUser!!
-        db  = FirebaseFirestore.getInstance()
+
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_splash_screen, container, false)
         return view

@@ -16,9 +16,14 @@ import com.android.volley.toolbox.Volley
 import com.ayushunleashed.mitram.R
 import com.ayushunleashed.mitram.databinding.FragmentCollegeSelectBinding
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.tasks.await
 
 
 class CollegeSelectFragment : Fragment() {
@@ -29,10 +34,14 @@ class CollegeSelectFragment : Fragment() {
     var isStreamSelected = false
     var checkFields =false
 
+    lateinit var db: FirebaseFirestore
+
     var collegeName =""
     var year =""
     var stream=""
     var collegeNameList:ArrayList<String> = arrayListOf()
+
+    var firebaseUser = Firebase.auth.currentUser
     lateinit var  rootView: View
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,6 +55,7 @@ class CollegeSelectFragment : Fragment() {
         if (container != null) {
             thisContext = container.getContext()
         };
+
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_college_select, container, false)
         rootView =view
@@ -56,17 +66,31 @@ class CollegeSelectFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding = FragmentCollegeSelectBinding.bind(view)
+        db = FirebaseFirestore.getInstance()
         generateDummyCollegeNamesList()
         handleCollegeSelectorLogic()
         handleYearSelectorLogic()
         handleStreamSelectorLogic()
         handleButtons()
 
+        skipScreen()
 
         binding.actvSelectCollege.setText("")
         binding.actvSelectYear.setText("")
         binding.actvSelectStream.setText("")
 
+    }
+
+    private fun skipScreen() {
+
+       GlobalScope.launch(Dispatchers.Main) {
+           if(!firebaseUser?.uid?.let { db.collection("users").document(it).get().await().exists() }!!) {
+               //dont skip
+           }else{
+               //skip
+               findNavController().navigate(R.id.action_collegeSelectFragment_to_splashScreenFragment)
+           }
+       }
     }
 
     private fun handleYearSelectorLogic() {
