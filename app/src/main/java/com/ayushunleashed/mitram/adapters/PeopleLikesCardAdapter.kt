@@ -18,8 +18,6 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.*
 import kotlinx.coroutines.tasks.await
-import org.json.JSONObject.NULL
-
 
 class PeopleLikesCardAdapter(var users: MutableList<UserModel>):RecyclerView.Adapter<PeopleLikesCardAdapter.PeopleLikesCardViewHolder>() {
 
@@ -122,13 +120,13 @@ class PeopleLikesCardAdapter(var users: MutableList<UserModel>):RecyclerView.Ada
 
                     //updating this to database
 
-                    if (currentUserModel != NULL) {
+                    if (currentUserModel != null) {
                         // current user's like list and connections list both are updated
                         db.collection("users").document(currentUserModel.uid!!)
                             .set(currentUserModel).await()
                     }
 
-                    if (likeCardUserModel != NULL) {
+                    if (likeCardUserModel != null) {
                         // request user's connection list is updated
                         db.collection("users").document(likeCardUserModel.uid)
                             .set(likeCardUserModel).await()
@@ -170,13 +168,13 @@ class PeopleLikesCardAdapter(var users: MutableList<UserModel>):RecyclerView.Ada
 
                     //updating this to database
 
-                    if (currentUserModel != NULL) {
+                    if (currentUserModel != null) {
                         // current user's like list and connections list both are updated
                         db.collection("users").document(currentUserModel.uid!!)
                             .set(currentUserModel).await()
                     }
 
-                    if (likeCardUserModel != NULL) {
+                    if (likeCardUserModel != null) {
                         // request user's connection list is updated
                         db.collection("users").document(likeCardUserModel.uid!!)
                             .set(likeCardUserModel).await()
@@ -189,14 +187,16 @@ class PeopleLikesCardAdapter(var users: MutableList<UserModel>):RecyclerView.Ada
 
             holder.btnDeclineConnection.setOnClickListener {
                 // remove from liked by of current user and remove from ui
-
+                Log.d("DECLINE_LIKE","remove like button clicked")
                 GlobalScope.launch(Dispatchers.IO) {
                     var currentUserModel =
                         db.collection("users").document(currentUser!!.uid).get().await()
                             .toObject(UserModel::class.java)
-
+                    if(currentUserModel==null){
+                        Log.d("DECLINE_LIKE","user model is null while canceling")
+                    }
                     if (currentUserModel != null) {
-
+                        Log.d("DECLINE_LIKE","user model is not null while canceling")
                         // since this person declined we would remove him from list of users who that person liked
                         likeCardUserModel.usersYouLiked.remove(currentUserModel.uid)
 
@@ -217,13 +217,13 @@ class PeopleLikesCardAdapter(var users: MutableList<UserModel>):RecyclerView.Ada
 
                         //updating this to database
 
-                        if (currentUserModel != NULL) {
+                        if (currentUserModel != null) {
                             // current user's like list and connections list both are updated
                             db.collection("users").document(currentUserModel.uid!!)
                                 .set(currentUserModel).await()
                         }
 
-                        if (likeCardUserModel != NULL) {
+                        if (likeCardUserModel != null) {
                             // request user's connection list is updated
                             db.collection("users").document(likeCardUserModel.uid!!)
                                 .set(likeCardUserModel).await()

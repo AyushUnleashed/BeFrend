@@ -27,7 +27,6 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.*
 import kotlinx.coroutines.tasks.await
-import org.json.JSONObject.NULL
 import java.util.Optional.empty
 
 
@@ -433,12 +432,12 @@ class DiscoverFragment : Fragment() ,CardListener{
                 //updating this to database
 
 
-                if(currentUserModel!=NULL){
+                if(currentUserModel!=null){
                     // current user's like list and connections list both are updated
                     db.collection("users").document(currentUserModel.uid!!).set(currentUserModel).await()
                 }
 
-                if(userWhoGotRightSwiped.uid!=NULL){
+                if(userWhoGotRightSwiped.uid!=null){
                     // request user's connection list is updated
                     db.collection("users").document(userWhoGotRightSwiped.uid!!).set(userWhoGotRightSwiped).await()
                 }
@@ -462,7 +461,7 @@ class DiscoverFragment : Fragment() ,CardListener{
                 userWhoGotRightSwiped.likedBy.add(currentUserModel.uid!!)
 
 
-                if(userWhoGotRightSwiped.uid!=NULL) {
+                if(userWhoGotRightSwiped.uid!=null) {
 
                     db.collection("users").document(userWhoGotRightSwiped.uid!!)
                         .set(userWhoGotRightSwiped).addOnSuccessListener {
@@ -478,7 +477,7 @@ class DiscoverFragment : Fragment() ,CardListener{
                     currentUserModel.usersYouLiked.add(userWhoGotRightSwiped.uid!!)
                 }
 
-                if(currentUserModel!=NULL) {
+                if(currentUserModel!=null) {
                     db.collection("users").document(currentUserModel.uid!!).set(currentUserModel).await()
                 }
             }

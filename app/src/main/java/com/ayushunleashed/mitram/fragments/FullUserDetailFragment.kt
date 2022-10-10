@@ -17,7 +17,6 @@ import com.ayushunleashed.mitram.databinding.FragmentFullUserDetailBinding
 import com.ayushunleashed.mitram.models.UserModel
 import com.bumptech.glide.Glide
 import com.google.android.material.chip.Chip
-import org.json.JSONObject.NULL
 
 class FullUserDetailFragment : Fragment() {
     lateinit var thisContext: Context
@@ -54,7 +53,7 @@ class FullUserDetailFragment : Fragment() {
         binding = FragmentFullUserDetailBinding.bind(view)
         previousFragmentName = requireArguments().getString("previousFragmentName").toString()
         userToLoad = requireArguments().getParcelable<UserModel>("currentUser")
-        if(userToLoad==NULL){
+        if(userToLoad==null){
             Log.d("GENERAL","Got null user in user detail page")
             userToLoad = currentUserModel
         }

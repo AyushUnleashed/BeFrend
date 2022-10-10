@@ -24,7 +24,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
-import org.json.JSONObject.NULL
 
 
 class EditSkillsFragment : Fragment() {
@@ -135,7 +134,7 @@ class EditSkillsFragment : Fragment() {
         currentUserModel.skills = skillsArrayList
         GlobalScope.launch(Dispatchers.IO) {
 
-            if(currentUserModel!=NULL){
+            if(currentUserModel!=null){
                 currentUserModel.uid?.let { db.collection("users").document(it).set(currentUserModel).await() }
                 Log.d("GENERAL","Skills added to Server")
             }
