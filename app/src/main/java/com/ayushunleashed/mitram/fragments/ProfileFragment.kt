@@ -94,6 +94,10 @@ class ProfileFragment : Fragment() {
         binding.tvUserName.text = currentUserModel.displayName
         binding.tvUserBio.text = currentUserModel.bio
         binding.tvUserEmail.text = currentUserModel.email
+        binding.tvUserCollegeName.text = currentUserModel.userCollegeName
+        binding.tvUserCollegeStream.text = currentUserModel.userCollegeStream
+        val collegeYearText ="Year:${currentUserModel.userCollegeYear}"
+        binding.tvUserCollegeYear.text = collegeYearText
         loadUserImage()
     }
 

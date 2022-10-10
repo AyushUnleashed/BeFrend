@@ -99,12 +99,69 @@
         app:layout_constraintTop_toBottomOf="@id/tvUserName"
         />
 
+            <TextView
+                android:id="@+id/tvUserCollegeStream"
+                app:layout_constraintHorizontal_bias="0.5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="IT"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="30dp"
+                android:layout_marginTop="12dp"
+                android:paddingTop="2dp"
+                android:paddingBottom="2dp"
+                android:textColor="@color/newBlack"
+                app:layout_constraintStart_toStartOf="parent"
+                android:fontFamily="@font/montserrat_regular"
+                android:textSize="12sp"
+                app:layout_constraintTop_toBottomOf="@id/tvUserEmail"
+                />
+
+            <TextView
+                android:id="@+id/tvUserCollegeYear"
+                app:layout_constraintHorizontal_bias="0.5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="3rd Year"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="30dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginTop="12dp"
+                android:paddingTop="2dp"
+                android:paddingBottom="2dp"
+                android:textColor="@color/newBlack"
+                android:fontFamily="@font/montserrat_regular"
+                android:textSize="12sp"
+                app:layout_constraintTop_toBottomOf="@id/tvUserCollegeStream"
+                />
+
+            <TextView
+                android:id="@+id/tvUserCollegeName"
+                app:layout_constraintHorizontal_bias="0.5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="JEC, Jabalpur"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="30dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginTop="12dp"
+                android:paddingTop="2dp"
+                android:paddingBottom="2dp"
+                android:textColor="@color/newBlack"
+                android:fontFamily="@font/montserrat_regular"
+                android:textSize="12sp"
+                app:layout_constraintTop_toBottomOf="@id/tvUserCollegeYear"
+                />
+
     <TextView
         android:id="@+id/tvUserBio"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvUserEmail"
+        app:layout_constraintTop_toBottomOf="@id/tvUserCollegeName"
         android:layout_marginStart="30dp"
         android:layout_marginEnd="30dp"
         android:layout_marginTop="12dp"
@@ -132,7 +189,7 @@
         app:layout_constraintVertical_bias="1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginBottom="30dp" />
+        android:layout_marginBottom="10dp" />
 
 
     <Button
@@ -146,7 +203,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginBottom="100dp" />
+        android:layout_marginBottom="50dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

@@ -125,6 +125,61 @@
         app:layout_constraintTop_toBottomOf="@id/tvUserNameDetailPage"
         />
 
+    <TextView
+        android:id="@+id/tvUserCollegeStream"
+        app:layout_constraintHorizontal_bias="0"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Stream: IT"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="12dp"
+        android:paddingTop="2dp"
+        android:paddingBottom="2dp"
+        android:textColor="@color/newBlack"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:fontFamily="@font/montserrat_regular"
+        android:textSize="12sp"
+        app:layout_constraintTop_toBottomOf="@id/tvUserEmail"
+        />
+    <TextView
+        android:id="@+id/tvUserCollegeYear"
+        app:layout_constraintHorizontal_bias="0"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Year: 3"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="12dp"
+        android:paddingTop="2dp"
+        android:paddingBottom="2dp"
+        android:textColor="@color/newBlack"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:fontFamily="@font/montserrat_regular"
+        android:textSize="12sp"
+        app:layout_constraintTop_toBottomOf="@id/tvUserCollegeStream"
+        />
+    <TextView
+        android:id="@+id/tvUserCollegeName"
+        app:layout_constraintHorizontal_bias="0"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="College: JEC, Jabalpur"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="12dp"
+        android:paddingTop="2dp"
+        android:paddingBottom="2dp"
+        android:textColor="@color/newBlack"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:fontFamily="@font/montserrat_regular"
+        android:textSize="12sp"
+        app:layout_constraintTop_toBottomOf="@id/tvUserCollegeYear"
+        />
+
 
 
 
@@ -139,7 +194,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         android:fontFamily="@font/montserrat_medium"
         android:textSize="14sp"
-        app:layout_constraintTop_toBottomOf="@id/tvUserEmail"
+        app:layout_constraintTop_toBottomOf="@id/tvUserCollegeName"
         />
 
     <TextView

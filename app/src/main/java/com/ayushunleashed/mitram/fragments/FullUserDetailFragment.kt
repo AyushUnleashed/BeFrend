@@ -138,6 +138,13 @@ class FullUserDetailFragment : Fragment() {
             binding.tvUserEmail.visibility = View.GONE
         }
 
+        val collegeNameText = "College: " + userToLoad!!.userCollegeName
+        val collegeStreamText = "Stream: "+userToLoad!!.userCollegeStream
+        val collegeYearText ="Year: ${userToLoad!!.userCollegeYear}"
+        binding.tvUserCollegeName.text = collegeNameText
+        binding.tvUserCollegeStream.text = collegeStreamText
+        binding.tvUserCollegeYear.text = collegeYearText
+
 //        binding.tvUserSkills.text = userToLoad!!.skills.toString()
 //        Log.d("GENERAL",userToLoad!!.skills.toString())
 //        binding.tvUserInterests.text = userToLoad!!.interests.toString()
