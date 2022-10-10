@@ -96,8 +96,10 @@ class LikeRequestsSentCardAdapter(var users: MutableList<UserModel>):RecyclerVie
 
                     if (currentUserModel !=NULL) {
                         // current user's like list and connections list both are updated
-                        db.collection("users").document(currentUser.uid).set(currentUserModel)
-                            .await()
+                        currentUserModel.uid?.let { it1 ->
+                            db.collection("users").document(it1).set(currentUserModel)
+                                .await()
+                        }
                     }
 
                     if (likeCardUserModel != NULL) {
