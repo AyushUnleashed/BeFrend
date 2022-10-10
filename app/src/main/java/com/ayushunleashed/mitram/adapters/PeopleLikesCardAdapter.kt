@@ -80,7 +80,9 @@ class PeopleLikesCardAdapter(var users: MutableList<UserModel>):RecyclerView.Ada
 
                 // if current user is not empty and current user does not has this person already as connections
 
-                if (currentUserModel != null && !(currentUserModel.connections.contains(likeCardUserModel.uid)
+                if (currentUserModel != null && !(currentUserModel.connections.contains(
+                        likeCardUserModel.uid
+                    )
                             && likeCardUserModel.connections.contains(currentUserModel.uid))
                 ) {
 
@@ -131,7 +133,9 @@ class PeopleLikesCardAdapter(var users: MutableList<UserModel>):RecyclerView.Ada
                         db.collection("users").document(likeCardUserModel.uid)
                             .set(likeCardUserModel).await()
                     }
-                } else if (currentUserModel != null && (currentUserModel.connections.contains(likeCardUserModel.uid)
+                } else if (currentUserModel != null && (currentUserModel.connections.contains(
+                        likeCardUserModel.uid
+                    )
                             || likeCardUserModel.connections.contains(currentUserModel.uid))
                 ) {
                     // if duplicacy occured, we have person already in connections
@@ -185,52 +189,51 @@ class PeopleLikesCardAdapter(var users: MutableList<UserModel>):RecyclerView.Ada
 
             }
 
-            holder.btnDeclineConnection.setOnClickListener {
-                // remove from liked by of current user and remove from ui
-                Log.d("DECLINE_LIKE","remove like button clicked")
-                GlobalScope.launch(Dispatchers.IO) {
-                    var currentUserModel =
-                        db.collection("users").document(currentUser!!.uid).get().await()
-                            .toObject(UserModel::class.java)
-                    if(currentUserModel==null){
-                        Log.d("DECLINE_LIKE","user model is null while canceling")
+        }
+
+        holder.btnDeclineConnection.setOnClickListener {
+            // remove from liked by of current user and remove from ui
+            Log.d("DECLINE_LIKE","remove like button clicked")
+            GlobalScope.launch(Dispatchers.IO) {
+                var currentUserModel =
+                    db.collection("users").document(currentUser!!.uid).get().await()
+                        .toObject(UserModel::class.java)
+                if(currentUserModel==null){
+                    Log.d("DECLINE_LIKE","user model is null while canceling")
+                }
+                if (currentUserModel != null) {
+                    Log.d("DECLINE_LIKE","user model is not null while canceling")
+                    // since this person declined we would remove him from list of users who that person liked
+                    likeCardUserModel.usersYouLiked.remove(currentUserModel.uid)
+
+                    // removing from liked array
+                    currentUserModel.likedBy.remove(likeCardUserModel.uid)
+
+                    //precautions - this 2
+                    currentUserModel.usersYouLiked.remove(likeCardUserModel.uid)
+                    likeCardUserModel.likedBy.remove(currentUserModel.uid)
+
+
+                    withContext(Dispatchers.Main)
+                    {
+                        //delete from ui
+                        users.removeAt(position)
+                        notifyDataSetChanged()
                     }
+
+                    //updating this to database
+
                     if (currentUserModel != null) {
-                        Log.d("DECLINE_LIKE","user model is not null while canceling")
-                        // since this person declined we would remove him from list of users who that person liked
-                        likeCardUserModel.usersYouLiked.remove(currentUserModel.uid)
-
-                        // removing from liked array
-                        currentUserModel.likedBy.remove(likeCardUserModel.uid)
-
-                        //precautions - this 2
-                        currentUserModel.usersYouLiked.remove(likeCardUserModel.uid)
-                        likeCardUserModel.likedBy.remove(currentUserModel.uid)
-
-
-                        withContext(Dispatchers.Main)
-                        {
-                            //delete from ui
-                            users.removeAt(position)
-                            notifyDataSetChanged()
-                        }
-
-                        //updating this to database
-
-                        if (currentUserModel != null) {
-                            // current user's like list and connections list both are updated
-                            db.collection("users").document(currentUserModel.uid!!)
-                                .set(currentUserModel).await()
-                        }
-
-                        if (likeCardUserModel != null) {
-                            // request user's connection list is updated
-                            db.collection("users").document(likeCardUserModel.uid!!)
-                                .set(likeCardUserModel).await()
-                        }
-
+                        // current user's like list and connections list both are updated
+                        db.collection("users").document(currentUserModel.uid!!)
+                            .set(currentUserModel).await()
                     }
 
+                    if (likeCardUserModel != null) {
+                        // request user's connection list is updated
+                        db.collection("users").document(likeCardUserModel.uid!!)
+                            .set(likeCardUserModel).await()
+                    }
 
                 }
             }
