@@ -111,8 +111,12 @@ class EditInterestsFragment : Fragment() {
     fun saveDataToDB(){
         currentUserModel.interests = interestsArrayList
         GlobalScope.launch(Dispatchers.IO) {
-            db.collection("users").document(currentUser.uid).set(currentUserModel).await()
-            Log.d("GENERAL","Skills added to Server")
+
+            if(currentUserModel!=null){
+                currentUserModel.uid?.let { db.collection("users").document(it).set(currentUserModel).await() }
+                Log.d("GENERAL","Interests added to Server")
+            }
+
         }
     }
 

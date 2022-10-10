@@ -133,8 +133,12 @@ class EditSkillsFragment : Fragment() {
     fun saveDataToDB(){
         currentUserModel.skills = skillsArrayList
         GlobalScope.launch(Dispatchers.IO) {
-            db.collection("users").document(currentUser.uid).set(currentUserModel).await()
-            Log.d("GENERAL","Skills added to Server")
+
+            if(currentUserModel!=null){
+                currentUserModel.uid?.let { db.collection("users").document(it).set(currentUserModel).await() }
+                Log.d("GENERAL","Skills added to Server")
+            }
+
         }
     }
 

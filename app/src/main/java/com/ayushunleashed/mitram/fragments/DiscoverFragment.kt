@@ -27,7 +27,6 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.*
 import kotlinx.coroutines.tasks.await
-import org.json.JSONObject.NULL
 import java.util.Optional.empty
 
 
@@ -431,17 +430,25 @@ class DiscoverFragment : Fragment() ,CardListener{
 
 
                 //updating this to database
-                // current user's like list and connections list both are updated
-                db.collection("users").document(currentUser.uid).set(currentUserModel).await()
-                // request user's connection list is updated
-                db.collection("users").document(userWhoGotRightSwiped.uid!!).set(userWhoGotRightSwiped).await()
+
+
+                if(currentUserModel!=null){
+                    // current user's like list and connections list both are updated
+                    db.collection("users").document(currentUserModel.uid!!).set(currentUserModel).await()
+                }
+
+                if(userWhoGotRightSwiped.uid!=null){
+                    // request user's connection list is updated
+                    db.collection("users").document(userWhoGotRightSwiped.uid!!).set(userWhoGotRightSwiped).await()
+                }
+
 
                 withContext(Dispatchers.Main)
                 {
                     Toast.makeText(thisContext,"It's a match",Toast.LENGTH_SHORT).show()
                 }
             }
-        }else if(!userWhoGotRightSwiped.likedBy.contains(currentUser.uid) && !userWhoGotRightSwiped.connections.contains(currentUser.uid))
+        }else if(!userWhoGotRightSwiped.likedBy.contains(currentUserModel.uid!!) && !userWhoGotRightSwiped.connections.contains(currentUserModel.uid!!))
         {
 
             Log.e(
@@ -451,22 +458,28 @@ class DiscoverFragment : Fragment() ,CardListener{
 
             GlobalScope.launch(Dispatchers.IO) {
 
-                userWhoGotRightSwiped.likedBy.add(currentUser.uid)
+                userWhoGotRightSwiped.likedBy.add(currentUserModel.uid!!)
 
-                db.collection("users").document(userWhoGotRightSwiped.uid!!).set(userWhoGotRightSwiped).
-                addOnSuccessListener {
-                    Toast.makeText(thisContext,"Like request Sent", Toast.LENGTH_SHORT).show()
-                }.addOnFailureListener {
-                    Toast.makeText(thisContext,"Failed To sent like request", Toast.LENGTH_SHORT).show()
+
+                if(userWhoGotRightSwiped.uid!=null) {
+
+                    db.collection("users").document(userWhoGotRightSwiped.uid!!)
+                        .set(userWhoGotRightSwiped).addOnSuccessListener {
+                        Toast.makeText(thisContext, "Like request Sent", Toast.LENGTH_SHORT).show()
+                    }.addOnFailureListener {
+                        Toast.makeText( thisContext,"Failed To sent like request", Toast.LENGTH_SHORT).show()
+                    }
                 }
-
                 //adding this person you swiped right on to users you liked
                 //val currentUserModel: UserModel? = db.collection("users").document(currentUser.uid).get().await().toObject(UserModel::class.java)
 
                 if(!currentUserModel.usersYouLiked.contains(userWhoGotRightSwiped.uid)){
-                    currentUserModel.usersYouLiked.add(userWhoGotRightSwiped.uid)
+                    currentUserModel.usersYouLiked.add(userWhoGotRightSwiped.uid!!)
                 }
-                db.collection("users").document(currentUserModel.uid!!).set(currentUserModel).await()
+
+                if(currentUserModel!=null) {
+                    db.collection("users").document(currentUserModel.uid!!).set(currentUserModel).await()
+                }
             }
         }
         else
