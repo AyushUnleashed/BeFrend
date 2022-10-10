@@ -17,6 +17,8 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.*
 import kotlinx.coroutines.tasks.await
+import org.json.JSONObject
+import org.json.JSONObject.NULL
 
 
 class LikeRequestsSentCardAdapter(var users: MutableList<UserModel>):RecyclerView.Adapter<LikeRequestsSentCardAdapter.LikeRequestsSentCardViewHolder>() {
@@ -91,10 +93,18 @@ class LikeRequestsSentCardAdapter(var users: MutableList<UserModel>):RecyclerVie
                     }
 
                     //updating this to database
-                    // current user's like list and connections list both are updated
-                    db.collection("users").document(currentUser.uid).set(currentUserModel).await()
-                    // request user's connection list is updated
-                    db.collection("users").document(likeCardUserModel.uid!!).set(likeCardUserModel).await()
+
+                    if (currentUserModel !=NULL) {
+                        // current user's like list and connections list both are updated
+                        db.collection("users").document(currentUser.uid).set(currentUserModel)
+                            .await()
+                    }
+
+                    if (likeCardUserModel != NULL) {
+                        // request user's connection list is updated
+                        db.collection("users").document(likeCardUserModel.uid!!)
+                            .set(likeCardUserModel).await()
+                    }
                 }
 
 

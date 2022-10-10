@@ -24,6 +24,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
+import org.json.JSONObject.NULL
 
 
 class EditSkillsFragment : Fragment() {
@@ -133,8 +134,12 @@ class EditSkillsFragment : Fragment() {
     fun saveDataToDB(){
         currentUserModel.skills = skillsArrayList
         GlobalScope.launch(Dispatchers.IO) {
-            db.collection("users").document(currentUser.uid).set(currentUserModel).await()
-            Log.d("GENERAL","Skills added to Server")
+
+            if(currentUserModel!=NULL){
+                currentUserModel.uid?.let { db.collection("users").document(it).set(currentUserModel).await() }
+                Log.d("GENERAL","Skills added to Server")
+            }
+
         }
     }
 
