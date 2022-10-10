@@ -24,6 +24,7 @@ import com.bumptech.glide.Glide
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.*
 import kotlinx.coroutines.tasks.await
@@ -535,11 +536,20 @@ class DiscoverFragment : Fragment() ,CardListener{
         val utilityDoc = db.collection("utility").
         document("utility_doc").get().await().toObject(UtilityModel::class.java)
 
-        var allUsersUid = utilityDoc?.allUsersUid
-        Log.d("GENERAL", allUsersUid.toString())
+        val allUsersUtilityDoc = db.collection("utility").document("all_users_utility_doc").get().await()
 
 
-        var usersToLoad = allUsersUid?.minus(combinedArray)
+        var currentCollegeName = currentUserModel.userCollegeName
+
+        var myHashMap = allUsersUtilityDoc.data
+        var currentCollegeAllUsersList = myHashMap?.get(currentCollegeName) as ArrayList<String>
+
+
+//        var allUsersUid = utilityDoc?.allUsersUid
+//        Log.d("GENERAL", allUsersUid.toString())
+
+
+        var usersToLoad = currentCollegeAllUsersList.minus(combinedArray)
         Log.d("GENERAL", usersToLoad.toString())
 
         var myUsersList:MutableList<UserModel> = mutableListOf()
