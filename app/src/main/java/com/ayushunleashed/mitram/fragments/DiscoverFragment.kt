@@ -211,7 +211,7 @@ class DiscoverFragment : Fragment() ,CardListener{
         // we make a network call to fetch user list
         GlobalScope.launch(Dispatchers.IO){
 
-            val currentUserModel = db.collection("users").document(currentUser.uid).get().await().toObject(UserModel::class.java)
+            currentUserModel = db.collection("users").document(currentUser.uid).get().await().toObject(UserModel::class.java)!!
             // get current user model from database
             val usersYouLiked = currentUserModel!!.usersYouLiked
             val connections = currentUserModel.connections
