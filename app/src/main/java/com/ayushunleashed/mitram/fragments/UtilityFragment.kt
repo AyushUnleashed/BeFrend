@@ -90,7 +90,7 @@ class UtilityFragment : Fragment() {
         binding.btnCollect.setOnClickListener {
             binding.progressBar.visibility = View.VISIBLE
             binding.btnCollect.visibility = View.GONE
-            handleCollectAllUserData()
+            handleSetAllUsersToJEC()
 
         }
     }
@@ -153,15 +153,36 @@ class UtilityFragment : Fragment() {
                 Toast.makeText(thisContext,"List of All users added to db",Toast.LENGTH_SHORT).show()
             }
         }
+    }
 
+    fun handleSetAllUsersToJEC(){
+        var allUsersUidArray: ArrayList<String> = ArrayList()
 
-
+        GlobalScope.launch(Dispatchers.IO) {
+            allUsersUidArray = getALlUsersUidFromUsersCollection()
+            uploadAllUsersIdToJEC(allUsersUidArray)
+            withContext(Dispatchers.Main){
+                binding.progressBar.visibility = View.GONE
+                binding.btnCollect.visibility = View.VISIBLE
+                Toast.makeText(thisContext,"List of All users added to db",Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     fun uploadAllUsersIdToUtilityCollection(allUsersUidArray: ArrayList<String>) {
 
         var utilityModel = UtilityModel(allUsersUidArray)
         db.collection("utility").document("utility_doc").set(utilityModel)
+    }
+
+    fun uploadAllUsersIdToJEC(allUsersUidArray: ArrayList<String>){
+
+        var myHashMap:HashMap<String,ArrayList<String>> = HashMap()
+        var collegeName = currentUserModel.userCollegeName
+        if (collegeName != null) {
+            myHashMap.put(collegeName,allUsersUidArray)
+            db.collection("utility").document("all_users_utility_doc").set(myHashMap, SetOptions.merge())
+        }
     }
 
     suspend fun getALlUsersUidFromUsersCollection():ArrayList<String>{
