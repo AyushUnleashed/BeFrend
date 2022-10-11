@@ -14,12 +14,25 @@
         android:layout_height="match_parent">
 
 
+
+
         <ImageView
             android:id="@+id/imgViewUserProfile"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
             android:src="@drawable/img_user_profile_sample" />
+
+        <ImageView
+            android:id="@+id/imgCollegeYear"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_bi_1_circle_fill" />
 
         <androidx.cardview.widget.CardView
             android:layout_margin="12dp"

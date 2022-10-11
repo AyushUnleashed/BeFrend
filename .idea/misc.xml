@@ -12,6 +12,7 @@
         <entry key="..\:/Users/ayush/AndroidStudioProjects/Mitram/app/src/main/res/drawable/ic_back_arrow.xml" value="0.221" />
         <entry key="..\:/Users/ayush/AndroidStudioProjects/Mitram/app/src/main/res/drawable/ic_back_button.xml" value="0.221" />
         <entry key="..\:/Users/ayush/AndroidStudioProjects/Mitram/app/src/main/res/drawable/ic_baseline_more_vert_24.xml" value="0.2345" />
+        <entry key="..\:/Users/ayush/AndroidStudioProjects/Mitram/app/src/main/res/drawable/ic_bi_1_circle_fill.xml" value="0.2455" />
         <entry key="..\:/Users/ayush/AndroidStudioProjects/Mitram/app/src/main/res/drawable/ic_bottom_card_bg.xml" value="0.221" />
         <entry key="..\:/Users/ayush/AndroidStudioProjects/Mitram/app/src/main/res/drawable/ic_cards_bottom_nav_2.xml" value="0.221" />
         <entry key="..\:/Users/ayush/AndroidStudioProjects/Mitram/app/src/main/res/drawable/ic_connections_bottom_nav.xml" value="0.221" />
@@ -64,7 +65,7 @@
         <entry key="..\:/Users/ayush/AndroidStudioProjects/Mitram/app/src/main/res/layout/item_people_like_requests.xml" value="0.21214868540344514" />
         <entry key="..\:/Users/ayush/AndroidStudioProjects/Mitram/app/src/main/res/layout/item_people_likes.xml" value="0.4" />
         <entry key="..\:/Users/ayush/AndroidStudioProjects/Mitram/app/src/main/res/layout/item_people_likes_modern.xml" value="0.5301204819277109" />
-        <entry key="..\:/Users/ayush/AndroidStudioProjects/Mitram/app/src/main/res/layout/item_user.xml" value="0.264" />
+        <entry key="..\:/Users/ayush/AndroidStudioProjects/Mitram/app/src/main/res/layout/item_user.xml" value="0.4" />
         <entry key="..\:/Users/ayush/AndroidStudioProjects/Mitram/app/src/main/res/layout/single_chip_layout.xml" value="0.21894832275611967" />
         <entry key="..\:/Users/ayush/AndroidStudioProjects/Mitram/app/src/main/res/layout/single_chip_layout2.xml" value="0.11011282908483076" />
         <entry key="..\:/Users/ayush/AndroidStudioProjects/Mitram/app/src/main/res/menu/bottom_nav_menu.xml" value="0.27447916666666666" />

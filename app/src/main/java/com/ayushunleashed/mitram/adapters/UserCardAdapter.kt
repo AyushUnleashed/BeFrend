@@ -58,9 +58,12 @@ class UserCardAdapter(var users: List<UserModel>,context: Context): CardContaine
         var tvUserName = view.findViewById<TextView>(R.id.tvUserName)
         var tvUserBio = view.findViewById<TextView>(R.id.tvUserBioDetailPage)
         var imgViewUserProfile = view.findViewById<ImageView>(R.id.imgViewUserProfile)
+        var imgCollegeYear = view.findViewById<ImageView>(R.id.imgCollegeYear)
+
         var cardViewProfileDescription:CardView = view.findViewById(R.id.cardViewProfileDescription)
         var btnShowFullProfile = view.findViewById<ImageButton>(R.id.btnShowFullProfile)
         var myCardView =view.findViewById<CardView>(R.id.myCardView)
+
         val user = getItem(position)
         myBlurView = view.findViewById<BlurView>(R.id.blurView)
         tvUserName.text = users[position].displayName
@@ -72,6 +75,7 @@ class UserCardAdapter(var users: List<UserModel>,context: Context): CardContaine
 
         loadChipsFromDB(position)
 
+        setCollegeYearIcon(imgCollegeYear,position)
 
 
         var radius =10f
@@ -99,6 +103,18 @@ class UserCardAdapter(var users: List<UserModel>,context: Context): CardContaine
 
 
         return view
+    }
+
+    private fun setCollegeYearIcon(imgCollegeYear: ImageView, position: Int) {
+        var collegeYear = users[position].userCollegeYear
+
+        when(collegeYear){
+            "1" -> imgCollegeYear.setImageResource(R.drawable.ic_bi_1_circle_fill)
+            "2" -> imgCollegeYear.setImageResource(R.drawable.ic_bi_2_circle_fill)
+            "3" -> imgCollegeYear.setImageResource(R.drawable.ic_bi_3_circle_fill)
+            "4" -> imgCollegeYear.setImageResource(R.drawable.ic_bi_4_circle_fill)
+            else -> imgCollegeYear.setImageResource(R.drawable.ic_akar_icons_circle_alert_fill)
+        }
     }
 
     override fun getCount(): Int {
