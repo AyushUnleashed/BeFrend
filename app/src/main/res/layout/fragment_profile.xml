@@ -33,7 +33,7 @@
         android:text="Profile"/>
 
             <Button
-                android:visibility="visible"
+                android:visibility="gone"
                 android:textColor="@color/themeApp"
                 android:text="Utility"
                 android:elevation="10dp"
