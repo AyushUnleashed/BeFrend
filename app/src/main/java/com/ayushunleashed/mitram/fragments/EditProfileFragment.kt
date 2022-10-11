@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.activity.addCallback
 import androidx.activity.result.ActivityResult
@@ -49,6 +50,9 @@ class EditProfileFragment : Fragment() {
     lateinit var currentUserModel:UserModel
     lateinit var checkPermission: ActivityResultLauncher<Intent>
     var stringHelper:StringHelperClass = StringHelperClass()
+
+    var year ="-"
+    var stream="-"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -93,6 +97,13 @@ class EditProfileFragment : Fragment() {
 
 
         currentUserModel = sharedViewModel.currentUserModel;
+
+        //loading old data
+        binding.actvSelectYear.setText(currentUserModel.userCollegeYear)
+        binding.actvSelectStream.setText(currentUserModel.userCollegeStream)
+
+        handleYearSelectorLogic()
+        handleStreamSelectorLogic()
         handleButtons()
 
 
@@ -154,6 +165,26 @@ class EditProfileFragment : Fragment() {
             binding.interestsChipGroup.removeView(chip)
         }
         binding.interestsChipGroup.addView(chip)
+    }
+
+    private fun handleYearSelectorLogic() {
+        val years = resources.getStringArray(R.array.years)
+        val yearsAdapter = ArrayAdapter(thisContext,android.R.layout.simple_spinner_dropdown_item,years)
+        binding.actvSelectYear.setAdapter(yearsAdapter)
+        binding.actvSelectYear.setOnItemClickListener { adapterView, view, i, l ->
+            year = binding.actvSelectYear.text.toString()
+            stream = binding.actvSelectStream.text.toString()
+        }
+    }
+
+    private fun handleStreamSelectorLogic() {
+        val streams = resources.getStringArray(R.array.streams)
+        val streamsAdapter = ArrayAdapter(thisContext,android.R.layout.simple_spinner_dropdown_item,streams)
+        binding.actvSelectStream.setAdapter(streamsAdapter)
+        binding.actvSelectStream.setOnItemClickListener { adapterView, view, i, l ->
+            stream = binding.actvSelectStream.text.toString()
+            year = binding.actvSelectYear.text.toString()
+        }
     }
 
 
@@ -261,32 +292,11 @@ class EditProfileFragment : Fragment() {
         var userBio = binding.etvUserBioEditBio.text.toString()
         userBio = stringHelper.removeEmptyLinesFromStartAndEnd(userBio)
 
-        //var userSkillsString = binding.etvUserSkillsEditProfile.text.toString()
-        //userSkillsString = stringHelper.removeEmptyLinesFromStartAndEnd(userSkillsString)
-
-        //var userSkillsArray:ArrayList<String> = userSkillsString.split(",") as ArrayList<String>
-//        Log.d("GENERAL",userSkillsArray.toString())
-//        userSkillsArray = removeEmptyInterestOrSkill(userSkillsArray)
-//        Log.d("GENERAL",userSkillsArray.toString())
-//        userSkillsArray = removeSpacesFromArrayElements(userSkillsArray)
-//        Log.d("GENERAL",userSkillsArray.toString())
-//
-//        var userInterestsString = binding.etvUserInterestsEditProfile.text.toString()
-//        userInterestsString = stringHelper.removeEmptyLinesFromStartAndEnd(userInterestsString)
-//
-//
-//        var userInterestsArray:ArrayList<String> = userInterestsString.split(",") as ArrayList<String>
-//        Log.d("GENERAL",userInterestsArray.toString())
-//        userInterestsArray = removeEmptyInterestOrSkill(userInterestsArray)
-//        Log.d("GENERAL",userInterestsArray.toString())
-//        userInterestsArray = removeSpacesFromArrayElements(userInterestsArray)
-//        Log.d("GENERAL",userInterestsArray.toString())
-
 
         currentUserModel.displayName =  userName
         currentUserModel.bio = userBio
-       // currentUserModel.interests = userInterestsArray
-        //currentUserModel.skills = userSkillsArray
+        currentUserModel.userCollegeYear = year
+        currentUserModel.userCollegeStream = stream
 
         Log.d("GENERAL",currentUserModel.toString())
 
