@@ -187,9 +187,7 @@ class CollegeSelectFragment : Fragment() {
     fun generateDummyCollegeNamesList(){
         collegeNameList.clear()
         collegeNameList.add("Jabalpur Engineering College")
-        collegeNameList.add("Devi Ahilya Vishwavidyalaya")
-        collegeNameList.add("Shri Govindram Seksaria Institute of Technology and Science")
-        collegeNameList.add("Other")
+        collegeNameList.add("Other College")
     }
 
     private fun handleCollegeSelectorLogic() {
