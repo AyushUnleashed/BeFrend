@@ -12,19 +12,32 @@
         tools:layout="@layout/fragment_discover" >
         <action
             android:id="@+id/action_discoverFragment_to_likesFragment"
-            app:destination="@id/likesFragment" />
+            app:destination="@id/likesFragment"
+            app:enterAnim="@anim/fui_slide_in_right"
+            app:exitAnim="@anim/fui_slide_out_left"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right" />
         <action
             android:id="@+id/action_discoverFragment_to_connectionsFragment"
-            app:destination="@id/connectionsFragment" />
+            app:destination="@id/connectionsFragment"
+            app:enterAnim="@anim/fui_slide_in_right"
+            app:exitAnim="@anim/fui_slide_out_left"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right" />
         <action
             android:id="@+id/action_discoverFragment_to_messagesFragment2"
             app:destination="@id/messagesFragment" />
         <action
             android:id="@+id/action_discoverFragment_to_profileFragment"
-            app:destination="@id/profileFragment" />
+            app:destination="@id/profileFragment"
+            app:enterAnim="@anim/fui_slide_in_right"
+            app:exitAnim="@anim/fui_slide_out_left"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right"/>
         <action
             android:id="@+id/action_discoverFragment_to_fullUserProfileFragment"
-            app:destination="@id/fullUserProfileFragment" />
+            app:destination="@id/fullUserProfileFragment"
+             />
     </fragment>
 
     <fragment
@@ -34,16 +47,24 @@
         tools:layout="@layout/fragment_likes" >
         <action
             android:id="@+id/action_likesFragment_to_fullUserProfileFragment"
-            app:destination="@id/fullUserProfileFragment" />
+            app:destination="@id/fullUserProfileFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"/>
         <action
             android:id="@+id/action_likesFragment_to_likeRequestsSentFragment"
-            app:destination="@id/likeRequestsSentFragment" />
+            app:destination="@id/likeRequestsSentFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"/>
         <action
             android:id="@+id/action_likesFragment_to_fullUserProfileFragment2"
-            app:destination="@id/fullUserProfileFragment" />
+            app:destination="@id/fullUserProfileFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"/>
         <action
             android:id="@+id/action_likesFragment_to_discoverFragment"
-            app:destination="@id/discoverFragment" />
+            app:destination="@id/discoverFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"/>
     </fragment>
 
     <fragment
@@ -53,10 +74,14 @@
         tools:layout="@layout/fragment_connections" >
         <action
             android:id="@+id/action_connectionsFragment_to_chatFragment"
-            app:destination="@id/chatFragment" />
+            app:destination="@id/chatFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"/>
         <action
             android:id="@+id/action_connectionsFragment_to_fullUserProfileFragment"
-            app:destination="@id/fullUserProfileFragment" />
+            app:destination="@id/fullUserProfileFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"/>
     </fragment>
 
     <fragment
@@ -71,10 +96,16 @@
         tools:layout="@layout/fragment_profile" >
         <action
             android:id="@+id/action_profileFragment_to_signInActivity"
-            app:destination="@id/signInActivity" />
+            app:destination="@id/signInActivity"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"/>
         <action
             android:id="@+id/action_profileFragment_to_editProfileFragment"
-            app:destination="@id/editProfileFragment" />
+            app:destination="@id/editProfileFragment"
+            app:enterAnim="@anim/fui_slide_in_right"
+            app:exitAnim="@anim/fui_slide_out_left"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right"/>
         <action
             android:id="@+id/action_profileFragment_to_utilityFragment"
             app:destination="@id/utilityFragment" />
@@ -97,16 +128,25 @@
             app:argType="com.ayushunleashed.mitram.models.UserModel" />
         <action
             android:id="@+id/action_fullUserProfileFragment_to_likesFragment"
-            app:destination="@id/likesFragment" />
+            app:destination="@id/likesFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"/>
         <action
             android:id="@+id/action_fullUserProfileFragment_to_connectionsFragment"
-            app:destination="@id/connectionsFragment" />
+            app:destination="@id/connectionsFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"/>
         <action
             android:id="@+id/action_fullUserProfileFragment_to_chatFragment"
-            app:destination="@id/chatFragment" />
+            app:destination="@id/chatFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"/>
         <action
             android:id="@+id/action_fullUserProfileFragment_to_likeRequestsSentFragment"
-            app:destination="@id/likeRequestsSentFragment" />
+            app:destination="@id/likeRequestsSentFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"
+            />
 
     </fragment>
     <fragment
@@ -133,13 +173,27 @@
         tools:layout="@layout/fragment_edit_profile" >
         <action
             android:id="@+id/action_editProfileFragment_to_profileFragment"
-            app:destination="@id/profileFragment" />
+            app:destination="@id/profileFragment"
+            app:popEnterAnim="@anim/fui_slide_in_right"
+            app:popExitAnim="@anim/fui_slide_out_left"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"/>
         <action
             android:id="@+id/action_editProfileFragment_to_editSkillsFragment"
-            app:destination="@id/editSkillsFragment" />
+            app:destination="@id/editSkillsFragment"
+            app:enterAnim="@anim/fui_slide_in_right"
+            app:exitAnim="@anim/fui_slide_out_left"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right"
+            />
         <action
             android:id="@+id/action_editProfileFragment_to_editInterestsFragment"
-            app:destination="@id/editInterestsFragment" />
+            app:destination="@id/editInterestsFragment"
+            app:enterAnim="@anim/fui_slide_in_right"
+            app:exitAnim="@anim/fui_slide_out_left"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right"
+            />
     </fragment>
     <fragment
         android:id="@+id/editSkillsFragment"
@@ -187,7 +241,8 @@
         tools:layout="@layout/fragment_splash_screen" >
         <action
             android:id="@+id/action_splashScreenFragment_to_discoverFragment"
-            app:destination="@id/discoverFragment" />
+            app:destination="@id/discoverFragment"
+            app:enterAnim="@android:anim/fade_in" />
     </fragment>
     <fragment
         android:id="@+id/collegeSelectFragment"
