@@ -199,7 +199,7 @@ class UtilityFragment : Fragment() {
         var myHashMap:HashMap<String,ArrayList<String>> = HashMap()
         var collegeName = currentUserModel.userCollegeName
         if (collegeName != null) {
-            myHashMap.put(collegeName,allUsersUidArray)
+            myHashMap.put("Jabalpur Engineering College",allUsersUidArray)
             db.collection("utility").document("all_users_utility_doc").set(myHashMap, SetOptions.merge())
         }
     }
