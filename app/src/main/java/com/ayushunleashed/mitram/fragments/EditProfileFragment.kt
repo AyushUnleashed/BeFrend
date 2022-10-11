@@ -17,6 +17,7 @@ import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.ayushunleashed.mitram.R
 import com.ayushunleashed.mitram.SharedViewModel
@@ -65,6 +66,9 @@ class EditProfileFragment : Fragment() {
             // Handle the back button event
             utilitySharedViewModel.bioBufferEP =""
             utilitySharedViewModel.nameBufferEP =""
+            utilitySharedViewModel.collegeYearBuffer=""
+            utilitySharedViewModel.collegeStreamBuffer=""
+
             findNavController().navigate(R.id.action_editProfileFragment_to_profileFragment)
 
         }
@@ -102,8 +106,7 @@ class EditProfileFragment : Fragment() {
         binding.actvSelectYear.setText(currentUserModel.userCollegeYear)
         binding.actvSelectStream.setText(currentUserModel.userCollegeStream)
 
-        handleYearSelectorLogic()
-        handleStreamSelectorLogic()
+
         handleButtons()
 
 
@@ -127,12 +130,18 @@ class EditProfileFragment : Fragment() {
         }
 
         binding.btnEditSkills.setOnClickListener {
+            utilitySharedViewModel.collegeStreamBuffer = binding.actvSelectStream.text.toString()
+            utilitySharedViewModel.collegeYearBuffer = binding.actvSelectYear.text.toString()
+
             utilitySharedViewModel.nameBufferEP = binding.etvUserNameEditProfile.text.toString()
             utilitySharedViewModel.bioBufferEP = binding.etvUserBioEditBio.text.toString()
             findNavController().navigate(R.id.action_editProfileFragment_to_editSkillsFragment);
         }
 
         binding.btnEditInterests.setOnClickListener {
+            utilitySharedViewModel.collegeStreamBuffer = binding.actvSelectStream.text.toString()
+            utilitySharedViewModel.collegeYearBuffer = binding.actvSelectYear.text.toString()
+
             utilitySharedViewModel.nameBufferEP = binding.etvUserNameEditProfile.text.toString()
             utilitySharedViewModel.bioBufferEP = binding.etvUserBioEditBio.text.toString()
             findNavController().navigate(R.id.action_editProfileFragment_to_editInterestsFragment);
@@ -192,9 +201,19 @@ class EditProfileFragment : Fragment() {
         binding.etvUserNameEditProfile.setText(currentUserModel.displayName)
         binding.etvUserBioEditBio.setText(currentUserModel.bio)
 
+        handleYearSelectorLogic()
+        handleStreamSelectorLogic()
+
         if(utilitySharedViewModel.nameBufferEP!=""){
+            //if buffer is not empty
+
             binding.etvUserNameEditProfile.setText(utilitySharedViewModel.nameBufferEP)
             binding.etvUserBioEditBio.setText(utilitySharedViewModel.bioBufferEP)
+
+            //loading old data
+            binding.actvSelectYear.setText(currentUserModel.userCollegeYear)
+            binding.actvSelectStream.setText(currentUserModel.userCollegeStream)
+
         }
 
 
@@ -295,8 +314,8 @@ class EditProfileFragment : Fragment() {
 
         currentUserModel.displayName =  userName
         currentUserModel.bio = userBio
-        currentUserModel.userCollegeYear = year
-        currentUserModel.userCollegeStream = stream
+        currentUserModel.userCollegeYear = binding.actvSelectYear.text.toString()
+        currentUserModel.userCollegeStream = binding.actvSelectStream.text.toString()
 
         Log.d("GENERAL",currentUserModel.toString())
 

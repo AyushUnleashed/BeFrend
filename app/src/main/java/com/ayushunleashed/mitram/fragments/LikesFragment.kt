@@ -38,11 +38,6 @@ class LikesFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val callback = requireActivity().onBackPressedDispatcher.addCallback(this) {
-            // Handle the back button event
-            findNavController().navigate(R.id.action_likesFragment_to_discoverFragment)
-
-        }
     }
 
     override fun onCreateView(
