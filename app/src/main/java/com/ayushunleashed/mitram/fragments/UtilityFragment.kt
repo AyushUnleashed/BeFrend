@@ -93,6 +93,12 @@ class UtilityFragment : Fragment() {
             handleSetAllUsersToJEC()
 
         }
+
+        binding.btnSetCollegeDetails.setOnClickListener {
+            binding.progressBar.visibility = View.VISIBLE
+            binding.btnSetCollegeDetails.visibility = View.GONE
+            handleSetCollegeDetailsToJEC()
+        }
     }
 
 
@@ -169,6 +175,19 @@ class UtilityFragment : Fragment() {
         }
     }
 
+    fun handleSetCollegeDetailsToJEC(){
+        GlobalScope.launch(Dispatchers.IO) {
+
+            withContext(Dispatchers.Main){
+                getAllUsersAndAddCollegeToJEC()
+                binding.progressBar.visibility = View.GONE
+                binding.btnSetCollegeDetails.visibility = View.VISIBLE
+                Toast.makeText(thisContext,"List of All users added to db",Toast.LENGTH_SHORT).show()
+            }
+        }
+
+    }
+
     fun uploadAllUsersIdToUtilityCollection(allUsersUidArray: ArrayList<String>) {
 
         var utilityModel = UtilityModel(allUsersUidArray)
@@ -194,5 +213,18 @@ class UtilityFragment : Fragment() {
             userModel.uid?.let { listOfAllUserIds.add(it) }
         }
         return listOfAllUserIds
+    }
+
+    suspend fun getAllUsersAndAddCollegeToJEC(){
+        var allUsersModel = db.collection("users").get().await().toObjects(UserModel::class.java)
+
+        for( userModel in allUsersModel){
+            if(userModel!=null){
+                userModel.userCollegeName = "Jabalpur Engineering College"
+                userModel.userCollegeStream = "Other"
+                userModel.userCollegeYear = "3"
+                userModel.uid?.let { db.collection("users").document(it).set(userModel).await() }
+            }
+        }
     }
 }
