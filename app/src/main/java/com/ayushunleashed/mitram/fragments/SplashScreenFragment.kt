@@ -101,6 +101,7 @@ class SplashScreenFragment : Fragment() {
                     if(!user.uid?.let { db.collection("users").document(it).get().await().exists() }!!) {
                         user.uid.let { db.collection("users").document(it).set(user) }
                         addCurrentUserToUtilityList(user)
+                        addCurrentUserToCollegeSpecificList(user)
                     }
                     loadCurrentUserModel()
 
@@ -130,6 +131,20 @@ class SplashScreenFragment : Fragment() {
         }
         if (utilityDoc != null) {
             db.collection("utility").document("utility_doc").set(utilityDoc).await()
+        }
+    }
+
+    suspend fun addCurrentUserToCollegeSpecificList(user: UserModel?){
+        val allUsersUtilityDoc = db.collection("utility").document("all_users_utility_doc").get().await()
+        var currentCollegeName = userCollegeName
+        var myHashMap = allUsersUtilityDoc.data
+        var currentCollegeAllUsersList = myHashMap?.get(currentCollegeName) as ArrayList<String>
+        user?.uid?.let { currentCollegeAllUsersList.add(it) }
+
+        if(allUsersUtilityDoc!=null){
+            myHashMap[currentCollegeName] = currentCollegeAllUsersList
+            db.collection("utility").document("all_users_utility_doc").set(myHashMap, SetOptions.merge()).await()
+            Log.d("NETWORK_DB","New User added to college specific list")
         }
     }
 
