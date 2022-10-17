@@ -7,6 +7,7 @@
 BeFrend is a product that was designed to help college students find people from their College, who have similar interests and skills as them. 
 
 To Collaborate, Explore & Build The Future.
+Learn more [here](https://www.linkedin.com/company/befrend/)
 
 ## Demo
 
