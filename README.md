@@ -86,14 +86,15 @@ To Collaborate, Explore & Build The Future.
 
 | Color             | Hex                                                                |
 | ----------------- | ------------------------------------------------------------------ |
-| Primary Theme Color | ![#FF5F00](https://via.placeholder.com/10/FF5F00?text=+) #FF5F00 |
-| Secondary Theme Color | ![#E7E9ED](https://via.placeholder.com/10/E7E9ED?text=+)#E7E9ED |
-| New Black Color | ![#E6101010](https://via.placeholder.com/10/00000?text=+)  #E6101010|
+| Primary Theme Color | #FF5F00 |
+| Secondary Theme Color | #E7E9ED |
+| New Black Color | #E6101010|
 
 ## 🚀 About Me
 My name is Ayush Yadav and I'm an Android Developer, working with kotlin.
 
 Trying to build products that people would actually use in their daily life.
+Email: ayushyadavcodes@gmail.com
 
 
 
@@ -115,7 +116,7 @@ Not Yet, I am fixing a bug issue, soon it would be uploaded.
 
 #### What's current Progress?
 
-- Idea - [x] [ done ]
+- Idea [ done ]
 - Figma Prototype [ done ]
 - Development Started [ done ]
 - MVP Ready [ done ]
