@@ -7,18 +7,19 @@
 BeFrend is a product that was designed to help college students find people from their College, who have similar interests and skills as them. 
 
 To Collaborate, Explore & Build The Future.
+
+## Demo
+
+![Cover](https://i.postimg.cc/c6qw4BzX/10.png)
+
 ## Problems
 
 ![Cover](https://i.postimg.cc/0QFcDm3J/6.png)
 
-
-
 ## Solution
 
 ![Cover](https://i.postimg.cc/B6rBX3LT/9.png)
-## Demo
 
-![Cover](https://i.postimg.cc/c6qw4BzX/10.png)
 
 ## Features
 
@@ -53,7 +54,6 @@ To Collaborate, Explore & Build The Future.
 - Kotlin Coroutines
 - View Binding
 - Shared View Model
-- 
 
 2. Firebase:
 - Firebase Google Authentication.
@@ -115,7 +115,7 @@ Not Yet, I am fixing a bug issue, soon it would be uploaded.
 
 #### What's current Progress?
 
-- Idea  - [ done ]
+- Idea - [x] [ done ]
 - Figma Prototype [ done ]
 - Development Started [ done ]
 - MVP Ready [ done ]
