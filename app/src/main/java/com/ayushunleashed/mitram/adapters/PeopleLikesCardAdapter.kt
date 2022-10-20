@@ -77,7 +77,6 @@ class PeopleLikesCardAdapter(var users: MutableList<UserModel>):RecyclerView.Ada
                 var currentUserModel =
                     db.collection("users").document(currentUser!!.uid).get().await()
                         .toObject(UserModel::class.java)
-
                 // if current user is not empty and current user does not has this person already as connections
 
                 if (currentUserModel != null && !(currentUserModel.connections.contains(

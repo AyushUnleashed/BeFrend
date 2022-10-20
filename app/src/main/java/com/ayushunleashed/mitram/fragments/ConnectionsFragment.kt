@@ -296,6 +296,10 @@ class ConnectionsFragment : Fragment() {
             val currentUserModel = db.collection("users").document(FirebaseAuth.getInstance().currentUser!!.uid).get().await()
                 .toObject(UserModel::class.java)
 
+            if (currentUserModel != null) {
+                sharedViewModel.currentUserModel = currentUserModel
+            }
+
             var currentConnection = db.collection("users").document(connectionUidToBeRemoved).get().await().toObject(UserModel::class.java)
 
             if (currentConnection != null && currentUserModel!=null)
