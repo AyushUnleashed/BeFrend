@@ -542,7 +542,17 @@ class DiscoverFragment : Fragment() ,CardListener{
         var currentCollegeName = currentUserModel.userCollegeName
 
         var myHashMap = allUsersUtilityDoc.data
-        var currentCollegeAllUsersList = myHashMap?.get(currentCollegeName) as ArrayList<String>
+
+        var currentCollegeAllUsersList = myHashMap?.get(currentCollegeName)
+
+        if(currentCollegeAllUsersList!=null){
+            currentCollegeAllUsersList = currentCollegeAllUsersList as ArrayList<String>
+        }else{
+            currentCollegeAllUsersList = ArrayList<String>()
+        }
+
+
+
 
 
 //        var allUsersUid = utilityDoc?.allUsersUid
