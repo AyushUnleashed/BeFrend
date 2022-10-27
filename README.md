@@ -107,6 +107,7 @@ Email: ayushyadavcodes@gmail.com
 
 - Founder/ Android Development -[@ayushunleashed](https://ayushunleashed.carrd.co/)
 - UI/UX Design - [@yogendramanawat](https://www.behance.net/yogendramanawat?tracking_source=search_users|yogendra%20manawat)
+- Music/Sound - [@harshit](https://github.com/harshit/)
 
 
 ## FAQ
