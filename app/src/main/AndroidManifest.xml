@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.ayushunleashed.mitram" >
+    package="com.ayushunleashed.mitram">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -11,36 +11,27 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Mitram">
-
         <activity
-            android:name="com.ayushunleashed.mitram.SignInActivity"
+            android:name=".activities.SignUpEmail"
+            android:exported="false" />
+        <activity
+            android:name=".SignInActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
-        <activity
-            android:name="com.ayushunleashed.mitram.MainActivity">
-
-        </activity>
-        <activity android:name="com.ayushunleashed.mitram.FragmentHomeActivity"
-            >
-
-        </activity>
-
-        <!-- [START firebase_service] -->
+        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".FragmentHomeActivity"></activity> <!-- [START firebase_service] -->
         <service
-            android:name="com.ayushunleashed.mitram.firebase.MessagingService"
+            android:name=".firebase.MessagingService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-        <!-- [END firebase_service] -->
-
     </application>
 
 </manifest>
