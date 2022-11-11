@@ -4,7 +4,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="long_string">I don’t know what to write right now so i’m just
 typing random, LBC is my wI don’t know what to write right now so i’m just</string>
-    
+
     <string-array name="years">
         <item>1</item>
         <item>2</item>
