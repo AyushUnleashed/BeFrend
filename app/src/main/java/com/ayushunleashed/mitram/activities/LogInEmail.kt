@@ -7,8 +7,7 @@ import com.ayushunleashed.mitram.R
 class LogInEmail : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_sign_up_email)
-
+        setContentView(R.layout.activity_log_in_email)
         supportActionBar?.hide()
     }
 }
