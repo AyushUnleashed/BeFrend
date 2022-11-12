@@ -32,10 +32,12 @@ class CollegeSelectFragment : Fragment() {
     var isCollegeSelected = false
     var isYearSelected = false
     var isStreamSelected = false
+    var isNameFilled=false;
     var checkFields =false
 
     lateinit var db: FirebaseFirestore
 
+    var userName =""
     var collegeName =""
     var year =""
     var stream=""
@@ -68,6 +70,8 @@ class CollegeSelectFragment : Fragment() {
         binding = FragmentCollegeSelectBinding.bind(view)
         db = FirebaseFirestore.getInstance()
         generateDummyCollegeNamesList()
+
+
         handleCollegeSelectorLogic()
         handleYearSelectorLogic()
         handleStreamSelectorLogic()
@@ -79,6 +83,15 @@ class CollegeSelectFragment : Fragment() {
         binding.actvSelectYear.setText("")
         binding.actvSelectStream.setText("")
 
+    }
+
+    private fun handleUserNameLogic():Boolean {
+        userName =  binding.etvEnterFullName.text.toString()
+
+        if(userName.isNotEmpty()){
+            return true
+        }
+        return false
     }
 
     private fun skipScreen() {
@@ -132,15 +145,17 @@ class CollegeSelectFragment : Fragment() {
 
         binding.btnNextScreen.setOnClickListener {
 
+            var isNameFilled:Boolean = handleUserNameLogic()
 
-            if(isCollegeSelected && isYearSelected && isStreamSelected)
+            if(isCollegeSelected && isYearSelected && isStreamSelected && isNameFilled)
             {
                 // go to next screen
                 Log.d("GENERAL","college:${collegeName.toString()}")
                 Log.d("GENERAL","year:${year.toString()}")
                 Log.d("GENERAL","stream:${stream.toString()}")
+                Log.d("GENERAL","userName:${userName.toString()}")
 
-                val myBundle = bundleOf("collegeName" to collegeName,"year" to year,"stream" to stream)
+                val myBundle = bundleOf("collegeName" to collegeName,"year" to year,"stream" to stream,"userName" to userName)
                 findNavController().navigate(R.id.action_collegeSelectFragment_to_splashScreenFragment,myBundle)
 
             }else{

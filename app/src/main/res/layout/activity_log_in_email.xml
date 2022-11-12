@@ -5,18 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/new_white"
-    tools:context=".activities.SignUpEmail">
-
-
-<!--    <ImageButton-->
-<!--        android:id="@+id/btnGoBackToWelcomeScreen"-->
-<!--        android:layout_width="32dp"-->
-<!--        android:layout_height="32dp"-->
-<!--        android:layout_marginTop="20dp"-->
-<!--        android:layout_marginStart="20dp"-->
-<!--        android:background="@drawable/ic_back_button"-->
-<!--        app:layout_constraintLeft_toLeftOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent" />-->
+    tools:context=".activities.LogInEmail">
 
 
     <TextView
@@ -26,7 +15,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="48dp"
         android:fontFamily="@font/montserrat_bold"
-        android:text="Create Account"
+        android:text="Hi, Welcome back!"
         android:textColor="@color/newBlack"
         android:textSize="28sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -40,12 +29,13 @@
         android:layout_marginTop="10dp"
         android:layout_marginRight="20dp"
         android:fontFamily="@font/montserrat_regular"
-        android:text="Don't have a account? Create one!"
+        android:text="Hello agian, You’ve been missed!"
         android:textColor="@color/newBlack"
         android:textSize="16sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvPageTitle" />
+
 
 
     <EditText
@@ -58,7 +48,7 @@
         android:background="@drawable/custom_input"
         android:ems="10"
         android:gravity="center_vertical"
-        android:hint="Email"
+        android:hint="Enter Your Email"
         android:inputType="textEmailAddress"
         android:padding="20dp"
         android:textColor="@color/black"
@@ -66,7 +56,7 @@
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <EditText
         android:id="@+id/etvEnterPassword"
@@ -89,7 +79,7 @@
         app:layout_constraintTop_toBottomOf="@id/etvEnterEmail" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnSignUpEmail"
+        android:id="@+id/btnLoginEmail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
@@ -97,40 +87,40 @@
         android:layout_marginEnd="20dp"
         android:padding="16dp"
         android:textColor="@color/white"
-        android:text="Sign Up"
+        android:text="Log In"
         android:textAllCaps="false"
         android:textSize="16sp"
         app:cornerRadius="20dp"
         app:layout_constraintTop_toBottomOf="@id/etvEnterPassword" />
 
     <TextView
-        android:id="@+id/tvAlreadyAccount"
+        android:id="@+id/tvDontHaveAccount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="32dp"
         android:fontFamily="@font/montserrat_regular"
-        android:text="Already have an Account?"
+        android:text="Don't have an Account?"
         android:textColor="@color/newBlack"
         android:textSize="12sp"
         android:layout_marginTop="64dp"
-        app:layout_constraintTop_toBottomOf="@id/btnSignUpEmail"
-        app:layout_constraintEnd_toStartOf="@+id/tvLogInBtn"
+        app:layout_constraintTop_toBottomOf="@id/btnLoginEmail"
+        app:layout_constraintEnd_toStartOf="@+id/tvSignUpBtn"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/tvLogInBtn"
+        android:id="@+id/tvSignUpBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="32dp"
         android:fontFamily="@font/montserrat_regular"
-        android:text=" Log In"
+        android:text=" Sign Up"
         android:textColor="@color/themeApp"
         android:textSize="12sp"
         android:layout_marginTop="64dp"
-        app:layout_constraintTop_toBottomOf="@id/btnSignUpEmail"
-        app:layout_constraintStart_toEndOf="@id/tvAlreadyAccount"
+        app:layout_constraintTop_toBottomOf="@id/btnLoginEmail"
+        app:layout_constraintStart_toEndOf="@id/tvDontHaveAccount"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintEnd_toEndOf="parent"
          />
@@ -159,7 +149,7 @@
 <!--        android:textSize="12sp"-->
 <!--        app:layout_constraintLeft_toLeftOf="parent"-->
 <!--        app:layout_constraintRight_toRightOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@id/tvAlreadyAccount" />-->
+<!--        app:layout_constraintTop_toBottomOf="@id/tvDontHaveAccount" />-->
 
 <!--    <View-->
 <!--        android:id="@+id/horizontalLineRight"-->

@@ -9,20 +9,20 @@ import android.widget.Toast
 import com.ayushunleashed.mitram.FragmentHomeActivity
 import com.ayushunleashed.mitram.R
 import com.ayushunleashed.mitram.SignInActivity
+import com.ayushunleashed.mitram.databinding.ActivityLogInEmailBinding
 import com.ayushunleashed.mitram.databinding.ActivitySignUpEmailBinding
-import com.ayushunleashed.mitram.databinding.FragmentEditInterestsBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
-class SignUpEmail : AppCompatActivity() {
-    private lateinit var binding: ActivitySignUpEmailBinding
+class LogInEmail : AppCompatActivity() {
+
+    private lateinit var binding: ActivityLogInEmailBinding
     private var mAuth: FirebaseAuth = Firebase.auth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        binding = ActivitySignUpEmailBinding.inflate(layoutInflater)
+        binding = ActivityLogInEmailBinding.inflate(layoutInflater)
         setContentView(binding.root)
         supportActionBar?.hide()
 
@@ -31,13 +31,13 @@ class SignUpEmail : AppCompatActivity() {
 
     private fun handleButtons(){
 
-        binding.tvLogInBtn.setOnClickListener{
+        binding.tvSignUpBtn.setOnClickListener{
             goToLogInWithEmailPage()
         }
 
-        binding.btnSignUpEmail.setOnClickListener {
-            Toast.makeText(this,"Clicked on Signup",Toast.LENGTH_SHORT).show()
-            createUser();
+        binding.btnLoginEmail.setOnClickListener{
+            Log.d("GENERAL","Log in button clicked")
+            logInUser()
         }
 
 //        binding.gSignInButton.setOnClickListener {
@@ -45,47 +45,55 @@ class SignUpEmail : AppCompatActivity() {
 //        }
     }
 
+    private fun logInUser()
+    {
+        //Toast.makeText(this,"logInUser()",Toast.LENGTH_SHORT).show()
+        var email = binding.etvEnterEmail.text.toString()
+        var pass = binding.etvEnterPassword.text.toString()
 
-    private fun createUser() {
-        Log.d("Cool", "create user running")
-        val email = binding.etvEnterEmail.text.toString()
-        val pass = binding.etvEnterPassword.text.toString()
-
-        if (email.isNotEmpty() && Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            if (pass.isNotEmpty()) {
-
-                mAuth.createUserWithEmailAndPassword(email, pass).addOnCompleteListener(this)
+        if(email.isNotEmpty() && Patterns.EMAIL_ADDRESS.matcher(email).matches())
+        {
+            if(pass.isNotEmpty())
+            {
+                mAuth.signInWithEmailAndPassword(email,pass).addOnCompleteListener(this)
                 { task ->
-                    if (task.isSuccessful) {
-                        Toast.makeText(this, "Successfully registered", Toast.LENGTH_SHORT)
-                            .show()
+                    if(task.isSuccessful)
+                    {
+                        Toast.makeText(this,"Log in Successful", Toast.LENGTH_SHORT).show()
                         //go to login activity
-                        val intent = Intent(this, FragmentHomeActivity::class.java)
+                        val intent = Intent(this,FragmentHomeActivity::class.java)
                         startActivity(intent)
-                    } else {
-                        Toast.makeText(this, "Signup Failed", Toast.LENGTH_SHORT).show()
+                    }
+                    else
+                    {
+                        Toast.makeText(this,"Log in Failed", Toast.LENGTH_SHORT).show()
                     }
                 }
 
-            } else {
+            }else
+            {
                 binding.etvEnterPassword.error = "password cannot be empty"
                 binding.etvEnterPassword.requestFocus()
             }
-        } else if (email.isEmpty()) {
+        }
+        else if(email.isEmpty())
+        {
             binding.etvEnterEmail.error = "Email cannot be empty"
-        } else {
+        }
+        else
+        {
             binding.etvEnterEmail.error = "Enter correct email"
         }
-    }
 
+    }
     private fun goToLogInWithEmailPage(){
-        val intent = Intent(this@SignUpEmail, LogInEmail::class.java)
+        val intent = Intent(this@LogInEmail, SignUpEmail::class.java)
         startActivity(intent);
         finish()
     }
 
     private fun goToWelcomePage(){
-        val intent = Intent(this@SignUpEmail, SignInActivity::class.java)
+        val intent = Intent(this, SignInActivity::class.java)
         startActivity(intent);
         finish()
     }

@@ -8,6 +8,7 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="white50">#80FFFFFF</color>
+    <color name="new_white">#F3F4F5</color>
     <color name="blue">#3269FF</color>
     <color name="themeApp">#FF5F00</color>
     <color name="themeSecondaryApp">#E7E9ED</color>

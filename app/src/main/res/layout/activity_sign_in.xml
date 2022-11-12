@@ -67,6 +67,22 @@
         app:layout_constraintStart_toStartOf="parent"
         />
 
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnLoginWithEmail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="20dp"
+        android:padding="16dp"
+        android:textColor="@color/white"
+        android:text="Login With Email"
+        android:textAllCaps="false"
+        android:textSize="16sp"
+        app:cornerRadius="20dp"
+        android:layout_marginBottom="64dp"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
     <com.google.android.gms.common.SignInButton
         android:id="@+id/gSignInButton"
         android:layout_width="match_parent"
@@ -74,8 +90,8 @@
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
         android:layout_marginTop="20dp"
-        android:layout_marginBottom="100dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toTopOf="@id/btnLoginWithEmail"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 

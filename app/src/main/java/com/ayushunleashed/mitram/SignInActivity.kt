@@ -9,6 +9,7 @@ import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
+import com.ayushunleashed.mitram.activities.SignUpEmail
 import com.ayushunleashed.mitram.models.UserModel
 import com.ayushunleashed.mitram.daos.UserDao
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -18,6 +19,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.SignInButton
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
+import com.google.android.material.button.MaterialButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
@@ -38,6 +40,7 @@ class SignInActivity : AppCompatActivity() {
     private lateinit var mAuth: FirebaseAuth
 
     private lateinit var gSignInButton: SignInButton
+    private lateinit var btnLoginWithEmail: MaterialButton
     private lateinit var progressBar: ProgressBar
     lateinit var db:FirebaseFirestore
 
@@ -72,11 +75,18 @@ class SignInActivity : AppCompatActivity() {
 
         // using gso to make google sign in client.
         googleSignInClient = GoogleSignIn.getClient(this, gso)
+        btnLoginWithEmail = findViewById(R.id.btnLoginWithEmail);
 
         // when sign in button is clicked , start signIn() function.
         gSignInButton.setOnClickListener {
             Log.d("GENERAL","Clicked on Signin Button")
             signIn()
+        }
+
+        btnLoginWithEmail.setOnClickListener{
+            Log.d("GENERAL","Clicked on Login with Email Button")
+            val intent = Intent(this@SignInActivity, SignUpEmail::class.java)
+            startActivity(intent);
         }
     }
 

@@ -15,6 +15,9 @@
             android:name=".activities.SignUpEmail"
             android:exported="false" />
         <activity
+            android:name=".activities.LogInEmail"
+            android:exported="false" />
+        <activity
             android:name=".SignInActivity"
             android:exported="true">
             <intent-filter>
