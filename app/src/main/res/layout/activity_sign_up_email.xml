@@ -36,34 +36,13 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvPageTitle" />
 
-    <EditText
-        android:id="@+id/etvEnterFullName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="200dp"
-        android:layout_marginEnd="20dp"
-        android:background="@drawable/custom_input"
-        android:ems="10"
-        android:gravity="center_vertical"
-        android:hint="Full Name"
-        android:inputType="textCapCharacters"
-        android:padding="20dp"
-        android:textColor="@color/black"
-        android:textColorHint="@color/myGray"
-        android:textSize="12sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-
 
     <EditText
         android:id="@+id/etvEnterEmail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="200dp"
         android:layout_marginEnd="20dp"
         android:background="@drawable/custom_input"
         android:ems="10"
@@ -76,7 +55,7 @@
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/etvEnterFullName" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/etvEnterPassword"
