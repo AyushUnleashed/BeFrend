@@ -8,6 +8,7 @@ import android.util.Patterns
 import android.widget.Toast
 import com.ayushunleashed.mitram.FragmentHomeActivity
 import com.ayushunleashed.mitram.R
+import com.ayushunleashed.mitram.SignInActivity
 import com.ayushunleashed.mitram.databinding.ActivityLogInEmailBinding
 import com.ayushunleashed.mitram.databinding.ActivitySignUpEmailBinding
 import com.google.firebase.auth.FirebaseAuth
@@ -38,6 +39,10 @@ class LogInEmail : AppCompatActivity() {
             Log.d("GENERAL","Log in button clicked")
             logInUser()
         }
+
+//        binding.gSignInButton.setOnClickListener {
+//            goToWelcomePage()
+//        }
     }
 
     private fun logInUser()
@@ -84,5 +89,12 @@ class LogInEmail : AppCompatActivity() {
     private fun goToLogInWithEmailPage(){
         val intent = Intent(this@LogInEmail, SignUpEmail::class.java)
         startActivity(intent);
+        finish()
+    }
+
+    private fun goToWelcomePage(){
+        val intent = Intent(this, SignInActivity::class.java)
+        startActivity(intent);
+        finish()
     }
 }

@@ -8,6 +8,17 @@
     tools:context=".activities.SignUpEmail">
 
 
+<!--    <ImageButton-->
+<!--        android:id="@+id/btnGoBackToWelcomeScreen"-->
+<!--        android:layout_width="32dp"-->
+<!--        android:layout_height="32dp"-->
+<!--        android:layout_marginTop="20dp"-->
+<!--        android:layout_marginStart="20dp"-->
+<!--        android:background="@drawable/ic_back_button"-->
+<!--        app:layout_constraintLeft_toLeftOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent" />-->
+
+
     <TextView
         android:id="@+id/tvPageTitle"
         android:layout_width="wrap_content"
@@ -123,6 +134,57 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintEnd_toEndOf="parent"
          />
+
+<!--    <View-->
+<!--        android:id="@+id/horizontalLineLeft"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="1dp"-->
+<!--        android:layout_marginStart="20dp"-->
+<!--        android:background="#33101010"-->
+<!--        app:layout_constraintRight_toLeftOf="@id/tvOr"-->
+<!--        app:layout_constraintLeft_toLeftOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="@id/tvOr"-->
+<!--        app:layout_constraintBottom_toBottomOf="@id/tvOr"-->
+<!--        />-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/tvOr"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="36dp"-->
+<!--        android:fontFamily="@font/montserrat_light"-->
+<!--        android:text="or"-->
+<!--        android:padding="10dp"-->
+<!--        android:textColor="@color/newBlack"-->
+<!--        android:textSize="12sp"-->
+<!--        app:layout_constraintLeft_toLeftOf="parent"-->
+<!--        app:layout_constraintRight_toRightOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/tvAlreadyAccount" />-->
+
+<!--    <View-->
+<!--        android:id="@+id/horizontalLineRight"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="1dp"-->
+<!--        android:layout_marginEnd="20dp"-->
+<!--        android:background="#33101010"-->
+<!--        app:layout_constraintStart_toEndOf="@id/tvOr"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="@id/tvOr"-->
+<!--        app:layout_constraintBottom_toBottomOf="@id/tvOr"-->
+<!--        />-->
+
+
+<!--    <com.google.android.gms.common.SignInButton-->
+<!--        android:id="@+id/gSignInButton"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="20dp"-->
+<!--        android:layout_marginEnd="20dp"-->
+<!--        android:layout_marginTop="36dp"-->
+<!--        android:layout_marginBottom="16dp"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/tvOr"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent" />-->
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

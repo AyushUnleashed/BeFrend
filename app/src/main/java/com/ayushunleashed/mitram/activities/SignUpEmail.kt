@@ -8,6 +8,7 @@ import android.util.Patterns
 import android.widget.Toast
 import com.ayushunleashed.mitram.FragmentHomeActivity
 import com.ayushunleashed.mitram.R
+import com.ayushunleashed.mitram.SignInActivity
 import com.ayushunleashed.mitram.databinding.ActivitySignUpEmailBinding
 import com.ayushunleashed.mitram.databinding.FragmentEditInterestsBinding
 import com.google.firebase.auth.FirebaseAuth
@@ -38,6 +39,10 @@ class SignUpEmail : AppCompatActivity() {
             Toast.makeText(this,"Clicked on Signup",Toast.LENGTH_SHORT).show()
             createUser();
         }
+
+//        binding.gSignInButton.setOnClickListener {
+//            goToWelcomePage()
+//        }
     }
 
 
@@ -76,5 +81,12 @@ class SignUpEmail : AppCompatActivity() {
     private fun goToLogInWithEmailPage(){
         val intent = Intent(this@SignUpEmail, LogInEmail::class.java)
         startActivity(intent);
+        finish()
+    }
+
+    private fun goToWelcomePage(){
+        val intent = Intent(this@SignUpEmail, SignInActivity::class.java)
+        startActivity(intent);
+        finish()
     }
 }
