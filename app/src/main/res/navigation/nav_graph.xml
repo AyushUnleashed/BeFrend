@@ -109,6 +109,9 @@
         <action
             android:id="@+id/action_profileFragment_to_utilityFragment"
             app:destination="@id/utilityFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_creditsFragment"
+            app:destination="@id/creditsFragment" />
     </fragment>
     <activity
         android:id="@+id/signInActivity"
@@ -252,5 +255,14 @@
         <action
             android:id="@+id/action_collegeSelectFragment_to_splashScreenFragment"
             app:destination="@id/splashScreenFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/creditsFragment"
+        android:name="com.ayushunleashed.mitram.fragments.CreditsFragment"
+        android:label="fragment_credits"
+        tools:layout="@layout/fragment_credits" >
+        <action
+            android:id="@+id/action_creditsFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
     </fragment>
 </navigation>

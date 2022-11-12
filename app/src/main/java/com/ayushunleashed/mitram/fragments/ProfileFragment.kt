@@ -124,6 +124,10 @@ class ProfileFragment : Fragment() {
 
         }
 
+        binding.btnGoToCreditsPage.setOnClickListener {
+            findNavController().navigate(R.id.action_profileFragment_to_creditsFragment)
+        }
+
     }
 
     fun logOut() {
