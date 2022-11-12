@@ -40,6 +40,8 @@ class SplashScreenFragment : Fragment() {
     var mAuth = Firebase.auth
     var firebaseuser = mAuth.currentUser
 
+    var userName = "-"
+    var userImageProfileURL ="-"
     var userCollegeName = ""
     var userCollegeYear = ""
     var userCollegeStream = ""
@@ -61,6 +63,7 @@ class SplashScreenFragment : Fragment() {
         db  = FirebaseFirestore.getInstance()
         runBlocking {
             if(!firebaseuser?.uid?.let { db.collection("users").document(it).get().await().exists() }!!) {
+                userName = requireArguments().getString("userName").toString()
                 userCollegeName = requireArguments().getString("collegeName").toString()
                 userCollegeYear = requireArguments().getString("year").toString()
                 userCollegeStream = requireArguments().getString("stream").toString()
@@ -86,14 +89,19 @@ class SplashScreenFragment : Fragment() {
 
     private fun updateUI() {
 
+        if (firebaseuser!!.photoUrl != null) {
+            userImageProfileURL = firebaseuser!!.photoUrl.toString()
+        }else{
+            userImageProfileURL ="https://via.placeholder.com/150"
+        }
+
         if(firebaseuser!=null){
-            val user = firebaseuser!!.displayName?.let {
-                UserModel(
+            val user = UserModel(
                     firebaseuser!!.uid,
-                    it, firebaseuser!!.photoUrl.toString(),"Hey there! My name is ${firebaseuser!!.displayName} . \nI am glad to be here"
+                    userName,userImageProfileURL,"Hey there! My name is ${firebaseuser!!.displayName} . \nI am glad to be here"
                     , firebaseuser!!.email,true,userCollegeName,userCollegeYear,userCollegeStream
                 )
-            }
+
 
             GlobalScope.launch(Dispatchers.Main) {
                 if (user != null) {
