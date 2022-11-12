@@ -41,43 +41,35 @@ class SignUpEmail : AppCompatActivity() {
     }
 
 
-    private fun createUser()
-    {   Log.d("Cool","create user running")
+    private fun createUser() {
+        Log.d("Cool", "create user running")
         val email = binding.etvEnterEmail.text.toString()
         val pass = binding.etvEnterPassword.text.toString()
-        val fullName = binding.etvEnterFullName.text.toString()
 
+        if (email.isNotEmpty() && Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            if (pass.isNotEmpty()) {
 
-
-        if(fullName.isNotBlank()) {
-            if (email.isNotEmpty() && Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-                if (pass.isNotEmpty()) {
-
-                    mAuth.createUserWithEmailAndPassword(email, pass).addOnCompleteListener(this)
-                    { task ->
-                        if (task.isSuccessful) {
-                            Toast.makeText(this, "Successfully registered", Toast.LENGTH_SHORT)
-                                .show()
-                            //go to login activity
-                            val intent = Intent(this, FragmentHomeActivity::class.java)
-                            startActivity(intent)
-                        } else {
-                            Toast.makeText(this, "Signup Failed", Toast.LENGTH_SHORT).show()
-                        }
+                mAuth.createUserWithEmailAndPassword(email, pass).addOnCompleteListener(this)
+                { task ->
+                    if (task.isSuccessful) {
+                        Toast.makeText(this, "Successfully registered", Toast.LENGTH_SHORT)
+                            .show()
+                        //go to login activity
+                        val intent = Intent(this, FragmentHomeActivity::class.java)
+                        startActivity(intent)
+                    } else {
+                        Toast.makeText(this, "Signup Failed", Toast.LENGTH_SHORT).show()
                     }
-
-                } else {
-                    binding.etvEnterPassword.error = "password cannot be empty"
-                    binding.etvEnterPassword.requestFocus()
                 }
-            } else if (email.isEmpty()) {
-                binding.etvEnterEmail.error = "Email cannot be empty"
+
             } else {
-                binding.etvEnterEmail.error = "Enter correct email"
+                binding.etvEnterPassword.error = "password cannot be empty"
+                binding.etvEnterPassword.requestFocus()
             }
-        }else{
-            binding.etvEnterFullName.error = "name cannot be empty"
-            binding.etvEnterFullName.requestFocus()
+        } else if (email.isEmpty()) {
+            binding.etvEnterEmail.error = "Email cannot be empty"
+        } else {
+            binding.etvEnterEmail.error = "Enter correct email"
         }
     }
 

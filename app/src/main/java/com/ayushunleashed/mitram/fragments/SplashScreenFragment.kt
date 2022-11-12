@@ -98,7 +98,7 @@ class SplashScreenFragment : Fragment() {
         if(firebaseuser!=null){
             val user = UserModel(
                     firebaseuser!!.uid,
-                    userName,userImageProfileURL,"Hey there! My name is ${firebaseuser!!.displayName} . \nI am glad to be here"
+                    userName,userImageProfileURL,"Hey there! My name is ${userName} . \nI am glad to be here"
                     , firebaseuser!!.email,true,userCollegeName,userCollegeYear,userCollegeStream
                 )
 
