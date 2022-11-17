@@ -65,7 +65,7 @@ class ConnectionsFragment : Fragment() {
         binding = FragmentConnectionsBinding.bind(view)
 
         db = FirebaseFirestore.getInstance()
-        sharedViewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
+        sharedViewModel = ViewModelProvider(requireActivity())[SharedViewModel::class.java]
         currentUserModel = sharedViewModel.currentUserModel
 
         return view
@@ -298,9 +298,9 @@ class ConnectionsFragment : Fragment() {
             val currentUserModel = db.collection("users").document(FirebaseAuth.getInstance().currentUser!!.uid).get().await()
                 .toObject(UserModel::class.java)
 
-            if (currentUserModel != null) {
-                sharedViewModel.currentUserModel = currentUserModel
-            }
+//            if (currentUserModel != null) {
+//                sharedViewModel.currentUserModel = currentUserModel
+//            }
 
             var currentConnection = db.collection("users").document(connectionUidToBeRemoved).get().await().toObject(UserModel::class.java)
 
