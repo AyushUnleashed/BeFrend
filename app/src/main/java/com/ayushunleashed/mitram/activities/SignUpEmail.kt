@@ -59,8 +59,11 @@ class SignUpEmail : AppCompatActivity() {
                     if (task.isSuccessful) {
                         Toast.makeText(this, "Successfully registered", Toast.LENGTH_SHORT)
                             .show()
+
+                        //send verification email
+                        sendVerificationEmail()
                         //go to login activity
-                        val intent = Intent(this, FragmentHomeActivity::class.java)
+                        val intent = Intent(this, LogInEmail::class.java)
                         startActivity(intent)
                     } else {
                         Toast.makeText(this, "Signup Failed", Toast.LENGTH_SHORT).show()
@@ -75,6 +78,21 @@ class SignUpEmail : AppCompatActivity() {
             binding.etvEnterEmail.error = "Email cannot be empty"
         } else {
             binding.etvEnterEmail.error = "Enter correct email"
+        }
+    }
+
+
+    private fun sendVerificationEmail(){
+        val user = mAuth.currentUser
+
+        user?.sendEmailVerification()?.addOnSuccessListener {
+            Toast.makeText(this, "Confirm Your Email Address", Toast.LENGTH_SHORT)
+                .show()
+            Log.d("GENERAL","Verification Email Sent")
+        }?.addOnFailureListener{
+            Toast.makeText(this, "Couldn't Send Verification Email", Toast.LENGTH_SHORT)
+                .show()
+            Log.d("GENERAL","Verification Email Sent")
         }
     }
 

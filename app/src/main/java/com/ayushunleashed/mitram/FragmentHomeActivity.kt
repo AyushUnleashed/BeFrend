@@ -1,5 +1,6 @@
 package com.ayushunleashed.mitram
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -7,12 +8,15 @@ import android.view.View
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
+import com.ayushunleashed.mitram.activities.LogInEmail
 import com.ayushunleashed.mitram.models.UserModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
+import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.FirebaseMessaging
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -59,9 +63,19 @@ class FragmentHomeActivity : AppCompatActivity() {
 
         setupNav()
         getTokenFun()
+        exitOnEmailNotVerified()
     }
 
+    fun exitOnEmailNotVerified(){
+        if(!currentUser?.isEmailVerified!!){
+            Log.d("GENERAL","Going back to Login from FragmentHome")
+            var mAuth = Firebase.auth
+            mAuth.signOut()
+            val intent = Intent(this,LogInEmail::class.java);
+            startActivity(intent);
+        }
 
+    }
 
 
 

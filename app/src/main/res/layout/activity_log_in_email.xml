@@ -125,6 +125,41 @@
         app:layout_constraintEnd_toEndOf="parent"
          />
 
+    <TextView
+        android:id="@+id/tvEmailNotVerified"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="64dp"
+        android:fontFamily="@font/montserrat_regular"
+        android:text="Your Email is not Verified!!"
+        android:textColor="@color/red"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvDontHaveAccount" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnResendVerificationEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:visibility="gone"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="20dp"
+        android:padding="8dp"
+        android:textColor="@color/white"
+        android:text="Resend Email"
+        android:textAllCaps="false"
+        android:textSize="12sp"
+        app:cornerRadius="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvEmailNotVerified" />
+
+
+
 <!--    <View-->
 <!--        android:id="@+id/horizontalLineLeft"-->
 <!--        android:layout_width="0dp"-->
