@@ -11,6 +11,7 @@ import com.ayushunleashed.mitram.R
 import com.ayushunleashed.mitram.SignInActivity
 import com.ayushunleashed.mitram.databinding.ActivitySignUpEmailBinding
 import com.ayushunleashed.mitram.databinding.FragmentEditInterestsBinding
+import com.ayushunleashed.mitram.utils.HelperClass
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -18,6 +19,7 @@ import com.google.firebase.ktx.Firebase
 class SignUpEmail : AppCompatActivity() {
     private lateinit var binding: ActivitySignUpEmailBinding
     private var mAuth: FirebaseAuth = Firebase.auth
+    private var helperClass:HelperClass = HelperClass()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,7 +53,7 @@ class SignUpEmail : AppCompatActivity() {
         val email = binding.etvEnterEmail.text.toString()
         val pass = binding.etvEnterPassword.text.toString()
 
-        if (email.isNotEmpty() && Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+        if (email.isNotEmpty() && Patterns.EMAIL_ADDRESS.matcher(email).matches() && helperClass.isEmailValidGmail(email)) {
             if (pass.isNotEmpty()) {
 
                 mAuth.createUserWithEmailAndPassword(email, pass).addOnCompleteListener(this)
