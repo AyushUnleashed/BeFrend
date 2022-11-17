@@ -1,13 +1,16 @@
 
 ![Logo](https://i.postimg.cc/25hG4PzC/Be-Frend-Logo.png)
 
-
 ## BeFrend - Upgrade Your College Life
 
 BeFrend is a product that was designed to help college students find people from their College, who have similar interests and skills as them. 
 
 To Collaborate, Explore & Build The Future.
 Learn more [here](https://www.linkedin.com/company/befrend/)
+
+## 🔗 Download
+
+[![Google Play Download](https://i.postimg.cc/tRSVMZ0s/800px-Google-Play-Store-badge-EN-svg.png)](https://play.google.com/store/apps/details?id=com.ayushunleashed.mitram)
 
 ## Demo
 
