@@ -76,7 +76,8 @@ class CollegeSelectFragment : Fragment() {
         handleYearSelectorLogic()
         handleStreamSelectorLogic()
         handleButtons()
-
+        binding.tempBeFrendLogo.visibility = View.VISIBLE
+        binding.tempSplashScreen.visibility = View.VISIBLE
         skipScreen()
 
         binding.actvSelectCollege.setText("")
@@ -99,6 +100,8 @@ class CollegeSelectFragment : Fragment() {
        GlobalScope.launch(Dispatchers.Main) {
            if(!firebaseUser?.uid?.let { db.collection("users").document(it).get().await().exists() }!!) {
                //dont skip
+               binding.tempBeFrendLogo.visibility = View.GONE
+               binding.tempSplashScreen.visibility = View.GONE
            }else{
                //skip
                findNavController().navigate(R.id.action_collegeSelectFragment_to_splashScreenFragment)
