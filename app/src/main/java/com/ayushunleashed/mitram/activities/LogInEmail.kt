@@ -1,21 +1,19 @@
 package com.ayushunleashed.mitram.activities
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.util.Patterns
 import android.view.View
 import android.widget.Toast
-import androidx.lifecycle.VIEW_MODEL_STORE_OWNER_KEY
+import androidx.appcompat.app.AppCompatActivity
 import com.ayushunleashed.mitram.FragmentHomeActivity
-import com.ayushunleashed.mitram.R
 import com.ayushunleashed.mitram.SignInActivity
 import com.ayushunleashed.mitram.databinding.ActivityLogInEmailBinding
-import com.ayushunleashed.mitram.databinding.ActivitySignUpEmailBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import java.util.regex.Pattern
 
 class LogInEmail : AppCompatActivity() {
 
@@ -61,6 +59,15 @@ class LogInEmail : AppCompatActivity() {
 //
 //    }
 
+    fun isEmailValidGmail(str:String): Boolean{
+        val EMAIL_ADDRESS = Pattern.compile(
+            "[a-zA-Z0-9\\+\\.\\_\\%\\-\\+]{1,256}" +
+                    "\\@" +
+                    "gmail.com"
+        )
+        return EMAIL_ADDRESS.matcher(str).matches()
+    }
+
     private fun sendVerificationEmail(){
         val user = mAuth.currentUser
 
@@ -83,7 +90,7 @@ class LogInEmail : AppCompatActivity() {
         var email = binding.etvEnterEmail.text.toString()
         var pass = binding.etvEnterPassword.text.toString()
 
-        if(email.isNotEmpty() && Patterns.EMAIL_ADDRESS.matcher(email).matches())
+        if(email.isNotEmpty() && Patterns.EMAIL_ADDRESS.matcher(email).matches()  &&isEmailValidGmail(email))
         {
             if(pass.isNotEmpty())
             {
