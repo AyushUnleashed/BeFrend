@@ -7,6 +7,7 @@
     tools:context=".fragments.CollegeSelectFragment">
 
 
+
     <TextView
         android:id="@+id/tvPageTitle"
         android:layout_width="wrap_content"
@@ -250,6 +251,33 @@
         app:layout_constraintRight_toRightOf="parent"
         android:visibility="gone">
     </ProgressBar>
+
+
+    <ImageView
+        android:id="@+id/tempSplashScreen"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:elevation="100dp"
+        android:src="@drawable/ic_splash_screen_v2"
+        />
+
+    <ImageView
+        android:id="@+id/tempBeFrendLogo"
+        android:layout_width="270dp"
+        android:layout_height="wrap_content"
+        android:src="@drawable/befrend_new_logo_black"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginBottom="200dp"
+        android:elevation="100dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
 
 
 

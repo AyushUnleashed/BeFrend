@@ -8,38 +8,28 @@
     tools:context=".fragments.SplashScreenFragment">
 
     <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:layout_marginTop="200dp"
-        android:src="@drawable/splash_screen_logo"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/tvBeFrend"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="BeFrend"
-        android:textSize="28sp"
-        android:fontFamily="@font/montserrat_medium"
-        android:textColor="@color/themeApp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Go to discover page"
-        android:visibility="gone"
-        android:id="@+id/btnGoToDiscoverPage"
-        android:textColor="@color/white"
+        android:id="@+id/tempSplashScreen"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginBottom="100dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        android:src="@drawable/ic_splash_screen_v2"
+        />
+
+    <ImageView
+        android:id="@+id/tempBeFrendLogo"
+        android:layout_width="270dp"
+        android:layout_height="wrap_content"
+        android:src="@drawable/befrend_new_logo_black"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginBottom="200dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
