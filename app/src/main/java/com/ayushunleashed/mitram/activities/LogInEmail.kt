@@ -5,7 +5,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.util.Patterns
+import android.view.View
 import android.widget.Toast
+import androidx.lifecycle.VIEW_MODEL_STORE_OWNER_KEY
 import com.ayushunleashed.mitram.FragmentHomeActivity
 import com.ayushunleashed.mitram.R
 import com.ayushunleashed.mitram.SignInActivity
@@ -19,6 +21,7 @@ class LogInEmail : AppCompatActivity() {
 
     private lateinit var binding: ActivityLogInEmailBinding
     private var mAuth: FirebaseAuth = Firebase.auth
+    private var isEmailVerified = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,9 +43,38 @@ class LogInEmail : AppCompatActivity() {
             logInUser()
         }
 
-//        binding.gSignInButton.setOnClickListener {
-//            goToWelcomePage()
+        binding.btnResendVerificationEmail.setOnClickListener{
+            Log.d("GENERAL","Verification Email Resend button clicked")
+            sendVerificationEmail()
+        }
+
+    }
+
+//    override fun onPause() {
+//        super.onPause()
+//
+//        if(!isEmailVerified){
+//            Log.d("GENERAL","Logged out on Pause")
+//            Log.d("GENERAL","isEmailVerified:$isEmailVerified")
+//            mAuth.signOut()
 //        }
+//
+//    }
+
+    private fun sendVerificationEmail(){
+        val user = mAuth.currentUser
+
+        user?.sendEmailVerification()?.addOnSuccessListener {
+            Toast.makeText(this, "Confirm Your Email Address", Toast.LENGTH_SHORT)
+                .show()
+            Log.d("GENERAL","Verification Email Sent")
+            binding.btnResendVerificationEmail.visibility = View.GONE
+            binding.tvEmailNotVerified.visibility = View.GONE
+        }?.addOnFailureListener{
+            Toast.makeText(this, "Couldn't Send Verification Email", Toast.LENGTH_SHORT)
+                .show()
+            Log.d("GENERAL","Verification Email Sent")
+        }
     }
 
     private fun logInUser()
@@ -59,10 +91,18 @@ class LogInEmail : AppCompatActivity() {
                 { task ->
                     if(task.isSuccessful)
                     {
-                        Toast.makeText(this,"Log in Successful", Toast.LENGTH_SHORT).show()
-                        //go to login activity
-                        val intent = Intent(this,FragmentHomeActivity::class.java)
-                        startActivity(intent)
+                        if(!mAuth.currentUser?.isEmailVerified!!){
+                            isEmailVerified = false
+                            binding.tvEmailNotVerified.visibility = View.VISIBLE
+                            binding.btnResendVerificationEmail.visibility = View.VISIBLE
+                        }else{
+                            isEmailVerified = true
+                            Toast.makeText(this,"Log in Successful", Toast.LENGTH_SHORT).show()
+                            //go to login activity
+                            val intent = Intent(this,FragmentHomeActivity::class.java)
+                            startActivity(intent)
+
+                        }
                     }
                     else
                     {
