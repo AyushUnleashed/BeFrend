@@ -41,7 +41,7 @@ class SplashScreenFragment : Fragment() {
     var firebaseuser = mAuth.currentUser
 
     var userName = "-"
-    var userImageProfileURL ="-"
+    var userImageProfileURL = "-"
     var userCollegeName = ""
     var userCollegeYear = ""
     var userCollegeStream = ""
@@ -92,7 +92,7 @@ class SplashScreenFragment : Fragment() {
         if (firebaseuser!!.photoUrl != null) {
             userImageProfileURL = firebaseuser!!.photoUrl.toString()
         }else{
-            userImageProfileURL ="https://via.placeholder.com/150"
+            userImageProfileURL = getString(R.string.url_place_holder_user_image)
         }
 
         if(firebaseuser!=null){

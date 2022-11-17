@@ -4,6 +4,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="long_string">I don’t know what to write right now so i’m just
 typing random, LBC is my wI don’t know what to write right now so i’m just</string>
+    <string name="url_place_holder_user_image">https://firebasestorage.googleapis.com/v0/b/mitram-b73db.appspot.com/o/images%2FprofileImages%2Fimg_user_place_holder.jpg?alt=media&amp;token=8a572d02-b7ee-46fe-a0e6-c15a48a5d499</string>
 
     <string-array name="years">
         <item>1</item>
