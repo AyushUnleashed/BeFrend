@@ -76,8 +76,9 @@ class DiscoverFragment : Fragment() ,CardListener{
         currentUser = FirebaseAuth.getInstance().currentUser!!
         db  = FirebaseFirestore.getInstance()
 
-        Log.d("GENERAL","CurrentUserUid:+${currentUser.uid}") //not null
+
         getCurrentUser()
+        Log.d("GENERAL","CurrentUserUid:+${currentUserModel.uid}") //not null
         return myView
     }
 
@@ -159,7 +160,7 @@ class DiscoverFragment : Fragment() ,CardListener{
         if(currentUserModel.email.isNullOrEmpty()){
             currentUserModel.email = currentUser.email
             GlobalScope.launch(Dispatchers.IO) {
-                db.collection("users").document(currentUser.uid).set(currentUserModel).await()
+                currentUserModel.uid?.let { db.collection("users").document(it).set(currentUserModel).await() }
                 Log.d("GENERAL","Email added to Server")
             }
         }
@@ -216,7 +217,7 @@ class DiscoverFragment : Fragment() ,CardListener{
             // get current user model from database
             val usersYouLiked = currentUserModel!!.usersYouLiked
             val connections = currentUserModel.connections
-            val combinedArray = usersYouLiked + connections +currentUser.uid
+            val combinedArray = usersYouLiked + connections +currentUserModel.uid
 
 
             //old method to get users list
@@ -472,7 +473,7 @@ class DiscoverFragment : Fragment() ,CardListener{
                     }
                 }
                 //adding this person you swiped right on to users you liked
-                //val currentUserModel: UserModel? = db.collection("users").document(currentUser.uid).get().await().toObject(UserModel::class.java)
+                //val currentUserModel: UserModel? = db.collection("users").document(currentUserModel.uid).get().await().toObject(UserModel::class.java)
 
                 if(!currentUserModel.usersYouLiked.contains(userWhoGotRightSwiped.uid)){
                     currentUserModel.usersYouLiked.add(userWhoGotRightSwiped.uid!!)
@@ -530,7 +531,7 @@ class DiscoverFragment : Fragment() ,CardListener{
         // get current user model from database
         val usersYouLiked = currentUserModel.usersYouLiked
         val connections = currentUserModel.connections
-        val combinedArray = usersYouLiked + connections +currentUser.uid
+        val combinedArray = usersYouLiked + connections +currentUserModel.uid
 
 
         val utilityDoc = db.collection("utility").

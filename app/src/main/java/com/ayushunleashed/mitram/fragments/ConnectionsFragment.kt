@@ -114,19 +114,21 @@ class ConnectionsFragment : Fragment() {
 
     fun giveRealtimeUpdate(view: View){
         Log.d("Snap", "Inside Give Realtime Update")
-        db.collection("users").document(currentUser.uid).addSnapshotListener { snapshot, e ->
-            if (e != null) {
-                Log.d("Snap", "Listen failed.", e)
-                return@addSnapshotListener
-            }
+        currentUserModel.uid?.let {
+            db.collection("users").document(it).addSnapshotListener { snapshot, e ->
+                if (e != null) {
+                    Log.d("Snap", "Listen failed.", e)
+                    return@addSnapshotListener
+                }
 
-            if (snapshot != null && snapshot.exists()) {
-                Log.d("Snap", "Current data: ${snapshot.data}")
-                loadData(view)
-                Log.d("Snap","After Load Data in snapshot listener")
+                if (snapshot != null && snapshot.exists()) {
+                    Log.d("Snap", "Current data: ${snapshot.data}")
+                    loadData(view)
+                    Log.d("Snap","After Load Data in snapshot listener")
 
-            } else {
-                Log.d("Snap", "Current data: null")
+                } else {
+                    Log.d("Snap", "Current data: null")
+                }
             }
         }
     }

@@ -320,7 +320,7 @@ class EditProfileFragment : Fragment() {
         Log.d("GENERAL",currentUserModel.toString())
 
         GlobalScope.launch(Dispatchers.IO) {
-            db.collection("users").document(currentUser.uid).set(currentUserModel).await()
+            currentUserModel.uid?.let { db.collection("users").document(it).set(currentUserModel).await() }
             Log.d("GENERAL","Saving data to server")
         }
         Log.d("GENERAL","Statement after data save")

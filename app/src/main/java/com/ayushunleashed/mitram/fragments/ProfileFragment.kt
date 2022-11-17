@@ -82,7 +82,7 @@ class ProfileFragment : Fragment() {
         runBlocking {
             Log.d("GENERAL","Inside run blocking")
 
-            currentUserModel = db.collection("users").document(currentUser.uid).get().await().toObject(UserModel::class.java)!!
+            currentUserModel = currentUserModel.uid?.let { db.collection("users").document(it).get().await().toObject(UserModel::class.java) }!!
             Log.d("GENERAL","After Model Request")
             sharedViewModel.currentUserModel = currentUserModel
         }
@@ -165,7 +165,9 @@ class ProfileFragment : Fragment() {
                 UserModel::class.java)
             currentUserModel?.fcmToken = null
 
-            db.collection("users").document(currentUser.uid).set(currentUserModel!!)
+            if (currentUserModel != null) {
+                currentUserModel.uid?.let { db.collection("users").document(it).set(currentUserModel) }
+            }
         }
     }
 
