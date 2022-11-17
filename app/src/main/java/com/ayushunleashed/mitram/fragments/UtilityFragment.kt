@@ -140,7 +140,7 @@ class UtilityFragment : Fragment() {
         if(currentUserModel.email.isNullOrEmpty()){
             currentUserModel.email = currentUser.email
             GlobalScope.launch(Dispatchers.IO) {
-                db.collection("users").document(currentUser.uid).set(currentUserModel).await()
+                currentUserModel.uid?.let { db.collection("users").document(it).set(currentUserModel).await() }
                 Log.d("GENERAL","Email added to Server")
             }
         }
