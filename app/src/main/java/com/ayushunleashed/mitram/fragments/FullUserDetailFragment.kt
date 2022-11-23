@@ -28,7 +28,6 @@ class FullUserDetailFragment : Fragment() {
     lateinit var sharedViewModel: SharedViewModel
     lateinit var currentUserModel: UserModel
 
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -144,12 +143,6 @@ class FullUserDetailFragment : Fragment() {
         binding.tvUserCollegeName.text = collegeNameText
         binding.tvUserCollegeStream.text = collegeStreamText
         binding.tvUserCollegeYear.text = collegeYearText
-
-//        binding.tvUserSkills.text = userToLoad!!.skills.toString()
-//        Log.d("GENERAL",userToLoad!!.skills.toString())
-//        binding.tvUserInterests.text = userToLoad!!.interests.toString()
-//        Log.d("GENERAL",userToLoad!!.interests.toString())
-
 
     }
 

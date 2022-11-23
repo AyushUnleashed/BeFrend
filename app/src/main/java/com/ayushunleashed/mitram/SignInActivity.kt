@@ -165,28 +165,6 @@ class SignInActivity : AppCompatActivity() {
             val intent = Intent(this@SignInActivity, FragmentHomeActivity::class.java)
             startActivity(intent);
             finish()
-//
-//            val user = firebaseuser.displayName?.let {
-//                UserModel(
-//                    firebaseuser.uid,
-//                    it, firebaseuser.photoUrl.toString(),"Hey there! My name is ${firebaseuser.displayName} . \nI am glad to be here"
-//                ,firebaseuser.email,true
-//                )
-//            }
-//
-//            GlobalScope.launch(Dispatchers.Main) {
-//                if (user != null) {
-//
-//                    if(!user.uid?.let { db.collection("users").document(it).get().await().exists() }!!) {
-//                        user.uid.let { db.collection("users").document(it).set(user) }
-//                    }
-//                }
-//                val myBundle = bundleOf("currentUser" to user)
-//                Log.d("GENERAL","Going to SplashScreen")
-//                val intent = Intent(this@SignInActivity, FragmentHomeActivity::class.java)
-//                startActivity(intent);
-//                finish()
-//            }
 
         } else {
             gSignInButton.visibility = View.VISIBLE

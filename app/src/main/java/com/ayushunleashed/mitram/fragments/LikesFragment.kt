@@ -35,10 +35,6 @@ class LikesFragment : Fragment() {
     private lateinit var binding: FragmentLikesBinding
     lateinit var recyclerView:RecyclerView
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -68,7 +64,6 @@ class LikesFragment : Fragment() {
 
         binding.refreshLayout.setOnRefreshListener {
             loadData(view)
-
         }
 
         if(sharedViewModel.loadedLikesFragmentBefore == true) {
@@ -95,10 +90,9 @@ class LikesFragment : Fragment() {
             loadData(view)
             sharedViewModel.loadedLikesFragmentBefore = true
         }
-        //loadData(view)
     }
 
-    fun loadData(view: View)
+    private fun loadData(view: View)
     {        val db = FirebaseFirestore.getInstance()
         binding.progressBar.visibility = View.VISIBLE
         binding.myRecyclerView.visibility = View.GONE
@@ -142,7 +136,6 @@ class LikesFragment : Fragment() {
                 binding.refreshLayout.isRefreshing = false
                 if (likedByArray != null) {
                     if(likedByArray.size == 0) {
-                        //Toast.makeText(requireContext(),"No Likes",Toast.LENGTH_SHORT).show()
                             tvNoUsersToShow.visibility = View.VISIBLE
 
 
@@ -153,7 +146,6 @@ class LikesFragment : Fragment() {
 
                 if (users != null) {
                     Log.d("GENERAL", "liked by users list" + users.toString());
-                    //Toast.makeText(requireContext(),"Size:${users.size}",Toast.LENGTH_SHORT).show()
                 }
 
                 val adapter = users?.let { PeopleLikesCardAdapter(it) }

@@ -50,17 +50,6 @@ class LogInEmail : AppCompatActivity() {
 
     }
 
-//    override fun onPause() {
-//        super.onPause()
-//
-//        if(!isEmailVerified){
-//            Log.d("GENERAL","Logged out on Pause")
-//            Log.d("GENERAL","isEmailVerified:$isEmailVerified")
-//            mAuth.signOut()
-//        }
-//
-//    }
-
     private fun sendVerificationEmail(){
         val user = mAuth.currentUser
 
@@ -80,8 +69,8 @@ class LogInEmail : AppCompatActivity() {
     private fun logInUser()
     {
         //Toast.makeText(this,"logInUser()",Toast.LENGTH_SHORT).show()
-        var email = binding.etvEnterEmail.text.toString()
-        var pass = binding.etvEnterPassword.text.toString()
+        val email = binding.etvEnterEmail.text.toString()
+        val pass = binding.etvEnterPassword.text.toString()
 
         if(email.isNotEmpty() && Patterns.EMAIL_ADDRESS.matcher(email).matches()  && helperClass.isEmailValidGmail(email))
         {
@@ -132,9 +121,4 @@ class LogInEmail : AppCompatActivity() {
         finish()
     }
 
-    private fun goToWelcomePage(){
-        val intent = Intent(this, SignInActivity::class.java)
-        startActivity(intent);
-        finish()
-    }
 }

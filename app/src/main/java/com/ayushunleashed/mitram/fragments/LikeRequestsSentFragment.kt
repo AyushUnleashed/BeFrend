@@ -93,7 +93,6 @@ class LikeRequestsSentFragment : Fragment() {
             loadData(view)
             sharedViewModel.loadedLikeRequestsSentFragmentBefore = true
         }
-        //loadData(view)
     }
 
     fun loadData(view: View)

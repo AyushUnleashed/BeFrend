@@ -41,10 +41,6 @@ class SignUpEmail : AppCompatActivity() {
             Toast.makeText(this,"Clicked on Signup",Toast.LENGTH_SHORT).show()
             createUser();
         }
-
-//        binding.gSignInButton.setOnClickListener {
-//            goToWelcomePage()
-//        }
     }
 
 
@@ -104,9 +100,4 @@ class SignUpEmail : AppCompatActivity() {
         finish()
     }
 
-    private fun goToWelcomePage(){
-        val intent = Intent(this@SignUpEmail, SignInActivity::class.java)
-        startActivity(intent);
-        finish()
-    }
 }

@@ -121,7 +121,6 @@ class ProfileFragment : Fragment() {
         }
         binding.refreshLayout.setOnRefreshListener {
             reloadCurrentUserModel()
-
         }
 
         binding.btnGoToCreditsPage.setOnClickListener {

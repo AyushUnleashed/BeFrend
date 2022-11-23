@@ -78,7 +78,7 @@ class ConnectionsCardAdapter(var lastMessageHashMap: HashMap<String,String>,var 
         }
 
 
-        //
+
         val bundle = bundleOf("userToSend" to users[position])
 
         //defining nav controller for navigation
@@ -91,7 +91,7 @@ class ConnectionsCardAdapter(var lastMessageHashMap: HashMap<String,String>,var 
             navController = Navigation.findNavController(holder.itemView)
             navController!!.navigate(R.id.action_connectionsFragment_to_chatFragment,bundle)
         }
-//
+
         holder.imgViewUserProfile.setOnClickListener{
             val myBundle = bundleOf("currentUser" to users[position],"previousFragmentName" to "ConnectionsFragment")
             navController = Navigation.findNavController(holder.itemView)

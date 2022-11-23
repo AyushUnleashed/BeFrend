@@ -72,8 +72,6 @@ class EditProfileFragment : Fragment() {
             findNavController().navigate(R.id.action_editProfileFragment_to_profileFragment)
 
         }
-
-
     }
 
     override fun onCreateView(
@@ -97,26 +95,18 @@ class EditProfileFragment : Fragment() {
         sharedViewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
         utilitySharedViewModel  = ViewModelProvider(requireActivity()).get(UtilitySharedViewModel::class.java)
 
-
-
-
         currentUserModel = sharedViewModel.currentUserModel;
 
         //loading old data
         binding.actvSelectYear.setText(currentUserModel.userCollegeYear)
         binding.actvSelectStream.setText(currentUserModel.userCollegeStream)
 
-
         handleButtons()
-
-
 
         currentUser = FirebaseAuth.getInstance().currentUser!!
         loadUserImage()
         loadAllDetails()
         loadChipsFromDB()
-
-
     }
 
     fun handleButtons()
@@ -197,7 +187,7 @@ class EditProfileFragment : Fragment() {
     }
 
 
-    fun loadAllDetails(){
+    private fun loadAllDetails(){
         binding.etvUserNameEditProfile.setText(currentUserModel.displayName)
         binding.etvUserBioEditBio.setText(currentUserModel.bio)
 
@@ -232,7 +222,7 @@ class EditProfileFragment : Fragment() {
         //binding.etvUserSkillsEditProfile.setText(userSkillsString)
     }
 
-    fun uploadImage(){
+    private fun uploadImage(){
         Log.d("GENERAL","Upload Image Called")
         val fileName = currentUserModel.uid + "_profile_image"
 
@@ -262,7 +252,7 @@ class EditProfileFragment : Fragment() {
 
 
 
-    fun selectImage(){
+    private fun selectImage(){
         Log.d("GENERAL","Select Image Called")
         val intent = Intent()
         intent.type = "image/*"
@@ -285,10 +275,6 @@ class EditProfileFragment : Fragment() {
                         val myResult = Compress.with(thisContext, profileImageURI)
                             .setQuality(80)
                             .concrete {
-//                                withMaxWidth(400f)
-//                                withMaxHeight(400f)
-//                                withScaleMode(ScaleMode.SCALE_HEIGHT)
-//                                withIgnoreIfSmaller(true)
                             }
                             .get(Dispatchers.IO)
                         withContext(Dispatchers.Main) {
@@ -304,7 +290,7 @@ class EditProfileFragment : Fragment() {
         }
     }
 
-    fun saveDataToDB(){
+    private fun saveDataToDB(){
 
         var userName = binding.etvUserNameEditProfile.text.toString()
         userName = stringHelper.removeEmptyLinesFromStartAndEnd(userName)
@@ -328,7 +314,7 @@ class EditProfileFragment : Fragment() {
         findNavController().navigate(R.id.action_editProfileFragment_to_profileFragment)
     }
 
-    fun loadUserImage()
+    private fun loadUserImage()
     {
         Glide.with(binding.userImage.context).load(currentUserModel.imageUrl).circleCrop().placeholder(R.drawable.img_user_place_holder)
                         .error(R.drawable.img_keep_calm_reload).into(binding.userImage)

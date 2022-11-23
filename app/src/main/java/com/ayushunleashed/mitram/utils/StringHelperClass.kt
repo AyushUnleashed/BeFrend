@@ -7,5 +7,4 @@ class StringHelperClass {
         return modifiedInput
     }
 
-
 }
