@@ -71,7 +71,7 @@ class FragmentHomeActivity : AppCompatActivity() {
             Log.d("GENERAL","Going back to Login from FragmentHome")
             var mAuth = Firebase.auth
             mAuth.signOut()
-            val intent = Intent(this,LogInEmail::class.java);
+            val intent = Intent(this,LogInEmailActivity::class.java);
             startActivity(intent);
         }
 

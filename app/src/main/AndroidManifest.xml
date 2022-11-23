@@ -12,10 +12,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Mitram">
         <activity
-            android:name=".activities.SignUpEmail"
+            android:name=".activities.SignUpEmailActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.LogInEmail"
+            android:name=".activities.LogInEmailActivity"
             android:exported="false" />
         <activity
             android:name=".activities.SignInActivity"

@@ -75,7 +75,7 @@ class SignInActivity : AppCompatActivity() {
 
         btnLoginWithEmail.setOnClickListener{
             Log.d("GENERAL","Clicked on Login with Email Button")
-            val intent = Intent(this@SignInActivity, SignUpEmail::class.java)
+            val intent = Intent(this@SignInActivity, SignUpEmailActivity::class.java)
             startActivity(intent);
         }
     }

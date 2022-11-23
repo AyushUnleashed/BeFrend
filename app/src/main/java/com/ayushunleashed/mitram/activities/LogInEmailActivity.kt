@@ -13,7 +13,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
-class LogInEmail : AppCompatActivity() {
+class LogInEmailActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLogInEmailBinding
     private var mAuth: FirebaseAuth = Firebase.auth
@@ -113,7 +113,7 @@ class LogInEmail : AppCompatActivity() {
 
     }
     private fun goToLogInWithEmailPage(){
-        val intent = Intent(this@LogInEmail, SignUpEmail::class.java)
+        val intent = Intent(this@LogInEmailActivity, SignUpEmailActivity::class.java)
         startActivity(intent);
         finish()
     }

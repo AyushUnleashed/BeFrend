@@ -12,7 +12,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
-class SignUpEmail : AppCompatActivity() {
+class SignUpEmailActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySignUpEmailBinding
     private var mAuth: FirebaseAuth = Firebase.auth
     private var helperClass:HelperClass = HelperClass()
@@ -57,7 +57,7 @@ class SignUpEmail : AppCompatActivity() {
                         //send verification email
                         sendVerificationEmail()
                         //go to login activity
-                        val intent = Intent(this, LogInEmail::class.java)
+                        val intent = Intent(this, LogInEmailActivity::class.java)
                         startActivity(intent)
                     } else {
                         Toast.makeText(this, "Signup Failed", Toast.LENGTH_SHORT).show()
@@ -91,7 +91,7 @@ class SignUpEmail : AppCompatActivity() {
     }
 
     private fun goToLogInWithEmailPage(){
-        val intent = Intent(this@SignUpEmail, LogInEmail::class.java)
+        val intent = Intent(this@SignUpEmailActivity, LogInEmailActivity::class.java)
         startActivity(intent);
         finish()
     }
