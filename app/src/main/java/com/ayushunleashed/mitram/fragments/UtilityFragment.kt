@@ -10,7 +10,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.ayushunleashed.mitram.R
-import com.ayushunleashed.mitram.SharedViewModel
+import com.ayushunleashed.mitram.viewmodels.SharedViewModel
 import com.ayushunleashed.mitram.databinding.FragmentUtilityBinding
 import com.ayushunleashed.mitram.models.UserModel
 import com.ayushunleashed.mitram.models.UtilityModel
@@ -37,7 +37,7 @@ class UtilityFragment : Fragment() {
     lateinit var currentUser: FirebaseUser
     private lateinit var mAuth: FirebaseAuth
 
-    lateinit var sharedViewModel:SharedViewModel
+    lateinit var sharedViewModel: SharedViewModel
     lateinit var currentUserModel:UserModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

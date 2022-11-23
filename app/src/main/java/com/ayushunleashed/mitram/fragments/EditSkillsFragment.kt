@@ -12,7 +12,7 @@ import android.widget.EditText
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.ayushunleashed.mitram.R
-import com.ayushunleashed.mitram.SharedViewModel
+import com.ayushunleashed.mitram.viewmodels.SharedViewModel
 import com.ayushunleashed.mitram.databinding.FragmentEditSkillsBinding
 import com.ayushunleashed.mitram.models.UserModel
 import com.ayushunleashed.mitram.utils.StringHelperClass
@@ -41,10 +41,6 @@ class EditSkillsFragment : Fragment() {
 
     lateinit var editText:EditText
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -69,7 +65,6 @@ class EditSkillsFragment : Fragment() {
         currentUserModel = sharedViewModel.currentUserModel;
         handleButtons()
 
-
         currentUser = FirebaseAuth.getInstance().currentUser!!
 
         loadChipsFromDB()
@@ -88,7 +83,6 @@ class EditSkillsFragment : Fragment() {
 
     private fun handleButtons() {
 
-
         binding.btnSaveSkills.setOnClickListener {
             handleAddSkill()
         }
@@ -102,7 +96,6 @@ class EditSkillsFragment : Fragment() {
             }
             false
         })
-
 
         binding.btnSaveAllSkills.setOnClickListener {
             saveDataToDB()

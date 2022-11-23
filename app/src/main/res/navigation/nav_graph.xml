@@ -115,7 +115,7 @@
     </fragment>
     <activity
         android:id="@+id/signInActivity"
-        android:name="com.ayushunleashed.mitram.SignInActivity"
+        android:name="com.ayushunleashed.mitram.activities.SignInActivity"
         android:label="activity_sign_in"
         tools:layout="@layout/activity_sign_in" />
     <fragment

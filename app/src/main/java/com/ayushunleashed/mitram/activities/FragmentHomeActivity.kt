@@ -1,4 +1,4 @@
-package com.ayushunleashed.mitram
+package com.ayushunleashed.mitram.activities
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -8,7 +8,7 @@ import android.view.View
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
-import com.ayushunleashed.mitram.activities.LogInEmail
+import com.ayushunleashed.mitram.R
 import com.ayushunleashed.mitram.models.UserModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
@@ -71,7 +71,7 @@ class FragmentHomeActivity : AppCompatActivity() {
             Log.d("GENERAL","Going back to Login from FragmentHome")
             var mAuth = Firebase.auth
             mAuth.signOut()
-            val intent = Intent(this,LogInEmail::class.java);
+            val intent = Intent(this,LogInEmailActivity::class.java);
             startActivity(intent);
         }
 

@@ -10,9 +10,8 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.ayushunleashed.mitram.R
-import com.ayushunleashed.mitram.SharedViewModel
+import com.ayushunleashed.mitram.viewmodels.SharedViewModel
 import com.ayushunleashed.mitram.databinding.FragmentSplashScreenBinding
-import com.ayushunleashed.mitram.databinding.FragmentUtilityBinding
 import com.ayushunleashed.mitram.models.UserModel
 import com.ayushunleashed.mitram.models.UtilityModel
 import com.google.firebase.auth.FirebaseAuth
@@ -122,13 +121,13 @@ class SplashScreenFragment : Fragment() {
 
     }
 
-    suspend fun loadCurrentUserModel(){
+    private suspend fun loadCurrentUserModel(){
         currentUserModel = db.collection("users").document(currentUser.uid).get().await().toObject(UserModel::class.java)!!
         Log.d("GENERAL","After Model Request")
         sharedViewModel.currentUserModel = currentUserModel
     }
 
-    suspend fun addCurrentUserToUtilityList(user: UserModel?){
+    private suspend fun addCurrentUserToUtilityList(user: UserModel?){
         var utilityDoc = db.collection("utility").document("utility_doc").get().await()
             .toObject(UtilityModel::class.java)
 
@@ -142,7 +141,7 @@ class SplashScreenFragment : Fragment() {
         }
     }
 
-    suspend fun addCurrentUserToCollegeSpecificList(user: UserModel?){
+    private suspend fun addCurrentUserToCollegeSpecificList(user: UserModel?){
         val allUsersUtilityDoc = db.collection("utility").document("all_users_utility_doc").get().await()
         var currentCollegeName = userCollegeName
         var myHashMap = allUsersUtilityDoc.data
@@ -155,5 +154,4 @@ class SplashScreenFragment : Fragment() {
             Log.d("NETWORK_DB","New User added to college specific list")
         }
     }
-
 }

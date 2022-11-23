@@ -1,4 +1,4 @@
-package com.ayushunleashed.mitram
+package com.ayushunleashed.mitram.viewmodels
 
 import androidx.lifecycle.ViewModel
 import com.ayushunleashed.mitram.models.UserModel

@@ -6,17 +6,13 @@ import android.os.Bundle
 import android.util.Log
 import android.util.Patterns
 import android.widget.Toast
-import com.ayushunleashed.mitram.FragmentHomeActivity
-import com.ayushunleashed.mitram.R
-import com.ayushunleashed.mitram.SignInActivity
 import com.ayushunleashed.mitram.databinding.ActivitySignUpEmailBinding
-import com.ayushunleashed.mitram.databinding.FragmentEditInterestsBinding
 import com.ayushunleashed.mitram.utils.HelperClass
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
-class SignUpEmail : AppCompatActivity() {
+class SignUpEmailActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySignUpEmailBinding
     private var mAuth: FirebaseAuth = Firebase.auth
     private var helperClass:HelperClass = HelperClass()
@@ -41,10 +37,6 @@ class SignUpEmail : AppCompatActivity() {
             Toast.makeText(this,"Clicked on Signup",Toast.LENGTH_SHORT).show()
             createUser();
         }
-
-//        binding.gSignInButton.setOnClickListener {
-//            goToWelcomePage()
-//        }
     }
 
 
@@ -65,7 +57,7 @@ class SignUpEmail : AppCompatActivity() {
                         //send verification email
                         sendVerificationEmail()
                         //go to login activity
-                        val intent = Intent(this, LogInEmail::class.java)
+                        val intent = Intent(this, LogInEmailActivity::class.java)
                         startActivity(intent)
                     } else {
                         Toast.makeText(this, "Signup Failed", Toast.LENGTH_SHORT).show()
@@ -99,14 +91,9 @@ class SignUpEmail : AppCompatActivity() {
     }
 
     private fun goToLogInWithEmailPage(){
-        val intent = Intent(this@SignUpEmail, LogInEmail::class.java)
+        val intent = Intent(this@SignUpEmailActivity, LogInEmailActivity::class.java)
         startActivity(intent);
         finish()
     }
 
-    private fun goToWelcomePage(){
-        val intent = Intent(this@SignUpEmail, SignInActivity::class.java)
-        startActivity(intent);
-        finish()
-    }
 }

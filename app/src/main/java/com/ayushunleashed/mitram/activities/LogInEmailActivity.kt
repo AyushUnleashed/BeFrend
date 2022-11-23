@@ -7,16 +7,13 @@ import android.util.Patterns
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.ayushunleashed.mitram.FragmentHomeActivity
-import com.ayushunleashed.mitram.SignInActivity
 import com.ayushunleashed.mitram.databinding.ActivityLogInEmailBinding
 import com.ayushunleashed.mitram.utils.HelperClass
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import java.util.regex.Pattern
 
-class LogInEmail : AppCompatActivity() {
+class LogInEmailActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLogInEmailBinding
     private var mAuth: FirebaseAuth = Firebase.auth
@@ -50,17 +47,6 @@ class LogInEmail : AppCompatActivity() {
 
     }
 
-//    override fun onPause() {
-//        super.onPause()
-//
-//        if(!isEmailVerified){
-//            Log.d("GENERAL","Logged out on Pause")
-//            Log.d("GENERAL","isEmailVerified:$isEmailVerified")
-//            mAuth.signOut()
-//        }
-//
-//    }
-
     private fun sendVerificationEmail(){
         val user = mAuth.currentUser
 
@@ -80,8 +66,8 @@ class LogInEmail : AppCompatActivity() {
     private fun logInUser()
     {
         //Toast.makeText(this,"logInUser()",Toast.LENGTH_SHORT).show()
-        var email = binding.etvEnterEmail.text.toString()
-        var pass = binding.etvEnterPassword.text.toString()
+        val email = binding.etvEnterEmail.text.toString()
+        val pass = binding.etvEnterPassword.text.toString()
 
         if(email.isNotEmpty() && Patterns.EMAIL_ADDRESS.matcher(email).matches()  && helperClass.isEmailValidGmail(email))
         {
@@ -99,7 +85,7 @@ class LogInEmail : AppCompatActivity() {
                             isEmailVerified = true
                             Toast.makeText(this,"Log in Successful", Toast.LENGTH_SHORT).show()
                             //go to login activity
-                            val intent = Intent(this,FragmentHomeActivity::class.java)
+                            val intent = Intent(this, FragmentHomeActivity::class.java)
                             startActivity(intent)
 
                         }
@@ -127,14 +113,9 @@ class LogInEmail : AppCompatActivity() {
 
     }
     private fun goToLogInWithEmailPage(){
-        val intent = Intent(this@LogInEmail, SignUpEmail::class.java)
+        val intent = Intent(this@LogInEmailActivity, SignUpEmailActivity::class.java)
         startActivity(intent);
         finish()
     }
 
-    private fun goToWelcomePage(){
-        val intent = Intent(this, SignInActivity::class.java)
-        startActivity(intent);
-        finish()
-    }
 }

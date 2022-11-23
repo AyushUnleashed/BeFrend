@@ -104,8 +104,6 @@ public class ChatAdapter(chatMessages:MutableList<ChatMessageModel>, senderId:St
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
 
-        //holder.tvTextMessage
-
         if(getItemViewType(position) == VIEW_TYPE_SENT)
         {
             (holder as SentMessageViewHolder).setData(chatMessages[position])

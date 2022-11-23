@@ -1,9 +1,11 @@
-package com.ayushunleashed.mitram
+package com.ayushunleashed.mitram.activities
 
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
+import com.ayushunleashed.mitram.R
+import com.ayushunleashed.mitram.viewmodels.SharedViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 

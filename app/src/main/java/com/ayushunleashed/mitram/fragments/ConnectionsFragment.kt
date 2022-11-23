@@ -10,17 +10,15 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.ayushunleashed.mitram.R
-import com.ayushunleashed.mitram.SharedViewModel
+import com.ayushunleashed.mitram.viewmodels.SharedViewModel
 import com.ayushunleashed.mitram.adapters.ConnectionsCardAdapter
 import com.ayushunleashed.mitram.adapters.ConnectionsFirestoreRVCardAdapter
 import com.ayushunleashed.mitram.databinding.FragmentConnectionsBinding
 import com.ayushunleashed.mitram.models.ChatMessageModel
 import com.ayushunleashed.mitram.models.UserModel
-import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
@@ -47,10 +45,6 @@ class ConnectionsFragment : Fragment() {
     var connectionsListArray = ArrayList<String>()
     var firestoreAdapter: ConnectionsFirestoreRVCardAdapter? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -77,8 +71,6 @@ class ConnectionsFragment : Fragment() {
         currentUser = FirebaseAuth.getInstance().currentUser!!
 
         setupViews(view)
-        //giveRealtimeUpdate(view)
-
         binding.refreshLayout.setOnRefreshListener {
             loadData(view)
 
@@ -108,30 +100,8 @@ class ConnectionsFragment : Fragment() {
             sharedViewModel.loadedConnectionsFragmentBefore = true
         }
 
-        //loadData(view) // old method
-        //setupFirestoreRecyclerView(view) - new method incomplete
     }
 
-    fun giveRealtimeUpdate(view: View){
-        Log.d("Snap", "Inside Give Realtime Update")
-        currentUserModel.uid?.let {
-            db.collection("users").document(it).addSnapshotListener { snapshot, e ->
-                if (e != null) {
-                    Log.d("Snap", "Listen failed.", e)
-                    return@addSnapshotListener
-                }
-
-                if (snapshot != null && snapshot.exists()) {
-                    Log.d("Snap", "Current data: ${snapshot.data}")
-                    loadData(view)
-                    Log.d("Snap","After Load Data in snapshot listener")
-
-                } else {
-                    Log.d("Snap", "Current data: null")
-                }
-            }
-        }
-    }
 
     fun setupViews(view: View)
     {
@@ -139,49 +109,6 @@ class ConnectionsFragment : Fragment() {
         tvNoUsersToShow = view.findViewById(R.id.tvNoUsers)
         progressBar = view.findViewById(R.id.progressBar)
         recyclerView = view.findViewById(R.id.myRecyclerView)
-    }
-
-    fun loadConnectionArray(){
-        myConnectionsList.clear()
-        progressBar.visibility = View.VISIBLE
-
-
-        GlobalScope.launch(Dispatchers.IO) {
-            currentUserModel = db.collection("users").document(currentUser.uid).get().await()
-                .toObject(UserModel::class.java)!!
-            connectionsListArray = currentUserModel?.connections!!
-        }
-
-
-    }
-
-//    override fun onStart() {
-//        super.onStart()
-//        firestoreAdapter.startListening()
-//    }
-//
-//    override fun onStop() {
-//        super.onStop()
-//        firestoreAdapter.stopListening()
-//    }
-
-    fun setupFirestoreRecyclerView(view: View){
-        //progressBar.visibility = View.VISIBLE
-        //loadConnectionArray()
-        connectionsListArray = sharedViewModel.currentUserModel.connections
-        Log.d("GENERAL","ConnectionsListArray:$connectionsListArray")
-
-        val usersCollection = db.collection("users")
-        val query = usersCollection.whereIn("uid",connectionsListArray)
-
-        val options: FirestoreRecyclerOptions<UserModel> =
-            FirestoreRecyclerOptions.Builder<UserModel>()
-                .setQuery(query, UserModel::class.java)
-                .build()
-
-        firestoreAdapter = ConnectionsFirestoreRVCardAdapter(options)
-        recyclerView.adapter =firestoreAdapter
-        recyclerView.layoutManager = LinearLayoutManager(thisContext)
     }
 
     fun loadData(view: View)
@@ -210,8 +137,7 @@ class ConnectionsFragment : Fragment() {
             }
 
             addingUsers.join()
-//            sharedViewModel.loadedConnectionsFragmentBefore = true
-//            sharedViewModel.myConnectionsList = myConnectionsList
+
             withContext(Dispatchers.Main)
             {
                 binding.tvUserCount.text = "( ${myConnectionsList.size} )"

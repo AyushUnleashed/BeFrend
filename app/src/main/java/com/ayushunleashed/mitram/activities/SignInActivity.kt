@@ -1,4 +1,4 @@
-package com.ayushunleashed.mitram
+package com.ayushunleashed.mitram.activities
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -6,12 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.ProgressBar
-import android.widget.Toast
-import androidx.core.os.bundleOf
-import androidx.navigation.fragment.findNavController
-import com.ayushunleashed.mitram.activities.SignUpEmail
-import com.ayushunleashed.mitram.models.UserModel
-import com.ayushunleashed.mitram.daos.UserDao
+import com.ayushunleashed.mitram.R
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -26,11 +21,6 @@ import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.tasks.await
 
 
 class SignInActivity : AppCompatActivity() {
@@ -85,7 +75,7 @@ class SignInActivity : AppCompatActivity() {
 
         btnLoginWithEmail.setOnClickListener{
             Log.d("GENERAL","Clicked on Login with Email Button")
-            val intent = Intent(this@SignInActivity, SignUpEmail::class.java)
+            val intent = Intent(this@SignInActivity, SignUpEmailActivity::class.java)
             startActivity(intent);
         }
     }
@@ -156,7 +146,6 @@ class SignInActivity : AppCompatActivity() {
     private fun updateUI(firebaseuser: FirebaseUser?) {
         //Toast.makeText(this,"Updating UI",Toast.LENGTH_SHORT).show()
 
-
         if (firebaseuser != null) {
 
             gSignInButton.visibility = View.GONE
@@ -165,28 +154,6 @@ class SignInActivity : AppCompatActivity() {
             val intent = Intent(this@SignInActivity, FragmentHomeActivity::class.java)
             startActivity(intent);
             finish()
-//
-//            val user = firebaseuser.displayName?.let {
-//                UserModel(
-//                    firebaseuser.uid,
-//                    it, firebaseuser.photoUrl.toString(),"Hey there! My name is ${firebaseuser.displayName} . \nI am glad to be here"
-//                ,firebaseuser.email,true
-//                )
-//            }
-//
-//            GlobalScope.launch(Dispatchers.Main) {
-//                if (user != null) {
-//
-//                    if(!user.uid?.let { db.collection("users").document(it).get().await().exists() }!!) {
-//                        user.uid.let { db.collection("users").document(it).set(user) }
-//                    }
-//                }
-//                val myBundle = bundleOf("currentUser" to user)
-//                Log.d("GENERAL","Going to SplashScreen")
-//                val intent = Intent(this@SignInActivity, FragmentHomeActivity::class.java)
-//                startActivity(intent);
-//                finish()
-//            }
 
         } else {
             gSignInButton.visibility = View.VISIBLE

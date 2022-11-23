@@ -12,7 +12,7 @@ import androidx.core.os.bundleOf
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.ayushunleashed.mitram.R
-import com.ayushunleashed.mitram.SharedViewModel
+import com.ayushunleashed.mitram.viewmodels.SharedViewModel
 import com.ayushunleashed.mitram.databinding.FragmentFullUserDetailBinding
 import com.ayushunleashed.mitram.models.UserModel
 import com.bumptech.glide.Glide
@@ -27,7 +27,6 @@ class FullUserDetailFragment : Fragment() {
     lateinit var previousFragmentName:String
     lateinit var sharedViewModel: SharedViewModel
     lateinit var currentUserModel: UserModel
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -144,12 +143,6 @@ class FullUserDetailFragment : Fragment() {
         binding.tvUserCollegeName.text = collegeNameText
         binding.tvUserCollegeStream.text = collegeStreamText
         binding.tvUserCollegeYear.text = collegeYearText
-
-//        binding.tvUserSkills.text = userToLoad!!.skills.toString()
-//        Log.d("GENERAL",userToLoad!!.skills.toString())
-//        binding.tvUserInterests.text = userToLoad!!.interests.toString()
-//        Log.d("GENERAL",userToLoad!!.interests.toString())
-
 
     }
 
