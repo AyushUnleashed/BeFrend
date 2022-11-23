@@ -12,7 +12,7 @@ import androidx.core.os.bundleOf
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.ayushunleashed.mitram.R
-import com.ayushunleashed.mitram.SharedViewModel
+import com.ayushunleashed.mitram.viewmodels.SharedViewModel
 import com.ayushunleashed.mitram.databinding.FragmentFullUserDetailBinding
 import com.ayushunleashed.mitram.models.UserModel
 import com.bumptech.glide.Glide

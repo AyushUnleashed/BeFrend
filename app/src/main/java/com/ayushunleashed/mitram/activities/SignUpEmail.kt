@@ -6,11 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.util.Patterns
 import android.widget.Toast
-import com.ayushunleashed.mitram.FragmentHomeActivity
-import com.ayushunleashed.mitram.R
-import com.ayushunleashed.mitram.SignInActivity
 import com.ayushunleashed.mitram.databinding.ActivitySignUpEmailBinding
-import com.ayushunleashed.mitram.databinding.FragmentEditInterestsBinding
 import com.ayushunleashed.mitram.utils.HelperClass
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth

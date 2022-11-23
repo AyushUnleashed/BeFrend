@@ -14,7 +14,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.ayushunleashed.mitram.R
-import com.ayushunleashed.mitram.SharedViewModel
+import com.ayushunleashed.mitram.viewmodels.SharedViewModel
 import com.ayushunleashed.mitram.adapters.LikeRequestsSentCardAdapter
 import com.ayushunleashed.mitram.databinding.FragmentLikeRequestsSentBinding
 import com.ayushunleashed.mitram.models.UserModel

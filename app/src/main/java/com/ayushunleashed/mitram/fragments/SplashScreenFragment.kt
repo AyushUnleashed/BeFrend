@@ -10,9 +10,8 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.ayushunleashed.mitram.R
-import com.ayushunleashed.mitram.SharedViewModel
+import com.ayushunleashed.mitram.viewmodels.SharedViewModel
 import com.ayushunleashed.mitram.databinding.FragmentSplashScreenBinding
-import com.ayushunleashed.mitram.databinding.FragmentUtilityBinding
 import com.ayushunleashed.mitram.models.UserModel
 import com.ayushunleashed.mitram.models.UtilityModel
 import com.google.firebase.auth.FirebaseAuth

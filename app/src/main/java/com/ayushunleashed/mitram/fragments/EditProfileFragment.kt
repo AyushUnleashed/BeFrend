@@ -17,11 +17,10 @@ import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.ayushunleashed.mitram.R
-import com.ayushunleashed.mitram.SharedViewModel
-import com.ayushunleashed.mitram.UtilitySharedViewModel
+import com.ayushunleashed.mitram.viewmodels.SharedViewModel
+import com.ayushunleashed.mitram.viewmodels.UtilitySharedViewModel
 import com.ayushunleashed.mitram.databinding.FragmentEditProfileBinding
 import com.ayushunleashed.mitram.models.UserModel
 import com.ayushunleashed.mitram.utils.StringHelperClass
@@ -46,8 +45,8 @@ class EditProfileFragment : Fragment() {
     lateinit var currentUser: FirebaseUser
     lateinit var profileImageURI: Uri
 
-    lateinit var sharedViewModel:SharedViewModel
-    lateinit var utilitySharedViewModel:UtilitySharedViewModel
+    lateinit var sharedViewModel: SharedViewModel
+    lateinit var utilitySharedViewModel: UtilitySharedViewModel
     lateinit var currentUserModel:UserModel
     lateinit var checkPermission: ActivityResultLauncher<Intent>
     var stringHelper:StringHelperClass = StringHelperClass()

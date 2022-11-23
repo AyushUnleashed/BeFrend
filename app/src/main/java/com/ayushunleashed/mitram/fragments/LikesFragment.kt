@@ -8,13 +8,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.activity.addCallback
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.ayushunleashed.mitram.R
-import com.ayushunleashed.mitram.SharedViewModel
+import com.ayushunleashed.mitram.viewmodels.SharedViewModel
 import com.ayushunleashed.mitram.adapters.PeopleLikesCardAdapter
 import com.ayushunleashed.mitram.databinding.FragmentLikesBinding
 import com.ayushunleashed.mitram.models.UserModel

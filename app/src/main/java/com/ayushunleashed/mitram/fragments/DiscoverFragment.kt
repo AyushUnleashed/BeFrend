@@ -15,7 +15,7 @@ import androidx.navigation.fragment.findNavController
 import com.asynctaskcoffee.cardstack.CardListener
 import com.asynctaskcoffee.cardstack.pulse
 import com.ayushunleashed.mitram.R
-import com.ayushunleashed.mitram.SharedViewModel
+import com.ayushunleashed.mitram.viewmodels.SharedViewModel
 import com.ayushunleashed.mitram.adapters.UserCardAdapter
 import com.ayushunleashed.mitram.models.UserModel
 import com.ayushunleashed.mitram.databinding.FragmentDiscoverBinding
@@ -24,17 +24,15 @@ import com.bumptech.glide.Glide
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.*
 import kotlinx.coroutines.tasks.await
-import java.util.Optional.empty
 
 
 class DiscoverFragment : Fragment() ,CardListener{
     lateinit var thisContext: Context
 
-   lateinit var sharedViewModel:SharedViewModel
+   lateinit var sharedViewModel: SharedViewModel
 
     lateinit var userCardAdapter: UserCardAdapter
     lateinit var usersList:MutableList<UserModel>

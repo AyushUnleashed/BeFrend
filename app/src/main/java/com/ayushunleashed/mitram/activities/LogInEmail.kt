@@ -7,14 +7,11 @@ import android.util.Patterns
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.ayushunleashed.mitram.FragmentHomeActivity
-import com.ayushunleashed.mitram.SignInActivity
 import com.ayushunleashed.mitram.databinding.ActivityLogInEmailBinding
 import com.ayushunleashed.mitram.utils.HelperClass
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import java.util.regex.Pattern
 
 class LogInEmail : AppCompatActivity() {
 
@@ -88,7 +85,7 @@ class LogInEmail : AppCompatActivity() {
                             isEmailVerified = true
                             Toast.makeText(this,"Log in Successful", Toast.LENGTH_SHORT).show()
                             //go to login activity
-                            val intent = Intent(this,FragmentHomeActivity::class.java)
+                            val intent = Intent(this, FragmentHomeActivity::class.java)
                             startActivity(intent)
 
                         }

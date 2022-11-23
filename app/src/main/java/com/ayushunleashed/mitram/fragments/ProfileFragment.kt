@@ -11,7 +11,7 @@ import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.ayushunleashed.mitram.R
-import com.ayushunleashed.mitram.SharedViewModel
+import com.ayushunleashed.mitram.viewmodels.SharedViewModel
 import com.ayushunleashed.mitram.databinding.FragmentProfileBinding
 import com.ayushunleashed.mitram.models.UserModel
 import com.bumptech.glide.Glide
@@ -38,7 +38,7 @@ class ProfileFragment : Fragment() {
     private lateinit var googleSignInClient: GoogleSignInClient
     private lateinit var mAuth: FirebaseAuth
 
-    lateinit var sharedViewModel:SharedViewModel
+    lateinit var sharedViewModel: SharedViewModel
     lateinit var currentUserModel:UserModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
