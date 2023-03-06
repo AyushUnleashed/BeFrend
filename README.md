@@ -8,11 +8,9 @@ BeFrend is a product that was designed to help college students find people from
 To Collaborate, Explore & Build The Future.
 Learn more [here](https://www.linkedin.com/company/befrend/)
 
-<!---
 ## 🔗 Download
 
 [![Google Play Download](https://i.postimg.cc/tRSVMZ0s/800px-Google-Play-Store-badge-EN-svg.png)](https://play.google.com/store/apps/details?id=com.ayushunleashed.mitram)
--->
 ## Demo
 
 ![Cover](https://i.postimg.cc/c6qw4BzX/10.png)
