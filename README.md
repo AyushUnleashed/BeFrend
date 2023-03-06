@@ -125,5 +125,5 @@ Not Yet, I am fixing a bug issue, soon it would be uploaded.
 - MVP Ready [ done ]
 - Beta Testing [ done ] 
 - Bug Fixing [ going on ]
-- Launching? [ soon it will be available on Playstore ]
+- Launching? [ Available on Google Playstore ]
 
